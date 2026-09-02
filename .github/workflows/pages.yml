@@ -1,4 +1,4 @@
-name: Publish Dashboard
+name: 发布A股独立结果页面
 
 on:
   workflow_dispatch:
@@ -10,6 +10,7 @@ on:
       - 'data/preopen_review.json'
       - 'data/overnight_news.json'
       - 'data/backtest_report.json'
+      - 'data/scan_diagnostics.json'
       - '.github/workflows/pages.yml'
 
 permissions:
@@ -22,21 +23,27 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  publish:
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Configure Pages
         uses: actions/configure-pages@v5
-      - name: Prepare site
+      - name: Prepare independent pages
         run: |
-          mkdir -p _site/data
-          cp -r docs/* _site/
-          for f in daily_candidates.json preopen_review.json overnight_news.json backtest_report.json; do
+          rm -rf _site
+          mkdir -p _site/tail _site/overnight _site/data
+          cp docs/index.html _site/index.html
+          cp docs/tail/index.html _site/tail/index.html
+          cp docs/overnight/index.html _site/overnight/index.html
+          for f in daily_candidates.json scan_diagnostics.json backtest_report.json; do
+            if [ -f "data/$f" ]; then cp "data/$f" "_site/data/$f"; fi
+          done
+          for f in preopen_review.json overnight_news.json; do
             if [ -f "data/$f" ]; then cp "data/$f" "_site/data/$f"; fi
           done
       - name: Upload Pages artifact
