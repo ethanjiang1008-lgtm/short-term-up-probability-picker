@@ -22,7 +22,7 @@ def overnight_window(tail_rows: list[dict], now_utc: datetime) -> tuple[datetime
     try:
         tail_day = datetime.strptime(tail_date, "%Y-%m-%d").date()
     except ValueError:
-        tail_day = (now_bj.date())
+        tail_day = now_bj.date()
     start_bj = datetime.combine(tail_day, time(15, 30), tzinfo=BEIJING)
     end_bj = datetime.combine(now_bj.date(), time(9, 30), tzinfo=BEIJING)
     return start_bj.astimezone(UTC), end_bj.astimezone(UTC)
@@ -92,20 +92,25 @@ def main() -> None:
     now_utc = datetime.now(UTC)
     start_utc, end_utc = overnight_window(tail_rows, now_utc)
     news = crawl_overnight_news(start_utc=start_utc, end_utc=end_utc)
-    matched = match_candidates(news, tail_rows)
+    # Only timestamp-confirmed items inside the explicit 15:30 -> 09:30 window
+    # are allowed to change the pre-open score. Unknown-time items remain visible
+    # in the crawler output but cannot alter the decision.
+    in_window = [n for n in news if n.get("window_status") == "inside_window"]
+    matched = match_candidates(in_window, tail_rows)
 
     Path("data").mkdir(parents=True, exist_ok=True)
     Path("data/overnight_news.json").write_text(json.dumps({
         "window_start_utc": start_utc.isoformat(),
         "window_end_utc": end_utc.isoformat(),
         "raw_count": len(news),
+        "timestamp_confirmed_count": len(in_window),
         "matched_count": len(matched),
-        "items": matched,
+        "items": news,
     }, ensure_ascii=False, indent=2), encoding="utf-8")
 
     review = build_preopen_review(tail_rows, matched, start_utc, end_utc)
     Path("data/preopen_review.json").write_text(json.dumps(review, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"tail={len(tail_rows)} overnight={len(news)} matched={len(matched)}")
+    print(f"tail={len(tail_rows)} overnight={len(news)} confirmed={len(in_window)} matched={len(matched)}")
 
 
 if __name__ == "__main__":
