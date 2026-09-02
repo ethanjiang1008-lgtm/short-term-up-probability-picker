@@ -6,7 +6,7 @@ universe:
   current_price_max: 50.0
   float_mcap_billion_min: 2.0
   float_mcap_billion_max: 300.0
-  five_day_ma_rising: true
+  five_day_ma_rising: false
   current_volume_ratio_max: 5.0
   current_turnover_rate_pct_max: 10.0
 
@@ -22,7 +22,9 @@ thresholds:
   strong_score: 75
   avoid_score: 50
   min_turnover_rate_pct: 2.0
+  max_turnover_rate_pct: 10.0
   min_relative_volume: 1.1
+  max_volume_ratio: 5.0
 
 labels:
   up_threshold: 0.0
