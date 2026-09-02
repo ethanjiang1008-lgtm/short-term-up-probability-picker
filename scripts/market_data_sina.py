@@ -1,23 +1,30 @@
-"""新浪/腾讯公开行情数据适配层。"""
+"""新浪公开行情数据适配层。"""
 from __future__ import annotations
 
 import json
+import ssl
 import time
+import urllib.request
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 from typing import Any
 
-import requests
-
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124 Safari/537.36",
-    "Referer": "https://finance.sina.com.cn/",
+    "Referer": "https://finance.sina.com.cn",
 }
-DEFAULT_TIMEOUT = (5, 10)
-RETRIES = 2
-BACKOFF_SECONDS = (0.5, 1.5)
+
+# 与旧七因子系统一致：普通 TLS 失败时使用宽松 SSL fallback。
+SSL_CTX = ssl.create_default_context()
+SSL_CTX.check_hostname = False
+SSL_CTX.verify_mode = ssl.CERT_NONE
+
+DEFAULT_TIMEOUT = 15
+RETRIES = 3
+BACKOFF_SECONDS = (1.0, 2.0, 3.0)
 RANK_PAGE_SIZE = 100
 MAX_RANK_PAGES = 60
+DEFAULT_KLINE_WORKERS = 10
 
 
 @dataclass(frozen=True)
@@ -27,25 +34,24 @@ class SinaStock:
     market: str
 
 
-def _session() -> requests.Session:
-    s = requests.Session()
-    s.headers.update(HEADERS)
-    return s
-
-
-def _get_json(url: str, params: dict[str, Any], *, label: str) -> Any:
+def _fetch_url(url: str, *, timeout: int = DEFAULT_TIMEOUT, label: str = "") -> str:
+    """兼容 GitHub Actions 网络环境，复用旧系统的 urllib + SSL fallback。"""
+    req = urllib.request.Request(url, headers=HEADERS)
     last_error: Exception | None = None
     for attempt in range(RETRIES):
         try:
-            with _session() as s:
-                r = s.get(url, params=params, timeout=DEFAULT_TIMEOUT)
-                r.raise_for_status()
-                return r.json()
-        except (requests.RequestException, ValueError) as exc:
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
+                return resp.read().decode("utf-8")
+        except Exception as exc:
             last_error = exc
+            try:
+                with urllib.request.urlopen(req, timeout=timeout, context=SSL_CTX) as resp:
+                    return resp.read().decode("utf-8")
+            except Exception as fallback_exc:
+                last_error = fallback_exc
             if attempt < RETRIES - 1:
-                time.sleep(BACKOFF_SECONDS[attempt])
-    raise RuntimeError(f"Public market-data request failed after {RETRIES} attempts: {label}") from last_error
+                time.sleep(BACKOFF_SECONDS[min(attempt, len(BACKOFF_SECONDS) - 1)])
+    raise RuntimeError(f"Sina request failed after {RETRIES} attempts: {label}") from last_error
 
 
 def is_main_board(code: str, name: str = "") -> bool:
@@ -91,17 +97,13 @@ def _normalize_rank_row(item: dict[str, Any]) -> dict[str, Any]:
 
 
 def _fetch_rank_page(node: str, sort: str, asc: int, page: int, num: int = RANK_PAGE_SIZE) -> list[dict[str, Any]]:
-    url = "https://vip.stock.finance.sina.com.cn/quotes_service/api/json_v2.php/Market_Center.getHQNodeData"
-    params = {
-        "page": page,
-        "num": num,
-        "sort": sort,
-        "asc": asc,
-        "node": node,
-        "symbol": "",
-        "_s_r_a": "sort",
-    }
-    data = _get_json(url, params, label=f"rank:{node}:{sort}:{asc}:page={page}")
+    url = (
+        "https://vip.stock.finance.sina.com.cn/quotes_service/api/json_v2.php/"
+        f"Market_Center.getHQNodeData?page={page}&num={num}&sort={sort}&asc={asc}"
+        f"&node={node}&symbol=&_s_r_a=sort"
+    )
+    text = _fetch_url(url, timeout=15, label=f"rank:{node}:{sort}:{asc}:page={page}")
+    data = json.loads(text)
     if not isinstance(data, list):
         return []
     return [_normalize_rank_row(x) for x in data if isinstance(x, dict)]
@@ -132,7 +134,6 @@ def _fetch_all_ranked(sort: str, asc: int, max_pages: int = MAX_RANK_PAGES) -> l
 
 
 def fetch_all_stocks() -> list[dict[str, Any]]:
-    """获取 hs_a 全市场快照，持续翻页到数据尾部。"""
     return _fetch_all_ranked("changepercent", 0)
 
 
@@ -144,101 +145,79 @@ def fetch_all_losers() -> list[dict[str, Any]]:
     return _fetch_all_ranked("changepercent", 1)
 
 
-def _parse_sina_kline(data: Any) -> list[dict[str, Any]]:
+def _parse_kline_items(data: Any, *, list_style: bool = False) -> list[dict[str, Any]]:
     if not isinstance(data, list):
         return []
     out: list[dict[str, Any]] = []
     for item in data:
-        if not isinstance(item, dict):
-            continue
         try:
-            out.append({
-                "date": item.get("day", ""),
-                "open": float(item.get("open", 0) or 0),
-                "high": float(item.get("high", 0) or 0),
-                "low": float(item.get("low", 0) or 0),
-                "close": float(item.get("close", 0) or 0),
-                "volume": float(item.get("volume", 0) or 0),
-                "turnover": float(item.get("turnover", 0) or 0),
-            })
-        except (TypeError, ValueError):
-            continue
-    return out
-
-
-def _fetch_sina_kline(code: str, count: int) -> list[dict[str, Any]]:
-    market = "sh" if code.startswith("6") else "sz"
-    symbol = f"{market}{code}"
-    url = "https://quotes.sina.cn/cn/api/jsonp_v2.php/CN_MarketDataService.getKLineData"
-    params = {"symbol": symbol, "scale": 240, "ma": "no", "datalen": count}
-    return _parse_sina_kline(_get_json(url, params, label=f"sina-kline:{code}"))
-
-
-def _fetch_tencent_kline(code: str, count: int) -> list[dict[str, Any]]:
-    """腾讯历史日K备用源；qfqday 使用前复权日线。"""
-    market = "sh" if code.startswith("6") else "sz"
-    symbol = f"{market}{code}"
-    url = "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get"
-    params = {"param": f"{symbol},day,,,{count},qfq"}
-    data = _get_json(url, params, label=f"tencent-kline:{code}")
-    if not isinstance(data, dict):
-        return []
-    stock = data.get("data", {}).get(symbol, {})
-    raw = stock.get("qfqday") or stock.get("day") or []
-    if not isinstance(raw, list):
-        return []
-    out: list[dict[str, Any]] = []
-    for item in raw:
-        if not isinstance(item, list) or len(item) < 6:
-            continue
-        try:
-            out.append({
-                "date": item[0],
-                "open": float(item[1] or 0),
-                "close": float(item[2] or 0),
-                "high": float(item[3] or 0),
-                "low": float(item[4] or 0),
-                "volume": float(item[5] or 0),
-                "turnover": 0.0,
-            })
+            if list_style:
+                if not isinstance(item, list) or len(item) < 6:
+                    continue
+                out.append({
+                    "date": item[0],
+                    "open": float(item[1] or 0),
+                    "close": float(item[2] or 0),
+                    "high": float(item[3] or 0),
+                    "low": float(item[4] or 0),
+                    "volume": float(item[5] or 0),
+                    "turnover": 0.0,
+                })
+            else:
+                if not isinstance(item, dict):
+                    continue
+                out.append({
+                    "date": item.get("day", ""),
+                    "open": float(item.get("open", 0) or 0),
+                    "high": float(item.get("high", 0) or 0),
+                    "low": float(item.get("low", 0) or 0),
+                    "close": float(item.get("close", 0) or 0),
+                    "volume": float(item.get("volume", 0) or 0),
+                    "turnover": float(item.get("turnover", 0) or 0),
+                })
         except (TypeError, ValueError):
             continue
     return out
 
 
 def fetch_kline(code: str, count: int = 80) -> list[dict[str, Any]]:
-    """获取日 K 线；优先腾讯备用源，新浪作为 fallback。"""
-    try:
-        bars = _fetch_tencent_kline(code, count)
-        if bars:
-            return bars
-    except Exception:
-        pass
-    try:
-        return _fetch_sina_kline(code, count)
-    except Exception:
-        return []
+    """获取日 K 线，优先沿用旧系统已验证的新浪实现。"""
+    market = "sh" if code.startswith("6") else "sz"
+    symbol = f"{market}{code}"
+    url = (
+        "https://quotes.sina.cn/cn/api/jsonp_v2.php/CN_MarketDataService.getKLineData?"
+        f"symbol={symbol}&scale=240&ma=no&datalen={count}"
+    )
+    return _parse_kline_items(json.loads(_fetch_url(url, timeout=15, label=f"kline:{code}")))
 
 
-def fetch_klines_parallel(codes: list[str], count: int = 80, workers: int = 24) -> tuple[dict[str, list[dict[str, Any]]], dict[str, int]]:
-    """批量获取日 K 线，同时返回成功/失败计数。"""
+def fetch_klines_parallel(codes: list[str], count: int = 80, workers: int = DEFAULT_KLINE_WORKERS) -> tuple[dict[str, list[dict[str, Any]]], dict[str, int]]:
+    """批量日K：10线程 + 分批，参考旧系统，避免 24+ 并发造成新浪连接/限流问题。"""
     out: dict[str, list[dict[str, Any]]] = {}
     success = 0
     failed = 0
-    with ThreadPoolExecutor(max_workers=workers) as ex:
-        futures = {ex.submit(fetch_kline, c, count): c for c in codes}
-        for fut in as_completed(futures):
-            code = futures[fut]
-            try:
-                bars = fut.result()
-                out[code] = bars
-                if bars:
-                    success += 1
-                else:
+    if not codes:
+        return out, {"requested": 0, "success": 0, "failed": 0}
+
+    batch_size = max(workers * 4, 40)
+    for start in range(0, len(codes), batch_size):
+        batch = codes[start : start + batch_size]
+        with ThreadPoolExecutor(max_workers=workers) as ex:
+            futures = {ex.submit(fetch_kline, code, count): code for code in batch}
+            for fut in as_completed(futures):
+                code = futures[fut]
+                try:
+                    bars = fut.result()
+                    out[code] = bars
+                    if bars:
+                        success += 1
+                    else:
+                        failed += 1
+                except Exception:
+                    out[code] = []
                     failed += 1
-            except Exception:
-                out[code] = []
-                failed += 1
+        if start + batch_size < len(codes):
+            time.sleep(0.5)
     return out, {"requested": len(codes), "success": success, "failed": failed}
 
 
