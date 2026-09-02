@@ -1,4 +1,4 @@
-"""新浪公开行情数据适配层。"""
+"""新浪/腾讯公开行情数据适配层。"""
 from __future__ import annotations
 
 import json
@@ -45,7 +45,7 @@ def _get_json(url: str, params: dict[str, Any], *, label: str) -> Any:
             last_error = exc
             if attempt < RETRIES - 1:
                 time.sleep(BACKOFF_SECONDS[attempt])
-    raise RuntimeError(f"Sina request failed after {RETRIES} attempts: {label}") from last_error
+    raise RuntimeError(f"Public market-data request failed after {RETRIES} attempts: {label}") from last_error
 
 
 def is_main_board(code: str, name: str = "") -> bool:
@@ -144,13 +144,7 @@ def fetch_all_losers() -> list[dict[str, Any]]:
     return _fetch_all_ranked("changepercent", 1)
 
 
-def fetch_kline(code: str, count: int = 80) -> list[dict[str, Any]]:
-    """获取足够计算 MA60 的日 K 线。"""
-    market = "sh" if code.startswith("6") else "sz"
-    symbol = f"{market}{code}"
-    url = "https://quotes.sina.cn/cn/api/jsonp_v2.php/CN_MarketDataService.getKLineData"
-    params = {"symbol": symbol, "scale": 240, "ma": "no", "datalen": count}
-    data = _get_json(url, params, label=f"kline:{code}")
+def _parse_sina_kline(data: Any) -> list[dict[str, Any]]:
     if not isinstance(data, list):
         return []
     out: list[dict[str, Any]] = []
@@ -170,6 +164,60 @@ def fetch_kline(code: str, count: int = 80) -> list[dict[str, Any]]:
         except (TypeError, ValueError):
             continue
     return out
+
+
+def _fetch_sina_kline(code: str, count: int) -> list[dict[str, Any]]:
+    market = "sh" if code.startswith("6") else "sz"
+    symbol = f"{market}{code}"
+    url = "https://quotes.sina.cn/cn/api/jsonp_v2.php/CN_MarketDataService.getKLineData"
+    params = {"symbol": symbol, "scale": 240, "ma": "no", "datalen": count}
+    return _parse_sina_kline(_get_json(url, params, label=f"sina-kline:{code}"))
+
+
+def _fetch_tencent_kline(code: str, count: int) -> list[dict[str, Any]]:
+    """腾讯历史日K备用源；qfqday 使用前复权日线。"""
+    market = "sh" if code.startswith("6") else "sz"
+    symbol = f"{market}{code}"
+    url = "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get"
+    params = {"param": f"{symbol},day,,,{count},qfq"}
+    data = _get_json(url, params, label=f"tencent-kline:{code}")
+    if not isinstance(data, dict):
+        return []
+    stock = data.get("data", {}).get(symbol, {})
+    raw = stock.get("qfqday") or stock.get("day") or []
+    if not isinstance(raw, list):
+        return []
+    out: list[dict[str, Any]] = []
+    for item in raw:
+        if not isinstance(item, list) or len(item) < 6:
+            continue
+        try:
+            out.append({
+                "date": item[0],
+                "open": float(item[1] or 0),
+                "close": float(item[2] or 0),
+                "high": float(item[3] or 0),
+                "low": float(item[4] or 0),
+                "volume": float(item[5] or 0),
+                "turnover": 0.0,
+            })
+        except (TypeError, ValueError):
+            continue
+    return out
+
+
+def fetch_kline(code: str, count: int = 80) -> list[dict[str, Any]]:
+    """获取日 K 线；优先腾讯备用源，新浪作为 fallback。"""
+    try:
+        bars = _fetch_tencent_kline(code, count)
+        if bars:
+            return bars
+    except Exception:
+        pass
+    try:
+        return _fetch_sina_kline(code, count)
+    except Exception:
+        return []
 
 
 def fetch_klines_parallel(codes: list[str], count: int = 80, workers: int = 24) -> tuple[dict[str, list[dict[str, Any]]], dict[str, int]]:
