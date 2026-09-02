@@ -1,24 +1,19 @@
-"""每日候选快照：只负责扫描、补齐今日收盘价、保存历史。"""
+"""每日候选快照：扫描、保存，不重复请求同一行情。"""
 from __future__ import annotations
 
 import json
-from pathlib import Path
 from datetime import datetime, timezone
+from pathlib import Path
 
-from scanner import scan
 from history import save_snapshot
-from market_data_sina import fetch_all_gainers
+from scanner import scan
 
 
 def main() -> None:
     rows = scan()
-    quotes = {
-        str(r.get("code")): float(r.get("trade", r.get("price", 0)) or 0)
-        for r in fetch_all_gainers()
-    }
+    captured_at = datetime.now(timezone.utc).isoformat()
     for row in rows:
-        row["today_close"] = quotes.get(str(row["code"]))
-        row["captured_at_utc"] = datetime.now(timezone.utc).isoformat()
+        row["captured_at_utc"] = captured_at
 
     out = Path("data/daily_candidates.json")
     out.parent.mkdir(parents=True, exist_ok=True)
