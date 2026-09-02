@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import json
-from datetime import datetime, time, timedelta, timezone
+from datetime import datetime, time, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -12,16 +12,19 @@ BEIJING = ZoneInfo("Asia/Shanghai")
 UTC = timezone.utc
 
 
-def overnight_window(now_utc: datetime) -> tuple[datetime, datetime]:
-    """Previous trading-day 15:30 Beijing through current 09:30 Beijing.
+def overnight_window(tail_rows: list[dict], now_utc: datetime) -> tuple[datetime, datetime]:
+    """Use the actual tail snapshot date, not a calendar-day guess.
 
-    The workflow runs around 09:10 Beijing, so the end is deliberately fixed at
-    09:30 rather than 'now'. News posted after 09:30 must never enter this review.
+    Window: the tail snapshot trading date at 15:30 Beijing -> current trading day 09:30 Beijing.
     """
     now_bj = now_utc.astimezone(BEIJING)
-    today = now_bj.date()
-    start_bj = datetime.combine(today - timedelta(days=1), time(15, 30), tzinfo=BEIJING)
-    end_bj = datetime.combine(today, time(9, 30), tzinfo=BEIJING)
+    tail_date = str(tail_rows[0].get("date", ""))
+    try:
+        tail_day = datetime.strptime(tail_date, "%Y-%m-%d").date()
+    except ValueError:
+        tail_day = (now_bj.date())
+    start_bj = datetime.combine(tail_day, time(15, 30), tzinfo=BEIJING)
+    end_bj = datetime.combine(now_bj.date(), time(9, 30), tzinfo=BEIJING)
     return start_bj.astimezone(UTC), end_bj.astimezone(UTC)
 
 
@@ -87,7 +90,7 @@ def main() -> None:
         return
 
     now_utc = datetime.now(UTC)
-    start_utc, end_utc = overnight_window(now_utc)
+    start_utc, end_utc = overnight_window(tail_rows, now_utc)
     news = crawl_overnight_news(start_utc=start_utc, end_utc=end_utc)
     matched = match_candidates(news, tail_rows)
 
