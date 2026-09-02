@@ -49,4 +49,5 @@ jobs:
           git add -f data/daily_candidates.json data/backtest_report.json data/scan_diagnostics.json
           if [ -d data/history ]; then git add -f data/history; fi
           git diff --cached --quiet || git commit -m "data: update tail trend selection"
+          git pull --rebase origin main
           git push
