@@ -2,11 +2,27 @@
   "date": "2026-09-02",
   "raw_market_rows": 5553,
   "main_board_rows": 3122,
-  "eligible_rows": 2894,
-  "kline_requested": 2894,
-  "kline_success": 0,
-  "kline_failed": 2894,
-  "kline_success_ratio": 0.0,
+  "eligible_price_mcap_turnover_rows": 2644,
+  "rising_5ma_rows": 0,
+  "final_universe_rows": 0,
+  "fast_kline_requested": 2644,
+  "fast_kline_success": 0,
+  "fast_kline_failed": 2644,
+  "fast_kline_success_ratio": 0.0,
+  "full_kline_requested": 0,
+  "full_kline_success": 0,
+  "full_kline_failed": 0,
+  "full_kline_success_ratio": 0.0,
+  "filters": {
+    "price_max": 50.0,
+    "float_mcap_billion_min": 2.0,
+    "float_mcap_billion_max": 300.0,
+    "turnover_rate_pct_lt": 10.0,
+    "volume_ratio_lt": 5.0,
+    "five_day_ma_rising": true
+  },
+  "volume_ratio_definition": "latest volume / average volume of previous 5 trading days",
+  "kline_strategy": "fast 10 bars for hard filters, full 120 bars only after filters pass",
   "min_expected_raw_rows": 3000,
   "min_kline_success_ratio": 0.7,
   "market": {
@@ -15,7 +31,7 @@
     "limit_down_count": 10,
     "ranked_market_rows": 5553
   },
-  "status": "DATA_INCOMPLETE",
-  "blocking_reason": "kline_success_ratio=0.00% < 70%",
-  "captured_at_utc": "2026-09-02T09:50:09.202888+00:00"
+  "status": "OK",
+  "blocking_reason": null,
+  "captured_at_utc": "2026-09-02T10:29:54.453719+00:00"
 }
