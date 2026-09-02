@@ -6,5 +6,4 @@ venv/
 .env
 .DS_Store
 
-data/*.json
-data/history/*.json
+data/daily_candidates.json
