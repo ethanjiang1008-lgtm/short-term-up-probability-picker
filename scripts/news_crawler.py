@@ -3,9 +3,10 @@ from __future__ import annotations
 
 import json
 import re
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from urllib.parse import urljoin
+from zoneinfo import ZoneInfo
 
 import requests
 from bs4 import BeautifulSoup
@@ -15,13 +16,14 @@ SOURCES = [
     {"name": "证券时报", "url": "https://www.stcn.com/", "domain": "stcn.com"},
     {"name": "e公司", "url": "https://egs.stcn.com/news/index", "domain": "stcn.com"},
 ]
-
 HEADERS = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/128 Safari/537.36"}
+BEIJING = ZoneInfo("Asia/Shanghai")
 
 
-def _parse_page(html: str, base_url: str, source_name: str, now: datetime) -> list[dict]:
+def _parse_page(html: str, base_url: str, source_name: str) -> list[dict]:
     soup = BeautifulSoup(html, "html.parser")
     out, seen = [], set()
+    now_bj = datetime.now(BEIJING)
     for tag in soup.find_all(["article", "li", "a"]):
         text = " ".join(tag.get_text(" ", strip=True).split())
         if len(text) < 12 or len(text) > 1000:
@@ -29,8 +31,7 @@ def _parse_page(html: str, base_url: str, source_name: str, now: datetime) -> li
         url = urljoin(base_url, tag.get("href") or "")
         if not url.startswith("http"):
             continue
-        title = text[:200]
-        key = (title, url)
+        key = (text[:200], url)
         if key in seen:
             continue
         seen.add(key)
@@ -39,13 +40,13 @@ def _parse_page(html: str, base_url: str, source_name: str, now: datetime) -> li
         published = None
         if time_match:
             hour, minute = map(int, time_match.groups())
-            try:
-                published = now.replace(hour=hour, minute=minute, second=0, microsecond=0)
-            except ValueError:
-                published = None
+            if 0 <= hour <= 23 and 0 <= minute <= 59:
+                published = now_bj.replace(hour=hour, minute=minute, second=0, microsecond=0)
+                if published > now_bj + timedelta(minutes=5):
+                    published -= timedelta(days=1)
         out.append({
             "source": source_name,
-            "title": title,
+            "title": text[:200],
             "url": url,
             "code_hint": code_match.group(1) if code_match else "",
             "published_at_utc": published.astimezone(timezone.utc).isoformat() if published else "",
@@ -61,7 +62,7 @@ def crawl_sources(timeout: int = 12) -> list[dict]:
         try:
             resp = requests.get(source["url"], headers=HEADERS, timeout=timeout)
             resp.raise_for_status()
-            for row in _parse_page(resp.text, source["url"], source["name"], now):
+            for row in _parse_page(resp.text, source["url"], source["name"]):
                 row["captured_at_utc"] = now.isoformat()
                 row["status"] = "ok"
                 rows.append(row)
@@ -117,8 +118,6 @@ def main() -> None:
     candidates_path = Path("data/daily_candidates.json")
     candidates = json.loads(candidates_path.read_text(encoding="utf-8")) if candidates_path.exists() else []
     now = datetime.now(timezone.utc)
-    # 15:30 Beijing previous day through the current pre-open run.
-    from datetime import timedelta
     start = now - timedelta(hours=18)
     raw = crawl_overnight_news(start, now)
     matched = match_candidates(raw, candidates)
