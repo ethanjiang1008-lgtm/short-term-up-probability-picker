@@ -38,3 +38,6 @@ jobs:
           git add -f data/daily_candidates.json data/history data/backtest_report.json
           git diff --cached --quiet || git commit -m "data: update 14:30 tail scan and history"
           git push
+
+      # Push-triggered runs provide a deterministic bootstrap after CI/config fixes;
+      # scheduled runs remain the production 14:30 Beijing snapshot.
