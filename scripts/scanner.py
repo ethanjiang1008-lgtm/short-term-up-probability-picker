@@ -165,9 +165,13 @@ def scan_with_diagnostics(max_candidates: int = 20) -> tuple[list[dict], dict]:
     if len(universe_raw) < MIN_EXPECTED_RAW_ROWS:
         diagnostics["status"] = "DATA_INCOMPLETE"
         diagnostics["blocking_reason"] = f"raw_market_rows={len(universe_raw)} < {MIN_EXPECTED_RAW_ROWS}"
-    elif final_codes and full_success_ratio < MIN_KLINE_SUCCESS_RATIO:
-        diagnostics["status"] = "DATA_INCOMPLETE"
-        diagnostics["blocking_reason"] = f"full_kline_success_ratio={full_success_ratio:.2%} < {MIN_KLINE_SUCCESS_RATIO:.0%}"
+    elif fast_codes := base_codes:
+        if fast_success_ratio < MIN_KLINE_SUCCESS_RATIO:
+            diagnostics["status"] = "DATA_INCOMPLETE"
+            diagnostics["blocking_reason"] = f"fast_kline_success_ratio={fast_success_ratio:.2%} < {MIN_KLINE_SUCCESS_RATIO:.0%}"
+        elif final_codes and full_success_ratio < MIN_KLINE_SUCCESS_RATIO:
+            diagnostics["status"] = "DATA_INCOMPLETE"
+            diagnostics["blocking_reason"] = f"full_kline_success_ratio={full_success_ratio:.2%} < {MIN_KLINE_SUCCESS_RATIO:.0%}"
 
     rows = []
     if diagnostics["status"] != "DATA_INCOMPLETE":
