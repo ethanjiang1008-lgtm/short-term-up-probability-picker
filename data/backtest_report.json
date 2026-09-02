@@ -1,0 +1,57 @@
+{
+  "labeled_samples": 0,
+  "min_samples": 30,
+  "thresholds": {
+    "60": {
+      "samples": 0,
+      "wins": 0,
+      "win_rate": null,
+      "avg_return": null,
+      "avg_win": null,
+      "avg_loss": null,
+      "expectancy": null,
+      "sample_ok": false
+    },
+    "65": {
+      "samples": 0,
+      "wins": 0,
+      "win_rate": null,
+      "avg_return": null,
+      "avg_win": null,
+      "avg_loss": null,
+      "expectancy": null,
+      "sample_ok": false
+    },
+    "68": {
+      "samples": 0,
+      "wins": 0,
+      "win_rate": null,
+      "avg_return": null,
+      "avg_win": null,
+      "avg_loss": null,
+      "expectancy": null,
+      "sample_ok": false
+    },
+    "70": {
+      "samples": 0,
+      "wins": 0,
+      "win_rate": null,
+      "avg_return": null,
+      "avg_win": null,
+      "avg_loss": null,
+      "expectancy": null,
+      "sample_ok": false
+    },
+    "75": {
+      "samples": 0,
+      "wins": 0,
+      "win_rate": null,
+      "avg_return": null,
+      "avg_win": null,
+      "avg_loss": null,
+      "expectancy": null,
+      "sample_ok": false
+    }
+  },
+  "best_threshold_by_expectancy": null
+}
