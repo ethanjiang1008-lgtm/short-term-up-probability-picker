@@ -5,7 +5,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from features import make_features
 from labels import next_day_labels
-from scanner import _eligible, _derived_volume_ratio, _is_rising_5ma
+from scanner import _eligible, _derived_volume_ratio, _is_rising_5ma, _observation_label
 
 
 def _bars(n=70):
@@ -64,6 +64,7 @@ def test_universe_filters():
     assert not _eligible({**base, "code": "688001", "name": "科创测试"})
     assert not _eligible({**base, "code": "300001", "name": "创业测试"})
     assert not _eligible({**base, "code": "600001", "name": "ST测试"})
+    assert not _eligible({**base, "code": "600001", "name": "*ST测试"})
     assert not _eligible({**base, "code": "600002", "name": "退市测试"})
     assert not _eligible({**base, "code": "600003", "name": "高价股", "price": 50.01})
     assert not _eligible({**base, "code": "600004", "name": "小市值", "circ_mcap": 199_999})
@@ -78,6 +79,21 @@ def test_ma5_feature_is_not_a_hard_filter_and_volume_ratio():
     flat = [dict(rising[-1], close=10.0) for _ in range(6)]
     assert not _is_rising_5ma(flat)
 
-    # scanner 的 _eligible 与 MA5 无关；即使没有 MA5 上升条件，基础股票仍可进入候选池。
     base = {"price": 20, "circ_mcap": 10_000_000, "turnover_rate": 5.0, "code": "600006", "name": "无趋势测试"}
     assert _eligible(base)
+
+
+def test_observation_tiers():
+    technical = {"ma5_rising": True, "close_above_ma20": True, "ma_bull_alignment": True}
+    label, focus, reason = _observation_label(80, False, technical)
+    assert label == "重点观察"
+    assert focus is True
+    assert "技术证据" in reason
+
+    label, focus, _ = _observation_label(90, True, technical)
+    assert label == "涨停观察"
+    assert focus is False
+
+    label, focus, _ = _observation_label(70, False, technical)
+    assert label == "次重点"
+    assert focus is False
