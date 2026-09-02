@@ -3,9 +3,12 @@ universe:
   exclude_kcb: true
   exclude_cyb: true
   exchanges_prefixes: ["600", "601", "603", "605", "000", "001", "002", "003"]
-  current_price_max: 100.0
+  current_price_max: 50.0
   float_mcap_billion_min: 2.0
   float_mcap_billion_max: 300.0
+  five_day_ma_rising: true
+  current_volume_ratio_max: 5.0
+  current_turnover_rate_pct_max: 10.0
 
 weights:
   base_strength: 0.25
