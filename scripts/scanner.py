@@ -71,7 +71,8 @@ def scan(max_candidates: int = 20) -> list[dict]:
             market_breadth=float(stats["breadth"]),
             market_limit_up_count=int(stats["limit_up_count"]),
             market_limit_down_count=int(stats["limit_down_count"]),
-            event_score=0.0,
+            # 尚未接入事件源时保持中性，不人为扣掉20%的总分。
+            event_score=50.0,
         )
         if f.score < 65:
             continue
