@@ -5,6 +5,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from features import make_features
 from labels import next_day_labels
+from scanner import _eligible
 
 
 def _bars(n=70):
@@ -34,3 +35,14 @@ def test_labels():
     assert y["next_day_up"] == 1
     assert y["next_day_strong_up"] == 1
     assert y["next_day_return"] == 0.05
+
+
+def test_universe_filters():
+    base = {"price": 20, "circ_mcap": 10_000_000}
+    assert _eligible({**base, "code": "600000", "name": "浦发银行"})
+    assert not _eligible({**base, "code": "688001", "name": "科创测试"})
+    assert not _eligible({**base, "code": "300001", "name": "创业测试"})
+    assert not _eligible({**base, "code": "600001", "name": "ST测试"})
+    assert not _eligible({**base, "code": "600002", "name": "退市测试"})
+    assert not _eligible({**base, "code": "600003", "name": "高价股" , "price": 100.01})
+    assert not _eligible({**base, "code": "600004", "name": "小市值", "circ_mcap": 199_999})
