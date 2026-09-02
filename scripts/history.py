@@ -35,7 +35,7 @@ def attach_next_day_returns(rows: list[dict], close_by_code: dict[str, float]) -
         if item.get("today_close") is not None and code in close_by_code:
             tc, nc = float(item["today_close"]), float(close_by_code[code])
             if tc > 0:
-                ret = nc / tc - 1.0
+                ret = round(nc / tc - 1.0, 6)
                 item.update(next_day_return=ret, next_day_up=int(ret > 0), next_day_strong_up=int(ret >= 0.03), next_day_limit_up=int(ret >= 0.099))
         out.append(item)
     return out
