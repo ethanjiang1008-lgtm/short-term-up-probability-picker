@@ -5,7 +5,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from features import make_features
 from labels import next_day_labels
-from scanner import _eligible
+from scanner import _eligible, _derived_volume_ratio, _is_rising_5ma
 
 
 def _bars(n=70):
@@ -38,11 +38,21 @@ def test_labels():
 
 
 def test_universe_filters():
-    base = {"price": 20, "circ_mcap": 10_000_000}
+    base = {"price": 20, "circ_mcap": 10_000_000, "turnover_rate": 5.0}
     assert _eligible({**base, "code": "600000", "name": "浦发银行"})
     assert not _eligible({**base, "code": "688001", "name": "科创测试"})
     assert not _eligible({**base, "code": "300001", "name": "创业测试"})
     assert not _eligible({**base, "code": "600001", "name": "ST测试"})
     assert not _eligible({**base, "code": "600002", "name": "退市测试"})
-    assert not _eligible({**base, "code": "600003", "name": "高价股" , "price": 100.01})
+    assert not _eligible({**base, "code": "600003", "name": "高价股", "price": 50.01})
     assert not _eligible({**base, "code": "600004", "name": "小市值", "circ_mcap": 199_999})
+    assert not _eligible({**base, "code": "600005", "name": "高换手", "turnover_rate": 10.0})
+
+
+def test_five_ma_rising_and_volume_ratio():
+    bars = _bars(10)
+    assert _is_rising_5ma(bars)
+    assert _derived_volume_ratio(bars) < 5
+
+    flat = [dict(bars[-1], close=10.0) for _ in range(6)]
+    assert not _is_rising_5ma(flat)
