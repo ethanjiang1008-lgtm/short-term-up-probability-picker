@@ -10,7 +10,7 @@ import re
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, Callable
 
 import requests
 
@@ -20,7 +20,10 @@ HEADERS = {
 }
 
 UA_HEADERS = {"User-Agent": HEADERS["User-Agent"]}
-DEFAULT_TIMEOUT = 12
+# Separate connect/read timeouts; Sina can occasionally stall during TLS setup.
+DEFAULT_TIMEOUT = (10, 25)
+RETRIES = 4
+BACKOFF_SECONDS = (1, 2, 4, 8)
 
 
 @dataclass(frozen=True)
@@ -34,6 +37,36 @@ def _session() -> requests.Session:
     s = requests.Session()
     s.headers.update(HEADERS)
     return s
+
+
+def _get_json(url: str, params: dict[str, Any], *, label: str) -> dict[str, Any]:
+    last_error: Exception | None = None
+    for attempt in range(RETRIES):
+        try:
+            with _session() as s:
+                r = s.get(url, params=params, timeout=DEFAULT_TIMEOUT)
+                r.raise_for_status()
+                return r.json()
+        except (requests.RequestException, ValueError) as exc:
+            last_error = exc
+            if attempt < RETRIES - 1:
+                time.sleep(BACKOFF_SECONDS[attempt])
+    raise RuntimeError(f"Sina request failed after {RETRIES} attempts: {label}") from last_error
+
+
+def _get_text(url: str, params: dict[str, Any], *, label: str) -> str:
+    last_error: Exception | None = None
+    for attempt in range(RETRIES):
+        try:
+            with _session() as s:
+                r = s.get(url, params=params, timeout=DEFAULT_TIMEOUT)
+                r.raise_for_status()
+                return r.text
+        except requests.RequestException as exc:
+            last_error = exc
+            if attempt < RETRIES - 1:
+                time.sleep(BACKOFF_SECONDS[attempt])
+    raise RuntimeError(f"Sina request failed after {RETRIES} attempts: {label}") from last_error
 
 
 def is_main_board(code: str, name: str = "") -> bool:
@@ -50,26 +83,21 @@ def normalize_stock(raw: dict[str, Any]) -> SinaStock | None:
     return SinaStock(code=code, name=name, market="sh" if code.startswith("6") else "sz")
 
 
-def fetch_all_gainers(limit: int = 500) -> list[dict[str, Any]]:
-    """抓取新浪涨幅排行。
-
-    新浪接口字段可能随时间变化，因此这里保持宽松解析，未知字段原样保留。
-    """
+def _fetch_rank(limit: int, asc: int, label: str) -> list[dict[str, Any]]:
     url = "https://quotes.sina.cn/cn/api/openapi.php/Market_Center.getHQNodeData"
-    params = {"page": 1, "num": limit, "sort": "changepercent", "asc": 0, "node": "hs_a"}
-    with _session() as s:
-        r = s.get(url, params=params, timeout=DEFAULT_TIMEOUT)
-        r.raise_for_status()
-        return r.json().get("result", {}).get("data", [])
+    params = {"page": 1, "num": limit, "sort": "changepercent", "asc": asc, "node": "hs_a"}
+    payload = _get_json(url, params, label=label)
+    return payload.get("result", {}).get("data", [])
+
+
+def fetch_all_gainers(limit: int = 500) -> list[dict[str, Any]]:
+    """抓取新浪涨幅排行；网络抖动时自动重试。"""
+    return _fetch_rank(limit, 0, "gainers")
 
 
 def fetch_all_losers(limit: int = 500) -> list[dict[str, Any]]:
-    url = "https://quotes.sina.cn/cn/api/openapi.php/Market_Center.getHQNodeData"
-    params = {"page": 1, "num": limit, "sort": "changepercent", "asc": 1, "node": "hs_a"}
-    with _session() as s:
-        r = s.get(url, params=params, timeout=DEFAULT_TIMEOUT)
-        r.raise_for_status()
-        return r.json().get("result", {}).get("data", [])
+    """抓取新浪跌幅排行；网络抖动时自动重试。"""
+    return _fetch_rank(limit, 1, "losers")
 
 
 def fetch_kline(code: str, count: int = 240) -> list[dict[str, Any]]:
@@ -78,10 +106,7 @@ def fetch_kline(code: str, count: int = 240) -> list[dict[str, Any]]:
     symbol = f"{market}{code}"
     url = "https://quotes.sina.cn/cn/api/jsonp_v2.php/var%20_%3D/cn/klga/{symbol}/daily"
     params = {"datalen": count}
-    with _session() as s:
-        r = s.get(url, params=params, timeout=DEFAULT_TIMEOUT)
-        r.raise_for_status()
-        text = r.text
+    text = _get_text(url, params, label=f"kline:{code}")
     # 兼容 var _=([...]); 形式
     m = re.search(r"\((\[.*\])\)", text, re.S)
     if not m:
@@ -102,7 +127,6 @@ def fetch_klines_parallel(codes: list[str], count: int = 120, workers: int = 12)
                 out[code] = fut.result()
             except Exception:
                 out[code] = []
-            time.sleep(0.01)
     return out
 
 
