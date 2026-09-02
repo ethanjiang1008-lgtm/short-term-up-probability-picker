@@ -13,9 +13,9 @@ HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124 Safari/537.36",
     "Referer": "https://finance.sina.com.cn/",
 }
-DEFAULT_TIMEOUT = (10, 25)
-RETRIES = 4
-BACKOFF_SECONDS = (1, 2, 4, 8)
+DEFAULT_TIMEOUT = (5, 10)
+RETRIES = 2
+BACKOFF_SECONDS = (0.5, 1.5)
 RANK_PAGE_SIZE = 100
 MAX_RANK_PAGES = 60
 
@@ -127,7 +127,7 @@ def _fetch_all_ranked(sort: str, asc: int, max_pages: int = MAX_RANK_PAGES) -> l
                 new_count += 1
         if new_count == 0 or len(batch) < RANK_PAGE_SIZE:
             break
-        time.sleep(0.15)
+        time.sleep(0.1)
     return rows
 
 
@@ -144,8 +144,8 @@ def fetch_all_losers() -> list[dict[str, Any]]:
     return _fetch_all_ranked("changepercent", 1)
 
 
-def fetch_kline(code: str, count: int = 240) -> list[dict[str, Any]]:
-    """获取日 K 线。"""
+def fetch_kline(code: str, count: int = 80) -> list[dict[str, Any]]:
+    """获取足够计算 MA60 的日 K 线。"""
     market = "sh" if code.startswith("6") else "sz"
     symbol = f"{market}{code}"
     url = "https://quotes.sina.cn/cn/api/jsonp_v2.php/CN_MarketDataService.getKLineData"
@@ -172,7 +172,7 @@ def fetch_kline(code: str, count: int = 240) -> list[dict[str, Any]]:
     return out
 
 
-def fetch_klines_parallel(codes: list[str], count: int = 120, workers: int = 12) -> tuple[dict[str, list[dict[str, Any]]], dict[str, int]]:
+def fetch_klines_parallel(codes: list[str], count: int = 80, workers: int = 24) -> tuple[dict[str, list[dict[str, Any]]], dict[str, int]]:
     """批量获取日 K 线，同时返回成功/失败计数。"""
     out: dict[str, list[dict[str, Any]]] = {}
     success = 0
