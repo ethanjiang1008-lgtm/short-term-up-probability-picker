@@ -1,0 +1,30 @@
+universe:
+  exclude_st: true
+  exclude_kcb: true
+  exclude_cyb: true
+  exchanges_prefixes: ["600", "601", "603", "605", "000", "001", "002", "003"]
+  float_mcap_billion_min: 2.0
+  float_mcap_billion_max: 300.0
+
+weights:
+  base_strength: 0.25
+  close_strength: 0.25
+  sector_strength: 0.20
+  event_strength: 0.20
+  market_environment: 0.10
+
+thresholds:
+  candidate_score: 60
+  strong_score: 75
+  avoid_score: 50
+  min_turnover_rate_pct: 2.0
+  min_relative_volume: 1.1
+
+labels:
+  up_threshold: 0.0
+  strong_up_threshold: 0.03
+
+execution:
+  decision_time: "15:00"
+  auction_confirm: true
+  max_candidates: 20
