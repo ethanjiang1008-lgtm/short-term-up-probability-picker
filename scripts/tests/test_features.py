@@ -24,10 +24,31 @@ def _bars(n=70):
     return rows
 
 
-def test_feature_score_range():
-    f = make_features("600000", "TEST", _bars(), sector_change_pct=2.0, sector_up_ratio=0.8, sector_limit_up_count=4, market_breadth=0.65, market_limit_up_count=50, event_score=80)
+def test_feature_score_range_and_technical_evidence():
+    f = make_features(
+        "600000",
+        "TEST",
+        _bars(),
+        sector_change_pct=2.0,
+        sector_up_ratio=0.8,
+        sector_limit_up_count=4,
+        market_breadth=0.65,
+        market_limit_up_count=50,
+        event_score=80,
+    )
     assert 0 <= f.score <= 100
     assert 0 <= f.close_strength <= 100
+    assert f.evidence["ma5"] > 0
+    assert f.evidence["ma10"] > 0
+    assert f.evidence["ma20"] > 0
+    assert f.evidence["ma60"] > 0
+    assert f.evidence["close_above_ma5"] is True
+    assert f.evidence["close_above_ma20"] is True
+    assert f.evidence["ma5_rising"] is True
+    assert f.evidence["ma20_rising"] is True
+    assert f.evidence["ma_bull_alignment"] is True
+    assert f.evidence["relative_volume_5d_vs_20d"] > 0
+    assert f.evidence["consecutive_up_days"] > 0
 
 
 def test_labels():
@@ -49,10 +70,14 @@ def test_universe_filters():
     assert not _eligible({**base, "code": "600005", "name": "高换手", "turnover_rate": 10.0})
 
 
-def test_five_ma_rising_and_volume_ratio():
-    bars = _bars(10)
-    assert _is_rising_5ma(bars)
-    assert _derived_volume_ratio(bars) < 5
+def test_ma5_feature_is_not_a_hard_filter_and_volume_ratio():
+    rising = _bars(10)
+    assert _is_rising_5ma(rising)
+    assert _derived_volume_ratio(rising) < 5
 
-    flat = [dict(bars[-1], close=10.0) for _ in range(6)]
+    flat = [dict(rising[-1], close=10.0) for _ in range(6)]
     assert not _is_rising_5ma(flat)
+
+    # scanner 的 _eligible 与 MA5 无关；即使没有 MA5 上升条件，基础股票仍可进入候选池。
+    base = {"price": 20, "circ_mcap": 10_000_000, "turnover_rate": 5.0, "code": "600006", "name": "无趋势测试"}
+    assert _eligible(base)
