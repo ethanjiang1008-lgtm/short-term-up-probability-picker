@@ -181,11 +181,12 @@ def _parse_kline_items(data: Any, *, list_style: bool = False) -> list[dict[str,
 
 
 def fetch_kline(code: str, count: int = 80) -> list[dict[str, Any]]:
-    """获取日 K 线，优先沿用旧系统已验证的新浪实现。"""
+    """获取日 K 线，使用旧系统已经实际验证过的新浪 JSON 接口。"""
     market = "sh" if code.startswith("6") else "sz"
     symbol = f"{market}{code}"
+    # 关键：这里与旧系统保持一致，使用 json_v2.php，而不是 jsonp_v2.php。
     url = (
-        "https://quotes.sina.cn/cn/api/jsonp_v2.php/CN_MarketDataService.getKLineData?"
+        "https://quotes.sina.cn/cn/api/json_v2.php/CN_MarketDataService.getKLineData?"
         f"symbol={symbol}&scale=240&ma=no&datalen={count}"
     )
     return _parse_kline_items(json.loads(_fetch_url(url, timeout=15, label=f"kline:{code}")))
