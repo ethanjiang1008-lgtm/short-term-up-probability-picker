@@ -17,9 +17,8 @@ MAX_VOLUME_RATIO = 5.0
 MAX_TURNOVER_RATE_PCT = 10.0
 MIN_EXPECTED_RAW_ROWS = 3000
 MIN_KLINE_SUCCESS_RATIO = 0.70
-FAST_KLINE_COUNT = 10
 FULL_KLINE_COUNT = 120
-KLINE_WORKERS = 24
+KLINE_WORKERS = 10
 
 
 def _num(v: object, default: float = 0.0) -> float:
@@ -39,16 +38,6 @@ def _price(row: dict) -> float:
 
 def _float_mcap_billion(row: dict) -> float:
     return _num(row.get("circ_mcap", row.get("nmc", 0.0))) / 100000.0
-
-
-def _is_rising_5ma(bars: list[dict]) -> bool:
-    """5日均线向上：最新日 MA5 高于前一交易日 MA5。"""
-    closes = [_num(b.get("close")) for b in bars]
-    if len(closes) < 6 or any(c <= 0 for c in closes[-6:]):
-        return False
-    ma5_prev = sum(closes[-6:-1]) / 5.0
-    ma5_now = sum(closes[-5:]) / 5.0
-    return ma5_now > ma5_prev
 
 
 def _derived_volume_ratio(bars: list[dict]) -> float:
@@ -108,53 +97,53 @@ def scan_with_diagnostics(max_candidates: int = 20) -> tuple[list[dict], dict]:
     base_universe = [r for r in universe_raw if _eligible(r)]
     stats = _market_stats(universe_raw)
 
-    # 第二阶段：仅对基础过滤后的股票拉最近10根K线，快速判断5MA方向和近似量比。
+    # 不再把5日均线向上作为硬过滤条件。
+    # 基础池直接拉120根K线；同一份K线同时计算量比代理和模型特征，避免重复请求。
     base_codes = [str(r.get("code")) for r in base_universe if r.get("code")]
-    fast_klines, fast_diag = fetch_klines_parallel(base_codes, count=FAST_KLINE_COUNT, workers=KLINE_WORKERS)
-    rising_universe = []
+    klines, kline_diag = fetch_klines_parallel(base_codes, count=FULL_KLINE_COUNT, workers=KLINE_WORKERS)
+    kline_success_ratio = (
+        kline_diag["success"] / kline_diag["requested"] if kline_diag["requested"] else 0.0
+    )
+
+    volume_universe = []
     for r in base_universe:
         code = str(r.get("code", ""))
-        bars = fast_klines.get(code, [])
-        if not _is_rising_5ma(bars):
-            continue
+        bars = klines.get(code, [])
         volume_ratio = _derived_volume_ratio(bars)
         if volume_ratio >= MAX_VOLUME_RATIO:
             continue
         row = dict(r)
         row["derived_volume_ratio"] = round(volume_ratio, 4)
-        rising_universe.append(row)
-
-    # 第三阶段：只有通过5MA/量比的股票才拉完整120根K线做模型特征。
-    final_codes = [str(r.get("code")) for r in rising_universe if r.get("code")]
-    klines, full_diag = fetch_klines_parallel(final_codes, count=FULL_KLINE_COUNT, workers=KLINE_WORKERS)
-    full_success_ratio = (full_diag["success"] / full_diag["requested"]) if full_diag["requested"] else 0.0
-    fast_success_ratio = (fast_diag["success"] / fast_diag["requested"]) if fast_diag["requested"] else 0.0
+        volume_universe.append(row)
 
     diagnostics = {
         "date": str(date.today()),
         "raw_market_rows": len(universe_raw),
-        "main_board_rows": sum(is_main_board(str(r.get("code", "")), str(r.get("name", ""))) for r in universe_raw),
+        "main_board_rows": sum(
+            is_main_board(str(r.get("code", "")), str(r.get("name", "")))
+            for r in universe_raw
+        ),
         "eligible_price_mcap_turnover_rows": len(base_universe),
-        "rising_5ma_rows": len(rising_universe),
-        "final_universe_rows": len(rising_universe),
-        "fast_kline_requested": fast_diag["requested"],
-        "fast_kline_success": fast_diag["success"],
-        "fast_kline_failed": fast_diag["failed"],
-        "fast_kline_success_ratio": round(fast_success_ratio, 4),
-        "full_kline_requested": full_diag["requested"],
-        "full_kline_success": full_diag["success"],
-        "full_kline_failed": full_diag["failed"],
-        "full_kline_success_ratio": round(full_success_ratio, 4),
+        "rising_5ma_rows": None,
+        "final_universe_rows": len(volume_universe),
+        "fast_kline_requested": 0,
+        "fast_kline_success": 0,
+        "fast_kline_failed": 0,
+        "fast_kline_success_ratio": None,
+        "full_kline_requested": kline_diag["requested"],
+        "full_kline_success": kline_diag["success"],
+        "full_kline_failed": kline_diag["failed"],
+        "full_kline_success_ratio": round(kline_success_ratio, 4),
         "filters": {
             "price_max": PRICE_MAX,
             "float_mcap_billion_min": FLOAT_MCAP_MIN_BILLION,
             "float_mcap_billion_max": FLOAT_MCAP_MAX_BILLION,
             "turnover_rate_pct_lt": MAX_TURNOVER_RATE_PCT,
             "volume_ratio_lt": MAX_VOLUME_RATIO,
-            "five_day_ma_rising": True,
+            "five_day_ma_rising": False,
         },
         "volume_ratio_definition": "latest volume / average volume of previous 5 trading days",
-        "kline_strategy": "fast 10 bars for hard filters, full 120 bars only after filters pass",
+        "kline_strategy": "one 120-bar request per price/mcap/turnover eligible stock; no 5MA hard filter",
         "min_expected_raw_rows": MIN_EXPECTED_RAW_ROWS,
         "min_kline_success_ratio": MIN_KLINE_SUCCESS_RATIO,
         "market": stats,
@@ -165,17 +154,13 @@ def scan_with_diagnostics(max_candidates: int = 20) -> tuple[list[dict], dict]:
     if len(universe_raw) < MIN_EXPECTED_RAW_ROWS:
         diagnostics["status"] = "DATA_INCOMPLETE"
         diagnostics["blocking_reason"] = f"raw_market_rows={len(universe_raw)} < {MIN_EXPECTED_RAW_ROWS}"
-    elif fast_codes := base_codes:
-        if fast_success_ratio < MIN_KLINE_SUCCESS_RATIO:
-            diagnostics["status"] = "DATA_INCOMPLETE"
-            diagnostics["blocking_reason"] = f"fast_kline_success_ratio={fast_success_ratio:.2%} < {MIN_KLINE_SUCCESS_RATIO:.0%}"
-        elif final_codes and full_success_ratio < MIN_KLINE_SUCCESS_RATIO:
-            diagnostics["status"] = "DATA_INCOMPLETE"
-            diagnostics["blocking_reason"] = f"full_kline_success_ratio={full_success_ratio:.2%} < {MIN_KLINE_SUCCESS_RATIO:.0%}"
+    elif base_codes and kline_success_ratio < MIN_KLINE_SUCCESS_RATIO:
+        diagnostics["status"] = "DATA_INCOMPLETE"
+        diagnostics["blocking_reason"] = f"kline_success_ratio={kline_success_ratio:.2%} < {MIN_KLINE_SUCCESS_RATIO:.0%}"
 
     rows = []
     if diagnostics["status"] != "DATA_INCOMPLETE":
-        for r in rising_universe:
+        for r in volume_universe:
             code = str(r.get("code", ""))
             bars = klines.get(code)
             if not bars:
@@ -200,7 +185,7 @@ def scan_with_diagnostics(max_candidates: int = 20) -> tuple[list[dict], dict]:
                 "today_change_pct": round(_change_pct(r), 4),
                 "turnover_rate_pct": round(_num(r.get("turnover_rate", 0.0)), 4),
                 "volume_ratio": r.get("derived_volume_ratio"),
-                "ma5_rising": True,
+                "ma5_rising": None,
                 "score": round(f.score, 2),
                 "grade": _grade(f.score),
                 "decision": "WATCH" if 65 <= f.score < 75 else ("CANDIDATE" if f.score >= 75 else "NO_TRADE"),
@@ -208,14 +193,14 @@ def scan_with_diagnostics(max_candidates: int = 20) -> tuple[list[dict], dict]:
                 "market": stats,
                 "universe": {
                     "raw_rows": len(universe_raw),
-                    "eligible_rows_before_5ma_volume_filter": len(base_universe),
-                    "eligible_rows": len(rising_universe),
+                    "eligible_rows_before_volume_filter": len(base_universe),
+                    "eligible_rows": len(volume_universe),
                     "price_max": PRICE_MAX,
                     "float_mcap_billion_min": FLOAT_MCAP_MIN_BILLION,
                     "float_mcap_billion_max": FLOAT_MCAP_MAX_BILLION,
                     "turnover_rate_pct_lt": MAX_TURNOVER_RATE_PCT,
                     "volume_ratio_lt": MAX_VOLUME_RATIO,
-                    "five_day_ma_rising": True,
+                    "five_day_ma_rising": False,
                 },
                 "data_quality": diagnostics,
                 "components": {
@@ -255,4 +240,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-# CI trigger: rerun the finalized full-market trend scan.
