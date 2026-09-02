@@ -20,12 +20,16 @@ jobs:
         run: pip install -r requirements.txt
       - name: Run tests
         run: pytest scripts/tests -q
-      - name: Build and save daily snapshot
+      - name: Build daily snapshot
         run: python scripts/daily_pipeline.py
-      - name: Commit history
+      - name: Label previous snapshots
+        run: python scripts/label_history.py
+      - name: Build threshold report
+        run: python scripts/report.py
+      - name: Commit data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -f data/daily_candidates.json data/history/*.json
-          git diff --cached --quiet || git commit -m "data: daily candidate snapshot"
+          git add -f data/
+          git diff --cached --quiet || git commit -m "data: daily candidate history"
           git push
