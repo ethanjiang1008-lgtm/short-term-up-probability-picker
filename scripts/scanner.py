@@ -40,6 +40,11 @@ def _float_mcap_billion(row: dict) -> float:
     return _num(row.get("circ_mcap", row.get("nmc", 0.0))) / 100000.0
 
 
+def _is_st_name(name: str) -> bool:
+    normalized = "".join(str(name or "").strip().upper().split()).replace("*", "")
+    return normalized.startswith("ST")
+
+
 def _derived_volume_ratio(bars: list[dict]) -> float:
     """透明近似量比：最新成交量 / 前5个交易日平均成交量。"""
     volumes = [_num(b.get("volume")) for b in bars]
@@ -52,10 +57,7 @@ def _derived_volume_ratio(bars: list[dict]) -> float:
 
 
 def _is_rising_5ma(bars: list[dict]) -> bool:
-    """兼容旧测试/调用：判断最新 MA5 是否高于前一交易日 MA5。
-
-    注意：该条件仅作为技术特征，不再作为硬过滤条件。
-    """
+    """兼容旧测试/调用：判断最新 MA5 是否高于前一交易日 MA5。"""
     closes = [_num(b.get("close")) for b in bars]
     if len(closes) < 6:
         return False
@@ -67,6 +69,8 @@ def _is_rising_5ma(bars: list[dict]) -> bool:
 def _eligible(row: dict) -> bool:
     code = str(row.get("code", ""))
     name = str(row.get("name", ""))
+    if _is_st_name(name) or "退" in name:
+        return False
     if not is_main_board(code, name):
         return False
     price = _price(row)
@@ -104,14 +108,31 @@ def _grade(score: float) -> str:
     return "C"
 
 
-def scan_with_diagnostics(max_candidates: int = 20) -> tuple[list[dict], dict]:
-    # 第一阶段：全市场排名快照，只做廉价硬过滤。
+def _observation_label(score: float, is_limit_up: bool, technical: dict) -> tuple[str, bool, str]:
+    """将模型分数与尾盘交易状态拆成全池状态和重点观察状态。
+
+    当前涨停股保留在全量池，但默认不进入重点观察，避免把“已经涨停”误当成
+    “次日仍值得在尾盘追入”。这不是对未来收益的否定，只是交易层的风险分层。
+    """
+    if is_limit_up:
+        return "涨停观察", False, "当日已涨停；保留观察，但不列入重点追踪"
+    confirmations = [
+        bool(technical.get("ma5_rising", False)),
+        bool(technical.get("close_above_ma20", False)),
+        bool(technical.get("ma_bull_alignment", False)),
+    ]
+    if score >= 75 and sum(confirmations) >= 2:
+        return "重点观察", True, "高分 + 趋势技术证据至少2项确认"
+    if score >= 68:
+        return "次重点", False, "模型达到B档，但技术确认或综合强度不足"
+    return "普通候选", False, "保留在全量候选池，不建议优先跟踪"
+
+
+def scan_with_diagnostics(max_candidates: int | None = None) -> tuple[list[dict], dict]:
     universe_raw = fetch_all_stocks()
     base_universe = [r for r in universe_raw if _eligible(r)]
     stats = _market_stats(universe_raw)
 
-    # 不把5日均线向上作为硬过滤条件。
-    # 基础池直接拉120根K线；同一份K线同时计算量比代理和模型特征，避免重复请求。
     base_codes = [str(r.get("code")) for r in base_universe if r.get("code")]
     klines, kline_diag = fetch_klines_parallel(base_codes, count=FULL_KLINE_COUNT, workers=KLINE_WORKERS)
     kline_success_ratio = (
@@ -139,6 +160,10 @@ def scan_with_diagnostics(max_candidates: int = 20) -> tuple[list[dict], dict]:
         "eligible_price_mcap_turnover_rows": len(base_universe),
         "rising_5ma_rows": None,
         "final_universe_rows": len(volume_universe),
+        "full_pool_rows": len(volume_universe),
+        "focus_rows": 0,
+        "limit_up_rows": 0,
+        "st_rows": 0,
         "fast_kline_requested": 0,
         "fast_kline_success": 0,
         "fast_kline_failed": 0,
@@ -154,6 +179,7 @@ def scan_with_diagnostics(max_candidates: int = 20) -> tuple[list[dict], dict]:
             "turnover_rate_pct_lt": MAX_TURNOVER_RATE_PCT,
             "volume_ratio_lt": MAX_VOLUME_RATIO,
             "five_day_ma_rising": False,
+            "exclude_st": True,
         },
         "technical_features": {
             "ma5": True,
@@ -171,6 +197,12 @@ def scan_with_diagnostics(max_candidates: int = 20) -> tuple[list[dict], dict]:
         "volume_ratio_definition": "latest volume / average volume of previous 5 trading days",
         "kline_strategy": "one 120-bar request per price/mcap/turnover eligible stock; no 5MA hard filter",
         "kline_source": "Sina daily K-line, urllib + SSL fallback + retry, reused from the validated legacy data path",
+        "candidate_policy": {
+            "full_pool": "保存全部通过硬过滤与量比代理过滤且K线可用的股票",
+            "focus": "score>=75 + 至少2项技术确认，且当日非涨停、非ST",
+            "limit_up": "保留在全量池，标记为涨停观察，不进入重点观察",
+            "score_is_probability": False,
+        },
         "min_expected_raw_rows": MIN_EXPECTED_RAW_ROWS,
         "min_kline_success_ratio": MIN_KLINE_SUCCESS_RATIO,
         "market": stats,
@@ -205,6 +237,22 @@ def scan_with_diagnostics(max_candidates: int = 20) -> tuple[list[dict], dict]:
                 event_score=50.0,
             )
             evidence = f.evidence
+            technical = {
+                "ma5": round(_num(evidence.get("ma5")), 4),
+                "ma10": round(_num(evidence.get("ma10")), 4),
+                "ma20": round(_num(evidence.get("ma20")), 4),
+                "ma60": round(_num(evidence.get("ma60")), 4),
+                "close_above_ma5": bool(evidence.get("close_above_ma5", False)),
+                "close_above_ma20": bool(evidence.get("close_above_ma20", False)),
+                "ma5_rising": bool(evidence.get("ma5_rising", False)),
+                "ma20_rising": bool(evidence.get("ma20_rising", False)),
+                "ma_bull_alignment": bool(evidence.get("ma_bull_alignment", False)),
+                "relative_volume_5d_vs_20d": round(_num(evidence.get("relative_volume_5d_vs_20d")), 4),
+                "consecutive_up_days": int(_num(evidence.get("consecutive_up_days"))),
+            }
+            score = round(f.score, 2)
+            is_limit_up = _change_pct(r) >= 9.8
+            observation, is_focus, focus_reason = _observation_label(score, is_limit_up, technical)
             rows.append({
                 "date": str(date.today()),
                 "code": f.code,
@@ -213,10 +261,13 @@ def scan_with_diagnostics(max_candidates: int = 20) -> tuple[list[dict], dict]:
                 "today_change_pct": round(_change_pct(r), 4),
                 "turnover_rate_pct": round(_num(r.get("turnover_rate", 0.0)), 4),
                 "volume_ratio": r.get("derived_volume_ratio"),
-                "ma5_rising": bool(evidence.get("ma5_rising", False)),
-                "score": round(f.score, 2),
-                "grade": _grade(f.score),
-                "decision": "WATCH" if 65 <= f.score < 75 else ("CANDIDATE" if f.score >= 75 else "NO_TRADE"),
+                "score": score,
+                "grade": _grade(score),
+                "decision": "FOCUS" if is_focus else ("LIMIT_UP_OBSERVE" if is_limit_up else ("WATCH" if score >= 68 else "NO_TRADE")),
+                "observation": observation,
+                "is_focus": is_focus,
+                "is_limit_up": is_limit_up,
+                "focus_reason": focus_reason,
                 "probability": None,
                 "market": stats,
                 "universe": {
@@ -229,6 +280,7 @@ def scan_with_diagnostics(max_candidates: int = 20) -> tuple[list[dict], dict]:
                     "turnover_rate_pct_lt": MAX_TURNOVER_RATE_PCT,
                     "volume_ratio_lt": MAX_VOLUME_RATIO,
                     "five_day_ma_rising": False,
+                    "exclude_st": True,
                 },
                 "data_quality": diagnostics,
                 "components": {
@@ -238,26 +290,21 @@ def scan_with_diagnostics(max_candidates: int = 20) -> tuple[list[dict], dict]:
                     "event_strength": round(f.event_strength, 2),
                     "market_environment": round(f.market_environment, 2),
                 },
-                "technical": {
-                    "ma5": round(_num(evidence.get("ma5")), 4),
-                    "ma10": round(_num(evidence.get("ma10")), 4),
-                    "ma20": round(_num(evidence.get("ma20")), 4),
-                    "ma60": round(_num(evidence.get("ma60")), 4),
-                    "close_above_ma5": bool(evidence.get("close_above_ma5", False)),
-                    "close_above_ma20": bool(evidence.get("close_above_ma20", False)),
-                    "ma5_rising": bool(evidence.get("ma5_rising", False)),
-                    "ma20_rising": bool(evidence.get("ma20_rising", False)),
-                    "ma_bull_alignment": bool(evidence.get("ma_bull_alignment", False)),
-                    "relative_volume_5d_vs_20d": round(_num(evidence.get("relative_volume_5d_vs_20d")), 4),
-                    "consecutive_up_days": int(_num(evidence.get("consecutive_up_days"))),
-                },
+                "technical": technical,
                 "evidence": evidence,
             })
 
-    return sorted(rows, key=lambda x: x["score"], reverse=True)[:max_candidates], diagnostics
+        diagnostics["focus_rows"] = sum(1 for x in rows if x["is_focus"])
+        diagnostics["limit_up_rows"] = sum(1 for x in rows if x["is_limit_up"])
+        diagnostics["st_rows"] = sum(1 for x in rows if _is_st_name(x["name"]))
+        rows.sort(key=lambda x: (not x["is_focus"], -x["score"], x["is_limit_up"], x["code"]))
+
+    if max_candidates is not None:
+        rows = rows[:max_candidates]
+    return rows, diagnostics
 
 
-def scan(max_candidates: int = 20) -> list[dict]:
+def scan(max_candidates: int | None = None) -> list[dict]:
     rows, _ = scan_with_diagnostics(max_candidates)
     return rows
 
@@ -266,7 +313,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", default="data/daily_candidates.json")
     parser.add_argument("--diagnostics-output", default="data/scan_diagnostics.json")
-    parser.add_argument("--max-candidates", type=int, default=20)
+    parser.add_argument("--max-candidates", type=int, default=None)
     args = parser.parse_args()
     rows, diagnostics = scan_with_diagnostics(args.max_candidates)
     out = Path(args.output)
