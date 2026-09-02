@@ -9,7 +9,6 @@ from pathlib import Path
 from features import make_features
 from market_data_sina import fetch_all_stocks, fetch_klines_parallel, is_main_board
 
-
 PRICE_MAX = 50.0
 FLOAT_MCAP_MIN_BILLION = 2.0
 FLOAT_MCAP_MAX_BILLION = 300.0
@@ -19,6 +18,7 @@ MIN_EXPECTED_RAW_ROWS = 3000
 MIN_KLINE_SUCCESS_RATIO = 0.70
 FULL_KLINE_COUNT = 120
 KLINE_WORKERS = 10
+FOCUS_SCORE_THRESHOLD = 68.0
 
 
 def _num(v: object, default: float = 0.0) -> float:
@@ -109,11 +109,7 @@ def _grade(score: float) -> str:
 
 
 def _observation_label(score: float, is_limit_up: bool, technical: dict) -> tuple[str, bool, str]:
-    """将模型分数与尾盘交易状态拆成全池状态和重点观察状态。
-
-    当前涨停股保留在全量池，但默认不进入重点观察，避免把“已经涨停”误当成
-    “次日仍值得在尾盘追入”。这不是对未来收益的否定，只是交易层的风险分层。
-    """
+    """将模型分数与尾盘交易状态拆成全池状态和重点观察状态。"""
     if is_limit_up:
         return "涨停观察", False, "当日已涨停；保留观察，但不列入重点追踪"
     confirmations = [
@@ -121,10 +117,11 @@ def _observation_label(score: float, is_limit_up: bool, technical: dict) -> tupl
         bool(technical.get("close_above_ma20", False)),
         bool(technical.get("ma_bull_alignment", False)),
     ]
-    if score >= 75 and sum(confirmations) >= 2:
-        return "重点观察", True, "高分 + 趋势技术证据至少2项确认"
+    confirmation_count = sum(confirmations)
+    if score >= FOCUS_SCORE_THRESHOLD and confirmation_count >= 2:
+        return "重点观察", True, f"Score≥{FOCUS_SCORE_THRESHOLD:.0f} + 3项趋势确认至少2项"
     if score >= 68:
-        return "次重点", False, "模型达到B档，但技术确认或综合强度不足"
+        return "次重点", False, "模型达到B档，但技术确认不足以进入重点观察"
     return "普通候选", False, "保留在全量候选池，不建议优先跟踪"
 
 
@@ -164,6 +161,9 @@ def scan_with_diagnostics(max_candidates: int | None = None) -> tuple[list[dict]
         "focus_rows": 0,
         "limit_up_rows": 0,
         "st_rows": 0,
+        "score_ge_68_rows": 0,
+        "score_ge_75_rows": 0,
+        "technical_confirm_2plus_rows": 0,
         "fast_kline_requested": 0,
         "fast_kline_success": 0,
         "fast_kline_failed": 0,
@@ -199,9 +199,10 @@ def scan_with_diagnostics(max_candidates: int | None = None) -> tuple[list[dict]
         "kline_source": "Sina daily K-line, urllib + SSL fallback + retry, reused from the validated legacy data path",
         "candidate_policy": {
             "full_pool": "保存全部通过硬过滤与量比代理过滤且K线可用的股票",
-            "focus": "score>=75 + 至少2项技术确认，且当日非涨停、非ST",
+            "focus": f"score>={FOCUS_SCORE_THRESHOLD:.0f} + 3项趋势确认至少2项，且当日非涨停、非ST",
             "limit_up": "保留在全量池，标记为涨停观察，不进入重点观察",
             "score_is_probability": False,
+            "focus_note": "重点观察是交易层优先级，不代表真实概率；弱市时避免因过高绝对门槛导致空集",
         },
         "min_expected_raw_rows": MIN_EXPECTED_RAW_ROWS,
         "min_kline_success_ratio": MIN_KLINE_SUCCESS_RATIO,
@@ -253,6 +254,14 @@ def scan_with_diagnostics(max_candidates: int | None = None) -> tuple[list[dict]
             score = round(f.score, 2)
             is_limit_up = _change_pct(r) >= 9.8
             observation, is_focus, focus_reason = _observation_label(score, is_limit_up, technical)
+            confirmation_count = sum([
+                technical["ma5_rising"],
+                technical["close_above_ma20"],
+                technical["ma_bull_alignment"],
+            ])
+            diagnostics["score_ge_68_rows"] += int(score >= 68)
+            diagnostics["score_ge_75_rows"] += int(score >= 75)
+            diagnostics["technical_confirm_2plus_rows"] += int(confirmation_count >= 2)
             rows.append({
                 "date": str(date.today()),
                 "code": f.code,
@@ -297,7 +306,7 @@ def scan_with_diagnostics(max_candidates: int | None = None) -> tuple[list[dict]
         diagnostics["focus_rows"] = sum(1 for x in rows if x["is_focus"])
         diagnostics["limit_up_rows"] = sum(1 for x in rows if x["is_limit_up"])
         diagnostics["st_rows"] = sum(1 for x in rows if _is_st_name(x["name"]))
-        rows.sort(key=lambda x: (not x["is_focus"], -x["score"], x["is_limit_up"], x["code"]))
+        rows.sort(key=lambda x: (not x["is_focus"], x["is_limit_up"], -x["score"], x["code"]))
 
     if max_candidates is not None:
         rows = rows[:max_candidates]
