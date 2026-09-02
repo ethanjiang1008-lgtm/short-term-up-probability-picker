@@ -12,6 +12,12 @@ on:
       - 'data/backtest_report.json'
       - 'data/scan_diagnostics.json'
       - '.github/workflows/pages.yml'
+  workflow_run:
+    workflows:
+      - A股-尾盘趋势选股
+      - A股-隔夜事件复核
+    types:
+      - completed
 
 permissions:
   contents: read
@@ -24,6 +30,9 @@ concurrency:
 
 jobs:
   publish:
+    if: >-
+      github.event_name != 'workflow_run' ||
+      github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
