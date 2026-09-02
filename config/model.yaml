@@ -25,6 +25,6 @@ labels:
   strong_up_threshold: 0.03
 
 execution:
-  decision_time: "15:25"
+  decision_time: "14:30"
   auction_confirm: true
   max_candidates: 20
