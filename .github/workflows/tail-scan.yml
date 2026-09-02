@@ -2,6 +2,10 @@ name: Tail Scan
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/tail-scan.yml'
   schedule:
     # 14:30 Beijing = 06:30 UTC.
     # This is intentionally before the close so high-confidence names can be acted on in the late session.
