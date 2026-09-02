@@ -31,7 +31,7 @@
     "limit_down_count": 10,
     "ranked_market_rows": 5553
   },
-  "status": "OK",
-  "blocking_reason": null,
-  "captured_at_utc": "2026-09-02T10:29:54.453719+00:00"
+  "status": "DATA_INCOMPLETE",
+  "blocking_reason": "fast_kline_success_ratio=0.00% < 70%",
+  "captured_at_utc": "2026-09-02T10:46:20.182701+00:00"
 }
