@@ -1,0 +1,21 @@
+{
+  "date": "2026-09-02",
+  "raw_market_rows": 5553,
+  "main_board_rows": 3122,
+  "eligible_rows": 2894,
+  "kline_requested": 2894,
+  "kline_success": 0,
+  "kline_failed": 2894,
+  "kline_success_ratio": 0.0,
+  "min_expected_raw_rows": 3000,
+  "min_kline_success_ratio": 0.7,
+  "market": {
+    "breadth": 0.23779888634130364,
+    "limit_up_count": 51,
+    "limit_down_count": 10,
+    "ranked_market_rows": 5553
+  },
+  "status": "DATA_INCOMPLETE",
+  "blocking_reason": "kline_success_ratio=0.00% < 70%",
+  "captured_at_utc": "2026-09-02T09:50:09.202888+00:00"
+}
