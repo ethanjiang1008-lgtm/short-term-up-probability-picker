@@ -20,9 +20,17 @@ def _num(v: object, default: float = 0.0) -> float:
         return default
 
 
+def _change_pct(row: dict) -> float:
+    """兼容新浪字段 changepercent / change_pct。"""
+    return _num(row.get("change_pct", row.get("changepercent", 0.0)))
+
+
 def scan(max_candidates: int = 20) -> list[dict]:
-    gainers = [r for r in fetch_all_gainers() if is_main_board(str(r.get("code", "")), str(r.get("name", "")))]
-    gainers = sorted(gainers, key=lambda x: _num(x.get("changepercent")), reverse=True)
+    gainers = [
+        r for r in fetch_all_gainers()
+        if is_main_board(str(r.get("code", "")), str(r.get("name", "")))
+    ]
+    gainers = sorted(gainers, key=_change_pct, reverse=True)
     codes = [str(r.get("code")) for r in gainers[:150] if r.get("code")]
     klines = fetch_klines_parallel(codes, count=120)
 
@@ -32,14 +40,18 @@ def scan(max_candidates: int = 20) -> list[dict]:
         if code not in klines or not klines[code]:
             continue
         # 第一版先留出事件、板块与市场环境接口；实际 provider 接入后由事件雷达填充。
-        f = make_features(code, str(r.get("name", "")), klines[code],
-                          sector_change_pct=0.0,
-                          sector_up_ratio=0.5,
-                          sector_limit_up_count=0,
-                          market_breadth=0.5,
-                          market_limit_up_count=0,
-                          market_limit_down_count=0,
-                          event_score=0.0)
+        f = make_features(
+            code,
+            str(r.get("name", "")),
+            klines[code],
+            sector_change_pct=0.0,
+            sector_up_ratio=0.5,
+            sector_limit_up_count=0,
+            market_breadth=0.5,
+            market_limit_up_count=0,
+            market_limit_down_count=0,
+            event_score=0.0,
+        )
         if f.score < 60:
             continue
         rows.append({
@@ -57,6 +69,7 @@ def scan(max_candidates: int = 20) -> list[dict]:
                 "market_environment": round(f.market_environment, 2),
             },
             "evidence": f.evidence,
+            "today_change_pct": round(_change_pct(r), 4),
         })
     return sorted(rows, key=lambda x: x["score"], reverse=True)[:max_candidates]
 
