@@ -41,7 +41,7 @@ def label_history(root: str = "data/history") -> int:
             continue
 
         codes = [str(r["code"]) for r in pending]
-        bars_map = fetch_klines_parallel(codes, count=10, workers=8)
+        bars_map, _stats = fetch_klines_parallel(codes, count=10, workers=8)
         changed = False
         for row in pending:
             code = str(row["code"])
