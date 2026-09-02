@@ -26,7 +26,17 @@ def main() -> None:
     )
     if rows:
         save_snapshot(rows)
-    print(f"scan_status={diagnostics['status']} raw={diagnostics['raw_market_rows']} eligible={diagnostics['eligible_rows']} kline={diagnostics['kline_success']}/{diagnostics['kline_requested']}")
+
+    print(
+        "scan_status="
+        f"{diagnostics['status']} "
+        f"raw={diagnostics['raw_market_rows']} "
+        f"eligible={diagnostics['final_universe_rows']} "
+        f"fast_kline={diagnostics['fast_kline_success']}/{diagnostics['fast_kline_requested']} "
+        f"full_kline={diagnostics['full_kline_success']}/{diagnostics['full_kline_requested']}"
+    )
+    if diagnostics.get("blocking_reason"):
+        print(f"blocking_reason={diagnostics['blocking_reason']}")
     print(f"saved {len(rows)} candidates")
 
 
