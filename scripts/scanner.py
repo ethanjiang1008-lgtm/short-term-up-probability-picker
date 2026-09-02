@@ -10,9 +10,11 @@ from features import make_features
 from market_data_sina import fetch_all_stocks, fetch_klines_parallel, is_main_board
 
 
-PRICE_MAX = 100.0
+PRICE_MAX = 50.0
 FLOAT_MCAP_MIN_BILLION = 2.0
 FLOAT_MCAP_MAX_BILLION = 300.0
+MAX_VOLUME_RATIO = 5.0
+MAX_TURNOVER_RATE_PCT = 10.0
 MIN_EXPECTED_RAW_ROWS = 3000
 MIN_KLINE_SUCCESS_RATIO = 0.70
 
@@ -33,8 +35,28 @@ def _price(row: dict) -> float:
 
 
 def _float_mcap_billion(row: dict) -> float:
-    # Sina mktcap/nmc is in 万元; 1 billion yuan = 100,000 万元.
     return _num(row.get("circ_mcap", row.get("nmc", 0.0))) / 100000.0
+
+
+def _is_rising_5ma(bars: list[dict]) -> bool:
+    """5日均线向上：最新完整日的 MA5 高于前一交易日 MA5。"""
+    closes = [_num(b.get("close")) for b in bars]
+    if len(closes) < 6 or any(c <= 0 for c in closes[-6:]):
+        return False
+    ma5_prev = sum(closes[-6:-1]) / 5.0
+    ma5_now = sum(closes[-5:]) / 5.0
+    return ma5_now > ma5_prev
+
+
+def _derived_volume_ratio(bars: list[dict]) -> float:
+    """用今日成交量 / 前5个交易日平均成交量近似量比；不把排名接口不存在的字段冒充真实量比。"""
+    volumes = [_num(b.get("volume")) for b in bars]
+    if len(volumes) < 6:
+        return float("inf")
+    avg_prev5 = sum(volumes[-6:-1]) / 5.0
+    if avg_prev5 <= 0:
+        return float("inf")
+    return volumes[-1] / avg_prev5
 
 
 def _eligible(row: dict) -> bool:
@@ -47,6 +69,9 @@ def _eligible(row: dict) -> bool:
         return False
     mcap = _float_mcap_billion(row)
     if mcap < FLOAT_MCAP_MIN_BILLION or mcap > FLOAT_MCAP_MAX_BILLION:
+        return False
+    turnover = _num(row.get("turnover_rate", row.get("turnoverratio", 0.0)))
+    if turnover <= 0 or turnover >= MAX_TURNOVER_RATE_PCT:
         return False
     return True
 
@@ -75,24 +100,53 @@ def _grade(score: float) -> str:
 
 
 def scan_with_diagnostics(max_candidates: int = 20) -> tuple[list[dict], dict]:
-    # 一个全量 hs_a 快照既承担股票宇宙，又承担市场环境统计；避免重复翻页抓取。
     universe_raw = fetch_all_stocks()
-    universe = [r for r in universe_raw if _eligible(r)]
+    base_universe = [r for r in universe_raw if _eligible(r)]
     stats = _market_stats(universe_raw)
 
-    codes = [str(r.get("code")) for r in universe if r.get("code")]
-    klines, kline_diag = fetch_klines_parallel(codes, count=120)
+    # 先用排名快照完成廉价硬过滤；只有通过价格/市值/换手率的股票才请求历史K线。
+    codes = [str(r.get("code")) for r in base_universe if r.get("code")]
+    klines, kline_diag = fetch_klines_parallel(codes, count=120, workers=24)
     success_ratio = (kline_diag["success"] / kline_diag["requested"]) if kline_diag["requested"] else 0.0
+
+    rising_universe = []
+    for r in base_universe:
+        code = str(r.get("code", ""))
+        bars = klines.get(code, [])
+        if _is_rising_5ma(bars):
+            rising_universe.append(r)
+
+    final_universe = []
+    for r in rising_universe:
+        code = str(r.get("code", ""))
+        bars = klines.get(code, [])
+        volume_ratio = _derived_volume_ratio(bars)
+        # 当前排名接口没有直接提供实时“量比”，因此这里采用透明的历史成交量近似值作为硬过滤。
+        if volume_ratio < MAX_VOLUME_RATIO:
+            row = dict(r)
+            row["derived_volume_ratio"] = round(volume_ratio, 4)
+            final_universe.append(row)
 
     diagnostics = {
         "date": str(date.today()),
         "raw_market_rows": len(universe_raw),
         "main_board_rows": sum(is_main_board(str(r.get("code", "")), str(r.get("name", ""))) for r in universe_raw),
-        "eligible_rows": len(universe),
+        "eligible_price_mcap_turnover_rows": len(base_universe),
+        "rising_5ma_rows": len(rising_universe),
+        "final_universe_rows": len(final_universe),
         "kline_requested": kline_diag["requested"],
         "kline_success": kline_diag["success"],
         "kline_failed": kline_diag["failed"],
         "kline_success_ratio": round(success_ratio, 4),
+        "filters": {
+            "price_max": PRICE_MAX,
+            "float_mcap_billion_min": FLOAT_MCAP_MIN_BILLION,
+            "float_mcap_billion_max": FLOAT_MCAP_MAX_BILLION,
+            "turnover_rate_lt_pct": MAX_TURNOVER_RATE_PCT,
+            "volume_ratio_lt": MAX_VOLUME_RATIO,
+            "five_day_ma_rising": True,
+        },
+        "volume_ratio_definition": "today volume / average volume of previous 5 trading days",
         "min_expected_raw_rows": MIN_EXPECTED_RAW_ROWS,
         "min_kline_success_ratio": MIN_KLINE_SUCCESS_RATIO,
         "market": stats,
@@ -109,7 +163,7 @@ def scan_with_diagnostics(max_candidates: int = 20) -> tuple[list[dict], dict]:
 
     rows = []
     if diagnostics["status"] != "DATA_INCOMPLETE":
-        for r in universe:
+        for r in final_universe:
             code = str(r.get("code", ""))
             bars = klines.get(code)
             if not bars:
@@ -132,6 +186,9 @@ def scan_with_diagnostics(max_candidates: int = 20) -> tuple[list[dict], dict]:
                 "name": f.name,
                 "today_close": _price(r),
                 "today_change_pct": round(_change_pct(r), 4),
+                "turnover_rate_pct": round(_num(r.get("turnover_rate", 0.0)), 4),
+                "volume_ratio": r.get("derived_volume_ratio"),
+                "ma5_rising": True,
                 "score": round(f.score, 2),
                 "grade": _grade(f.score),
                 "decision": "WATCH" if 65 <= f.score < 75 else ("CANDIDATE" if f.score >= 75 else "NO_TRADE"),
@@ -139,10 +196,14 @@ def scan_with_diagnostics(max_candidates: int = 20) -> tuple[list[dict], dict]:
                 "market": stats,
                 "universe": {
                     "raw_rows": len(universe_raw),
-                    "eligible_rows": len(universe),
+                    "eligible_rows_before_5ma_volume_filter": len(base_universe),
+                    "eligible_rows": len(final_universe),
                     "price_max": PRICE_MAX,
                     "float_mcap_billion_min": FLOAT_MCAP_MIN_BILLION,
                     "float_mcap_billion_max": FLOAT_MCAP_MAX_BILLION,
+                    "turnover_rate_pct_lt": MAX_TURNOVER_RATE_PCT,
+                    "volume_ratio_lt": MAX_VOLUME_RATIO,
+                    "five_day_ma_rising": True,
                 },
                 "data_quality": diagnostics,
                 "components": {
