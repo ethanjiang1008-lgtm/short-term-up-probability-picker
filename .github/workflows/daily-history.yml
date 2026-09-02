@@ -1,0 +1,31 @@
+name: Daily Candidate History
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "25 7 * * 1-5"
+
+permissions:
+  contents: write
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run tests
+        run: pytest scripts/tests -q
+      - name: Build and save daily snapshot
+        run: python scripts/daily_pipeline.py
+      - name: Commit history
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f data/daily_candidates.json data/history/*.json
+          git diff --cached --quiet || git commit -m "data: daily candidate snapshot"
+          git push
