@@ -51,6 +51,19 @@ def _derived_volume_ratio(bars: list[dict]) -> float:
     return volumes[-1] / avg_prev5
 
 
+def _is_rising_5ma(bars: list[dict]) -> bool:
+    """兼容旧测试/调用：判断最新 MA5 是否高于前一交易日 MA5。
+
+    注意：该条件仅作为技术特征，不再作为硬过滤条件。
+    """
+    closes = [_num(b.get("close")) for b in bars]
+    if len(closes) < 6:
+        return False
+    current = sum(closes[-5:]) / 5.0
+    previous = sum(closes[-6:-1]) / 5.0
+    return current > previous
+
+
 def _eligible(row: dict) -> bool:
     code = str(row.get("code", ""))
     name = str(row.get("name", ""))
@@ -97,7 +110,7 @@ def scan_with_diagnostics(max_candidates: int = 20) -> tuple[list[dict], dict]:
     base_universe = [r for r in universe_raw if _eligible(r)]
     stats = _market_stats(universe_raw)
 
-    # 不再把5日均线向上作为硬过滤条件。
+    # 不把5日均线向上作为硬过滤条件。
     # 基础池直接拉120根K线；同一份K线同时计算量比代理和模型特征，避免重复请求。
     base_codes = [str(r.get("code")) for r in base_universe if r.get("code")]
     klines, kline_diag = fetch_klines_parallel(base_codes, count=FULL_KLINE_COUNT, workers=KLINE_WORKERS)
@@ -142,8 +155,22 @@ def scan_with_diagnostics(max_candidates: int = 20) -> tuple[list[dict], dict]:
             "volume_ratio_lt": MAX_VOLUME_RATIO,
             "five_day_ma_rising": False,
         },
+        "technical_features": {
+            "ma5": True,
+            "ma10": True,
+            "ma20": True,
+            "ma60": True,
+            "close_above_ma5": True,
+            "close_above_ma20": True,
+            "ma5_rising": True,
+            "ma20_rising": True,
+            "ma_bull_alignment": "MA5 > MA10 > MA20 > MA60",
+            "relative_volume_5d_vs_20d": True,
+            "consecutive_up_days": True,
+        },
         "volume_ratio_definition": "latest volume / average volume of previous 5 trading days",
         "kline_strategy": "one 120-bar request per price/mcap/turnover eligible stock; no 5MA hard filter",
+        "kline_source": "Sina daily K-line, urllib + SSL fallback + retry, reused from the validated legacy data path",
         "min_expected_raw_rows": MIN_EXPECTED_RAW_ROWS,
         "min_kline_success_ratio": MIN_KLINE_SUCCESS_RATIO,
         "market": stats,
@@ -177,6 +204,7 @@ def scan_with_diagnostics(max_candidates: int = 20) -> tuple[list[dict], dict]:
                 market_limit_down_count=int(stats["limit_down_count"]),
                 event_score=50.0,
             )
+            evidence = f.evidence
             rows.append({
                 "date": str(date.today()),
                 "code": f.code,
@@ -185,7 +213,7 @@ def scan_with_diagnostics(max_candidates: int = 20) -> tuple[list[dict], dict]:
                 "today_change_pct": round(_change_pct(r), 4),
                 "turnover_rate_pct": round(_num(r.get("turnover_rate", 0.0)), 4),
                 "volume_ratio": r.get("derived_volume_ratio"),
-                "ma5_rising": None,
+                "ma5_rising": bool(evidence.get("ma5_rising", False)),
                 "score": round(f.score, 2),
                 "grade": _grade(f.score),
                 "decision": "WATCH" if 65 <= f.score < 75 else ("CANDIDATE" if f.score >= 75 else "NO_TRADE"),
@@ -210,7 +238,20 @@ def scan_with_diagnostics(max_candidates: int = 20) -> tuple[list[dict], dict]:
                     "event_strength": round(f.event_strength, 2),
                     "market_environment": round(f.market_environment, 2),
                 },
-                "evidence": f.evidence,
+                "technical": {
+                    "ma5": round(_num(evidence.get("ma5")), 4),
+                    "ma10": round(_num(evidence.get("ma10")), 4),
+                    "ma20": round(_num(evidence.get("ma20")), 4),
+                    "ma60": round(_num(evidence.get("ma60")), 4),
+                    "close_above_ma5": bool(evidence.get("close_above_ma5", False)),
+                    "close_above_ma20": bool(evidence.get("close_above_ma20", False)),
+                    "ma5_rising": bool(evidence.get("ma5_rising", False)),
+                    "ma20_rising": bool(evidence.get("ma20_rising", False)),
+                    "ma_bull_alignment": bool(evidence.get("ma_bull_alignment", False)),
+                    "relative_volume_5d_vs_20d": round(_num(evidence.get("relative_volume_5d_vs_20d")), 4),
+                    "consecutive_up_days": int(_num(evidence.get("consecutive_up_days"))),
+                },
+                "evidence": evidence,
             })
 
     return sorted(rows, key=lambda x: x["score"], reverse=True)[:max_candidates], diagnostics
