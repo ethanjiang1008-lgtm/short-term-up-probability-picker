@@ -2,9 +2,6 @@ name: Daily Tail Scanner
 
 on:
   workflow_dispatch:
-  schedule:
-    # GitHub Actions uses UTC. 07:20 UTC ~= 15:20 Beijing time.
-    - cron: "20 7 * * 1-5"
 
 jobs:
   scan:
@@ -17,7 +14,7 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
       - name: Run tests
-        run: python -m pytest scripts/tests -q
+        run: pytest scripts/tests -q
       - name: Run scanner
         run: python scripts/scanner.py --output data/daily_candidates.json
       - name: Upload candidate snapshot
