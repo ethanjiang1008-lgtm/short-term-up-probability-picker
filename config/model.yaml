@@ -3,6 +3,7 @@ universe:
   exclude_kcb: true
   exclude_cyb: true
   exchanges_prefixes: ["600", "601", "603", "605", "000", "001", "002", "003"]
+  current_price_max: 100.0
   float_mcap_billion_min: 2.0
   float_mcap_billion_max: 300.0
 
