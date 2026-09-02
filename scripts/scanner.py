@@ -17,6 +17,9 @@ MAX_VOLUME_RATIO = 5.0
 MAX_TURNOVER_RATE_PCT = 10.0
 MIN_EXPECTED_RAW_ROWS = 3000
 MIN_KLINE_SUCCESS_RATIO = 0.70
+FAST_KLINE_COUNT = 10
+FULL_KLINE_COUNT = 120
+KLINE_WORKERS = 24
 
 
 def _num(v: object, default: float = 0.0) -> float:
@@ -39,7 +42,7 @@ def _float_mcap_billion(row: dict) -> float:
 
 
 def _is_rising_5ma(bars: list[dict]) -> bool:
-    """5日均线向上：最新完整日的 MA5 高于前一交易日 MA5。"""
+    """5日均线向上：最新日 MA5 高于前一交易日 MA5。"""
     closes = [_num(b.get("close")) for b in bars]
     if len(closes) < 6 or any(c <= 0 for c in closes[-6:]):
         return False
@@ -49,7 +52,7 @@ def _is_rising_5ma(bars: list[dict]) -> bool:
 
 
 def _derived_volume_ratio(bars: list[dict]) -> float:
-    """用今日成交量 / 前5个交易日平均成交量近似量比；不把排名接口不存在的字段冒充真实量比。"""
+    """透明近似量比：最新成交量 / 前5个交易日平均成交量。"""
     volumes = [_num(b.get("volume")) for b in bars]
     if len(volumes) < 6:
         return float("inf")
@@ -100,32 +103,32 @@ def _grade(score: float) -> str:
 
 
 def scan_with_diagnostics(max_candidates: int = 20) -> tuple[list[dict], dict]:
+    # 第一阶段：全市场排名快照，只做廉价硬过滤。
     universe_raw = fetch_all_stocks()
     base_universe = [r for r in universe_raw if _eligible(r)]
     stats = _market_stats(universe_raw)
 
-    # 先用排名快照完成廉价硬过滤；只有通过价格/市值/换手率的股票才请求历史K线。
-    codes = [str(r.get("code")) for r in base_universe if r.get("code")]
-    klines, kline_diag = fetch_klines_parallel(codes, count=120, workers=24)
-    success_ratio = (kline_diag["success"] / kline_diag["requested"]) if kline_diag["requested"] else 0.0
-
+    # 第二阶段：仅对基础过滤后的股票拉最近10根K线，快速判断5MA方向和近似量比。
+    base_codes = [str(r.get("code")) for r in base_universe if r.get("code")]
+    fast_klines, fast_diag = fetch_klines_parallel(base_codes, count=FAST_KLINE_COUNT, workers=KLINE_WORKERS)
     rising_universe = []
     for r in base_universe:
         code = str(r.get("code", ""))
-        bars = klines.get(code, [])
-        if _is_rising_5ma(bars):
-            rising_universe.append(r)
-
-    final_universe = []
-    for r in rising_universe:
-        code = str(r.get("code", ""))
-        bars = klines.get(code, [])
+        bars = fast_klines.get(code, [])
+        if not _is_rising_5ma(bars):
+            continue
         volume_ratio = _derived_volume_ratio(bars)
-        # 当前排名接口没有直接提供实时“量比”，因此这里采用透明的历史成交量近似值作为硬过滤。
-        if volume_ratio < MAX_VOLUME_RATIO:
-            row = dict(r)
-            row["derived_volume_ratio"] = round(volume_ratio, 4)
-            final_universe.append(row)
+        if volume_ratio >= MAX_VOLUME_RATIO:
+            continue
+        row = dict(r)
+        row["derived_volume_ratio"] = round(volume_ratio, 4)
+        rising_universe.append(row)
+
+    # 第三阶段：只有通过5MA/量比的股票才拉完整120根K线做模型特征。
+    final_codes = [str(r.get("code")) for r in rising_universe if r.get("code")]
+    klines, full_diag = fetch_klines_parallel(final_codes, count=FULL_KLINE_COUNT, workers=KLINE_WORKERS)
+    full_success_ratio = (full_diag["success"] / full_diag["requested"]) if full_diag["requested"] else 0.0
+    fast_success_ratio = (fast_diag["success"] / fast_diag["requested"]) if fast_diag["requested"] else 0.0
 
     diagnostics = {
         "date": str(date.today()),
@@ -133,11 +136,15 @@ def scan_with_diagnostics(max_candidates: int = 20) -> tuple[list[dict], dict]:
         "main_board_rows": sum(is_main_board(str(r.get("code", "")), str(r.get("name", ""))) for r in universe_raw),
         "eligible_price_mcap_turnover_rows": len(base_universe),
         "rising_5ma_rows": len(rising_universe),
-        "final_universe_rows": len(final_universe),
-        "kline_requested": kline_diag["requested"],
-        "kline_success": kline_diag["success"],
-        "kline_failed": kline_diag["failed"],
-        "kline_success_ratio": round(success_ratio, 4),
+        "final_universe_rows": len(rising_universe),
+        "fast_kline_requested": fast_diag["requested"],
+        "fast_kline_success": fast_diag["success"],
+        "fast_kline_failed": fast_diag["failed"],
+        "fast_kline_success_ratio": round(fast_success_ratio, 4),
+        "full_kline_requested": full_diag["requested"],
+        "full_kline_success": full_diag["success"],
+        "full_kline_failed": full_diag["failed"],
+        "full_kline_success_ratio": round(full_success_ratio, 4),
         "filters": {
             "price_max": PRICE_MAX,
             "float_mcap_billion_min": FLOAT_MCAP_MIN_BILLION,
@@ -146,7 +153,8 @@ def scan_with_diagnostics(max_candidates: int = 20) -> tuple[list[dict], dict]:
             "volume_ratio_lt": MAX_VOLUME_RATIO,
             "five_day_ma_rising": True,
         },
-        "volume_ratio_definition": "today volume / average volume of previous 5 trading days",
+        "volume_ratio_definition": "latest volume / average volume of previous 5 trading days",
+        "kline_strategy": "fast 10 bars for hard filters, full 120 bars only after filters pass",
         "min_expected_raw_rows": MIN_EXPECTED_RAW_ROWS,
         "min_kline_success_ratio": MIN_KLINE_SUCCESS_RATIO,
         "market": stats,
@@ -157,13 +165,13 @@ def scan_with_diagnostics(max_candidates: int = 20) -> tuple[list[dict], dict]:
     if len(universe_raw) < MIN_EXPECTED_RAW_ROWS:
         diagnostics["status"] = "DATA_INCOMPLETE"
         diagnostics["blocking_reason"] = f"raw_market_rows={len(universe_raw)} < {MIN_EXPECTED_RAW_ROWS}"
-    elif codes and success_ratio < MIN_KLINE_SUCCESS_RATIO:
+    elif full_codes and full_success_ratio < MIN_KLINE_SUCCESS_RATIO:
         diagnostics["status"] = "DATA_INCOMPLETE"
-        diagnostics["blocking_reason"] = f"kline_success_ratio={success_ratio:.2%} < {MIN_KLINE_SUCCESS_RATIO:.0%}"
+        diagnostics["blocking_reason"] = f"full_kline_success_ratio={full_success_ratio:.2%} < {MIN_KLINE_SUCCESS_RATIO:.0%}"
 
     rows = []
     if diagnostics["status"] != "DATA_INCOMPLETE":
-        for r in final_universe:
+        for r in rising_universe:
             code = str(r.get("code", ""))
             bars = klines.get(code)
             if not bars:
@@ -197,7 +205,7 @@ def scan_with_diagnostics(max_candidates: int = 20) -> tuple[list[dict], dict]:
                 "universe": {
                     "raw_rows": len(universe_raw),
                     "eligible_rows_before_5ma_volume_filter": len(base_universe),
-                    "eligible_rows": len(final_universe),
+                    "eligible_rows": len(rising_universe),
                     "price_max": PRICE_MAX,
                     "float_mcap_billion_min": FLOAT_MCAP_MIN_BILLION,
                     "float_mcap_billion_max": FLOAT_MCAP_MAX_BILLION,
