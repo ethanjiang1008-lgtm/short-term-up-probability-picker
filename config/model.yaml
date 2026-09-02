@@ -14,7 +14,7 @@ weights:
   market_environment: 0.10
 
 thresholds:
-  candidate_score: 60
+  candidate_score: 65
   strong_score: 75
   avoid_score: 50
   min_turnover_rate_pct: 2.0
@@ -25,6 +25,6 @@ labels:
   strong_up_threshold: 0.03
 
 execution:
-  decision_time: "15:00"
+  decision_time: "15:25"
   auction_confirm: true
   max_candidates: 20
