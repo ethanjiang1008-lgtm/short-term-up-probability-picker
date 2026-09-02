@@ -149,7 +149,7 @@ def scan_with_diagnostics(max_candidates: int = 20) -> tuple[list[dict], dict]:
             "price_max": PRICE_MAX,
             "float_mcap_billion_min": FLOAT_MCAP_MIN_BILLION,
             "float_mcap_billion_max": FLOAT_MCAP_MAX_BILLION,
-            "turnover_rate_lt_pct": MAX_TURNOVER_RATE_PCT,
+            "turnover_rate_pct_lt": MAX_TURNOVER_RATE_PCT,
             "volume_ratio_lt": MAX_VOLUME_RATIO,
             "five_day_ma_rising": True,
         },
@@ -251,3 +251,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+# CI trigger: rerun the finalized full-market trend scan.
