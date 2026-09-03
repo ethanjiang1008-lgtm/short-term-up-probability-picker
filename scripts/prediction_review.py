@@ -32,9 +32,8 @@ def beijing_today() -> str:
 
 
 def freeze_window_open() -> bool:
-    """Allow the first official daily snapshot only from 14:00 Beijing time onward."""
-    now = beijing_now()
-    return now.hour >= FREEZE_AFTER_HOUR
+    """Allow official snapshot creation and next-day validation from 14:00 Beijing time onward."""
+    return beijing_now().hour >= FREEZE_AFTER_HOUR
 
 
 def save_daily_snapshot(rows: list[dict]) -> Path | None:
@@ -160,6 +159,12 @@ def _failure_reasons(row: dict, next_day_return: float) -> list[str]:
 
 
 def validate_previous_day() -> tuple[str | None, list[dict]]:
+    # Validation is deliberately gated to the same 14:00+ Beijing window as
+    # the official daily snapshot. A morning/manual run may preview data but
+    # must not finalize the previous day's result.
+    if not freeze_window_open():
+        return None, []
+
     _bootstrap_existing_daily_candidates()
     files = sorted(Path("data/predictions").glob("*_tail.json"))
     if not files:
