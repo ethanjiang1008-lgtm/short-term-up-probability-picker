@@ -5,7 +5,7 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-from prediction_review import export_excel, save_daily_snapshot
+from prediction_review import export_excel, load_json, save_daily_snapshot
 from scanner import scan_with_diagnostics
 
 
@@ -27,8 +27,22 @@ def main() -> None:
     (data_dir / "focus_candidates.json").write_text(json.dumps(focus_rows, ensure_ascii=False, indent=2), encoding="utf-8")
 
     if rows:
-        save_daily_snapshot(rows)
-        print(f"prediction_excel={export_excel(rows, str(rows[0]['date']))}")
+        day = str(rows[0]["date"])
+        snapshot_path = Path("data/predictions") / f"{day}_tail.json"
+        if not snapshot_path.exists():
+            save_daily_snapshot(rows)
+            print(f"prediction_snapshot=frozen:{snapshot_path}")
+        else:
+            print(f"prediction_snapshot=already_frozen:{snapshot_path}")
+
+        excel_path = Path("reports") / f"{day}_tail_prediction.xlsx"
+        if not excel_path.exists():
+            frozen = load_json(snapshot_path)
+            frozen_rows = (frozen or {}).get("rows") if isinstance(frozen, dict) else None
+            export_excel(frozen_rows or rows, day)
+            print(f"prediction_excel={excel_path}")
+        else:
+            print(f"prediction_excel=already_exists:{excel_path}")
 
     print(
         "scan_status="
