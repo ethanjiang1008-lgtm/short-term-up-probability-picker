@@ -40,6 +40,7 @@ jobs:
           mkdir -p _site/tail _site/data/validation _site/reports
           cp docs/index.html _site/index.html
           cp docs/tail/index.html _site/tail/index.html
+          cp docs/reports/index.html _site/reports/index.html
           for f in daily_candidates.json scan_diagnostics.json backtest_report.json; do
             if [ -f "data/$f" ]; then cp "data/$f" "_site/data/$f"; fi
           done
@@ -48,6 +49,18 @@ jobs:
           for f in reports/*.xlsx; do
             [ -f "$f" ] && cp "$f" _site/reports/ || true
           done
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          files=[]
+          for p in sorted(Path('reports').glob('*.xlsx'), reverse=True):
+              files.append({
+                  'name': p.name,
+                  'type': '每日尾盘预测' if '_tail_prediction.xlsx' in p.name else '周度模型复盘',
+                  'url': p.name,
+              })
+          Path('_site/reports/manifest.json').write_text(json.dumps({'files':files}, ensure_ascii=False, indent=2), encoding='utf-8')
+          PY
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
