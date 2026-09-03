@@ -7,9 +7,7 @@ from pathlib import Path
 
 from history import save_snapshot
 from scanner import scan_with_diagnostics
-
-
-HISTORY_SNAPSHOT_ROWS = 100
+from prediction_review import save_daily_snapshot, export_excel
 
 
 def main() -> None:
@@ -35,10 +33,10 @@ def main() -> None:
         json.dumps(focus_rows, ensure_ascii=False, indent=2), encoding="utf-8"
     )
 
-    # 历史标签暂保留当日最有交易意义的前100条，避免每天对数千只股票重复拉取次日K线。
-    # 全量当前候选池仍完整保存在 daily_candidates.json。
+    # 冻结完整候选池，用于后续次日验证；不在验证后修改昨日预测。
     if rows:
-        save_snapshot(rows[:HISTORY_SNAPSHOT_ROWS])
+        save_daily_snapshot(rows)
+        export_excel(rows, str(rows[0]["date"]))
 
     print(
         "scan_status="
