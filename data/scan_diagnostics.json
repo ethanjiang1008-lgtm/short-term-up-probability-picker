@@ -1,20 +1,23 @@
 {
-  "date": "2026-09-02",
-  "raw_market_rows": 5553,
+  "date": "2026-09-03",
+  "raw_market_rows": 5554,
   "main_board_rows": 3122,
-  "eligible_price_mcap_turnover_rows": 2597,
+  "eligible_price_mcap_turnover_rows": 2638,
   "rising_5ma_rows": null,
-  "final_universe_rows": 2592,
-  "full_pool_rows": 2592,
-  "focus_rows": 0,
-  "limit_up_rows": 28,
+  "final_universe_rows": 2632,
+  "full_pool_rows": 2632,
+  "focus_rows": 15,
+  "limit_up_rows": 29,
   "st_rows": 0,
+  "score_ge_68_rows": 16,
+  "score_ge_75_rows": 0,
+  "technical_confirm_2plus_rows": 1470,
   "fast_kline_requested": 0,
   "fast_kline_success": 0,
   "fast_kline_failed": 0,
   "fast_kline_success_ratio": null,
-  "full_kline_requested": 2597,
-  "full_kline_success": 2597,
+  "full_kline_requested": 2638,
+  "full_kline_success": 2638,
   "full_kline_failed": 0,
   "full_kline_success_ratio": 1.0,
   "filters": {
@@ -44,19 +47,20 @@
   "kline_source": "Sina daily K-line, urllib + SSL fallback + retry, reused from the validated legacy data path",
   "candidate_policy": {
     "full_pool": "保存全部通过硬过滤与量比代理过滤且K线可用的股票",
-    "focus": "score>=75 + 至少2项技术确认，且当日非涨停、非ST",
+    "focus": "score>=68 + 3项趋势确认至少2项，且当日非涨停、非ST",
     "limit_up": "保留在全量池，标记为涨停观察，不进入重点观察",
-    "score_is_probability": false
+    "score_is_probability": false,
+    "focus_note": "重点观察是交易层优先级，不代表真实概率；弱市时避免因过高绝对门槛导致空集"
   },
   "min_expected_raw_rows": 3000,
   "min_kline_success_ratio": 0.7,
   "market": {
-    "breadth": 0.23779888634130364,
-    "limit_up_count": 51,
-    "limit_down_count": 10,
-    "ranked_market_rows": 5553
+    "breadth": 0.4590495449949444,
+    "limit_up_count": 41,
+    "limit_down_count": 11,
+    "ranked_market_rows": 5554
   },
   "status": "OK",
   "blocking_reason": null,
-  "captured_at_utc": "2026-09-02T11:48:21.077732+00:00"
+  "captured_at_utc": "2026-09-03T03:52:37.735057+00:00"
 }
