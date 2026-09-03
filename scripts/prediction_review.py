@@ -13,6 +13,7 @@ from openpyxl.styles import Alignment, Font, PatternFill
 
 
 BEIJING_TZ = ZoneInfo("Asia/Shanghai")
+FREEZE_AFTER_HOUR = 14
 
 
 def load_json(path: Path):
@@ -22,19 +23,41 @@ def load_json(path: Path):
         return None
 
 
+def beijing_now() -> datetime:
+    return datetime.now(BEIJING_TZ)
+
+
 def beijing_today() -> str:
-    return datetime.now(BEIJING_TZ).date().isoformat()
+    return beijing_now().date().isoformat()
 
 
-def save_daily_snapshot(rows: list[dict]) -> Path:
+def freeze_window_open() -> bool:
+    """Allow the first official daily snapshot only from 14:00 Beijing time onward."""
+    now = beijing_now()
+    return now.hour >= FREEZE_AFTER_HOUR
+
+
+def save_daily_snapshot(rows: list[dict]) -> Path | None:
+    if not rows:
+        return None
     day = str(rows[0]["date"])
     out = Path("data/predictions") / f"{day}_tail.json"
     out.parent.mkdir(parents=True, exist_ok=True)
-    # A prediction snapshot is frozen on first creation and must never be overwritten
-    # by another run on the same trading day.
+
+    # Before 14:00 Beijing time, this run is preview-only and cannot create
+    # the official prediction snapshot. Once the window opens, the first
+    # snapshot created for the day is permanently frozen.
+    if not freeze_window_open():
+        return None
     if out.exists():
         return out
-    payload = {"date": day, "captured_at_utc": datetime.now(timezone.utc).isoformat(), "rows": rows}
+
+    payload = {
+        "date": day,
+        "captured_at_utc": datetime.now(timezone.utc).isoformat(),
+        "captured_at_beijing": beijing_now().isoformat(),
+        "rows": rows,
+    }
     out.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     return out
 
@@ -92,11 +115,14 @@ def _bootstrap_existing_daily_candidates() -> None:
     pred_dir.mkdir(parents=True, exist_ok=True)
     if list(pred_dir.glob("*_tail.json")):
         return
+    if not freeze_window_open():
+        return
     rows = load_json(Path("data/daily_candidates.json"))
     if isinstance(rows, list) and rows:
-        save_daily_snapshot(rows)
-        export_excel(rows, str(rows[0].get("date")))
-        print(f"bootstrapped_prediction_date={rows[0].get('date')} rows={len(rows)}")
+        snap = save_daily_snapshot(rows)
+        if snap is not None:
+            export_excel(rows, str(rows[0].get("date")))
+            print(f"bootstrapped_prediction_date={rows[0].get('date')} rows={len(rows)}")
 
 
 def _failure_reasons(row: dict, next_day_return: float) -> list[str]:
@@ -139,9 +165,9 @@ def validate_previous_day() -> tuple[str | None, list[dict]]:
     if not files:
         return None, []
 
-    # Validation runs before today's new 14:30 snapshot is frozen. Only use the
+    # Validation runs before today's new 14:00+ snapshot is frozen. Only use the
     # latest snapshot strictly before Beijing's current calendar date. This prevents
-    # an evening re-run on the same day from treating today's snapshot as validated.
+    # a same-day re-run from treating today's snapshot as a next-day result.
     today = beijing_today()
     eligible_files = []
     for path in files:
@@ -169,7 +195,7 @@ def validate_previous_day() -> tuple[str | None, list[dict]]:
                 close = float(bar.get("close", bar.get("c")))
             except (TypeError, ValueError):
                 continue
-            # Never validate against today's still-forming intraday/daily bar.
+            # Only use a completed trading day between the prediction date and today.
             if d > day and d < today:
                 future.append((d, close))
         if not future or not r.get("today_close"):
