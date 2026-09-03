@@ -22,6 +22,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: tail-scan
@@ -65,3 +66,7 @@ jobs:
           git diff --cached --quiet || git commit -m "data: update tail prediction validation"
           git pull --rebase origin main
           git push
+      - name: Trigger Pages publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --repo "${{ github.repository }}" --ref main
