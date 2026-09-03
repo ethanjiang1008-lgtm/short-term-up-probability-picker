@@ -75,7 +75,23 @@ def export_excel(rows: list[dict], day: str) -> Path:
     return out
 
 
+def _bootstrap_existing_daily_candidates() -> None:
+    pred_dir = Path("data/predictions")
+    pred_dir.mkdir(parents=True, exist_ok=True)
+    if list(pred_dir.glob("*_tail.json")):
+        return
+    path = Path("data/daily_candidates.json")
+    rows = load_json(path)
+    if isinstance(rows, list) and rows:
+        save_daily_snapshot(rows)
+        day = str(rows[0].get("date"))
+        if day:
+            export_excel(rows, day)
+        print(f"bootstrapped_prediction_date={day} rows={len(rows)}")
+
+
 def validate_previous_day() -> tuple[str | None, list[dict]]:
+    _bootstrap_existing_daily_candidates()
     files = sorted(Path("data/predictions").glob("*_tail.json"))
     if not files:
         return None, []
