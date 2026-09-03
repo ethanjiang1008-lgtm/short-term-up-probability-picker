@@ -9,6 +9,9 @@ on:
       - 'data/daily_candidates.json'
       - 'data/backtest_report.json'
       - 'data/scan_diagnostics.json'
+      - 'data/validation/**'
+      - 'reports/weekly_model_review.json'
+      - 'reports/*.xlsx'
       - '.github/workflows/pages.yml'
 
 permissions:
@@ -34,11 +37,16 @@ jobs:
       - name: Prepare tail page only
         run: |
           rm -rf _site
-          mkdir -p _site/tail _site/data
+          mkdir -p _site/tail _site/data/validation _site/reports
           cp docs/index.html _site/index.html
           cp docs/tail/index.html _site/tail/index.html
           for f in daily_candidates.json scan_diagnostics.json backtest_report.json; do
             if [ -f "data/$f" ]; then cp "data/$f" "_site/data/$f"; fi
+          done
+          if [ -f data/validation/latest_validation.json ]; then cp data/validation/latest_validation.json _site/data/validation/latest_validation.json; fi
+          if [ -f reports/weekly_model_review.json ]; then cp reports/weekly_model_review.json _site/reports/weekly_model_review.json; fi
+          for f in reports/*.xlsx; do
+            [ -f "$f" ] && cp "$f" _site/reports/ || true
           done
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
