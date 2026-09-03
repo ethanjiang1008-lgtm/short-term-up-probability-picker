@@ -1,8 +1,7 @@
 import json
 from pathlib import Path
 
-from features import _observation_label
-from scanner import _eligible, _is_rising_5ma
+from scanner import _eligible, _is_rising_5ma, _observation_label
 
 
 def test_is_rising_5ma():
