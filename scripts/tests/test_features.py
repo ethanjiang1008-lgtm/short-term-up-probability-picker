@@ -6,7 +6,7 @@ from scanner import _eligible, _is_rising_5ma, _observation_label
 
 def test_is_rising_5ma():
     rising = [{"close": 8}, {"close": 9}, {"close": 10}, {"close": 11}, {"close": 12}, {"close": 14}]
-    flat = [{"close": 8}, {"close": 9}, {"close": 10}, {"close": 11}, {"close": 12}, {"close": 12}]
+    flat = [{"close": 8}, {"close": 9}, {"close": 10}, {"close": 11}, {"close": 12}, {"close": 8}]
     assert _is_rising_5ma(rising)
     assert not _is_rising_5ma(flat)
 
