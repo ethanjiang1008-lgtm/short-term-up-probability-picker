@@ -8,7 +8,7 @@ from pathlib import Path
 from labels import next_day_labels
 from market_data_sina import fetch_klines_parallel
 from openpyxl import Workbook, load_workbook
-from openpyxl.styles import Font, PatternFill, Alignment
+from openpyxl.styles import Alignment, Font, PatternFill
 
 
 def load_json(path: Path):
@@ -80,14 +80,49 @@ def _bootstrap_existing_daily_candidates() -> None:
     pred_dir.mkdir(parents=True, exist_ok=True)
     if list(pred_dir.glob("*_tail.json")):
         return
-    path = Path("data/daily_candidates.json")
-    rows = load_json(path)
+    rows = load_json(Path("data/daily_candidates.json"))
     if isinstance(rows, list) and rows:
         save_daily_snapshot(rows)
-        day = str(rows[0].get("date"))
-        if day:
-            export_excel(rows, day)
-        print(f"bootstrapped_prediction_date={day} rows={len(rows)}")
+        export_excel(rows, str(rows[0].get("date")))
+        print(f"bootstrapped_prediction_date={rows[0].get('date')} rows={len(rows)}")
+
+
+def _failure_reasons(row: dict, next_day_return: float) -> list[str]:
+    """Return transparent, pre-declared risk flags; these are not causal proof."""
+    t = row.get("technical") or {}
+    e = row.get("evidence") or {}
+    market = row.get("market") or {}
+    reasons: list[str] = []
+
+    close = float(row.get("today_close") or 0)
+    ma5 = float(t.get("ma5") or 0)
+    ma20 = float(t.get("ma20") or 0)
+    ret5 = float(e.get("ret_5d") or 0)
+    ret20 = float(e.get("ret_20d") or 0)
+    tail_accel = float(e.get("tail_acceleration") or 0)
+    relvol = float(e.get("relative_volume_5d_vs_20d") or 0)
+    volume_proxy = float(row.get("volume_ratio") or 0)
+    turnover = float(row.get("turnover_rate_pct") or 0)
+    up_days = int(t.get("consecutive_up_days") or 0)
+    breadth = float(market.get("breadth") or 0)
+    market_env = float((row.get("components") or {}).get("market_environment") or 0)
+
+    if ret5 >= 0.15 or ret20 >= 0.25 or up_days >= 4 or (close > 0 and ma5 > 0 and close / ma5 - 1 >= 0.08):
+        reasons.append("短期过热/乖离偏高")
+    if tail_accel >= 0.05:
+        reasons.append("尾盘加速过快")
+    if relvol >= 1.8 or volume_proxy >= 2.5:
+        reasons.append("放量风险")
+    if turnover >= 8.0:
+        reasons.append("高换手风险")
+    if breadth < 0.35 or market_env < 45:
+        reasons.append("市场环境偏弱")
+    if close > 0 and ma20 > 0 and close / ma20 - 1 < 0.05 and not bool(t.get("ma_bull_alignment")):
+        reasons.append("趋势确认不足")
+
+    if next_day_return < 0 and not reasons:
+        reasons.append("未命中预设风险标签")
+    return reasons
 
 
 def validate_previous_day() -> tuple[str | None, list[dict]]:
@@ -119,14 +154,15 @@ def validate_previous_day() -> tuple[str | None, list[dict]]:
             continue
         next_day, next_close = sorted(future)[0]
         labels = next_day_labels(float(r["today_close"]), next_close)
+        next_return = float(labels.get("next_day_return", 0) or 0)
+        failure = next_return <= 0
         results.append({
             "预测日期": day, "验证日期": next_day, "代码": code, "名称": r.get("name"), "Score": r.get("score"),
             "观察": r.get("observation"), "重点观察": "是" if r.get("is_focus") else "否", "预测等级": r.get("grade"),
             "昨日收盘": r.get("today_close"), "次日收盘": next_close,
-            "次日收益%": round(labels.get("next_day_return", 0) * 100, 3),
-            "次日上涨": "是" if labels.get("next_day_up") else "否",
-            "次日≥3%": "是" if labels.get("next_day_strong_up") else "否",
-            "次日涨停": "是" if labels.get("next_day_limit_up") else "否",
+            "次日收益%": round(next_return * 100, 3), "次日上涨": "是" if labels.get("next_day_up") else "否",
+            "次日≥3%": "是" if labels.get("next_day_strong_up") else "否", "次日涨停": "是" if labels.get("next_day_limit_up") else "否",
+            "结果": "失败" if failure else "成功", "失败风险标签": "；".join(_failure_reasons(r, next_return)) if failure else "",
         })
     return day, results
 
