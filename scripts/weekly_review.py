@@ -19,6 +19,8 @@ def load_json(path: Path):
 def collect_validation() -> list[dict]:
     rows: list[dict] = []
     for path in sorted(Path("data/validation").glob("*.json")):
+        if path.name == "latest_validation.json":
+            continue
         data = load_json(path)
         if isinstance(data, list):
             rows.extend(data)
@@ -45,6 +47,8 @@ def _risk_tags(row: dict) -> list[str]:
 def main() -> None:
     rows = collect_validation()
     if not rows:
+        Path("reports").mkdir(parents=True, exist_ok=True)
+        Path("reports/weekly_model_review.json").write_text(json.dumps({"samples": 0, "status": "样本不足"}, ensure_ascii=False, indent=2), encoding="utf-8")
         print("weekly_review_samples=0")
         return
 
@@ -103,20 +107,10 @@ def main() -> None:
         n = tag_total[tag]
         f = tag_failures[tag]
         avg = sum(tag_returns[tag]) / f if f else None
-        wb3.append([
-            tag,
-            n,
-            f,
-            round(f / len(failures), 4) if failures else None,
-            round(avg, 4) if avg is not None else None,
-            "预先定义的风险标签，不代表因果关系；一只股票可同时命中多个标签",
-        ])
+        wb3.append([tag, n, f, round(f / len(failures), 4) if failures else None, round(avg, 4) if avg is not None else None, "预先定义的风险标签，不代表因果关系；一只股票可同时命中多个标签"])
 
     wb4 = wb.create_sheet("失败明细")
-    failure_headers = [
-        "预测日期", "验证日期", "代码", "名称", "Score", "观察", "重点观察", "预测等级",
-        "昨日收盘", "次日收盘", "次日收益%", "失败风险标签",
-    ]
+    failure_headers = ["预测日期", "验证日期", "代码", "名称", "Score", "观察", "重点观察", "预测等级", "昨日收盘", "次日收盘", "次日收益%", "失败风险标签"]
     wb4.append(failure_headers)
     for r in failures:
         wb4.append([r.get(h) for h in failure_headers])
@@ -142,15 +136,12 @@ def main() -> None:
         "avg_return_pct": round(avg_ret, 4),
         "strong_up_count": strong,
         "failure_count": len(failures),
+        "focus_samples": sum(r.get("重点观察") == "是" for r in rows),
+        "focus_win_rate": round(sum(r.get("重点观察") == "是" and r.get("次日上涨") == "是" for r in rows) / max(1, sum(r.get("重点观察") == "是" for r in rows)), 4),
         "failure_tag_counts": dict(tag_failures),
     }
-    Path("reports/weekly_model_review.json").write_text(
-        json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8"
-    )
-    print(
-        f"weekly_review_samples={total} win_rate={summary['win_rate']} "
-        f"avg_return_pct={summary['avg_return_pct']} failures={len(failures)}"
-    )
+    Path("reports/weekly_model_review.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"weekly_review_samples={total} win_rate={summary['win_rate']} avg_return_pct={summary['avg_return_pct']} failures={len(failures)}")
 
 
 if __name__ == "__main__":
