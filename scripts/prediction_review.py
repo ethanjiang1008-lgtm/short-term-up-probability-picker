@@ -4,11 +4,15 @@ from __future__ import annotations
 import json
 from datetime import datetime, timezone
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 from labels import next_day_labels
 from market_data_sina import fetch_klines_parallel
 from openpyxl import Workbook, load_workbook
 from openpyxl.styles import Alignment, Font, PatternFill
+
+
+BEIJING_TZ = ZoneInfo("Asia/Shanghai")
 
 
 def load_json(path: Path):
@@ -18,10 +22,18 @@ def load_json(path: Path):
         return None
 
 
+def beijing_today() -> str:
+    return datetime.now(BEIJING_TZ).date().isoformat()
+
+
 def save_daily_snapshot(rows: list[dict]) -> Path:
     day = str(rows[0]["date"])
     out = Path("data/predictions") / f"{day}_tail.json"
     out.parent.mkdir(parents=True, exist_ok=True)
+    # A prediction snapshot is frozen on first creation and must never be overwritten
+    # by another run on the same trading day.
+    if out.exists():
+        return out
     payload = {"date": day, "captured_at_utc": datetime.now(timezone.utc).isoformat(), "rows": rows}
     out.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     return out
@@ -126,7 +138,21 @@ def validate_previous_day() -> tuple[str | None, list[dict]]:
     files = sorted(Path("data/predictions").glob("*_tail.json"))
     if not files:
         return None, []
-    latest = load_json(files[-1]) or {}
+
+    # Validation runs before today's new 14:30 snapshot is frozen. Only use the
+    # latest snapshot strictly before Beijing's current calendar date. This prevents
+    # an evening re-run on the same day from treating today's snapshot as validated.
+    today = beijing_today()
+    eligible_files = []
+    for path in files:
+        payload = load_json(path) or {}
+        snapshot_day = str(payload.get("date", ""))
+        if snapshot_day and snapshot_day < today:
+            eligible_files.append((path, payload))
+    if not eligible_files:
+        return None, []
+
+    _, latest = eligible_files[-1]
     day = str(latest.get("date", ""))
     rows = latest.get("rows") or []
     if not day or not rows:
@@ -143,7 +169,8 @@ def validate_previous_day() -> tuple[str | None, list[dict]]:
                 close = float(bar.get("close", bar.get("c")))
             except (TypeError, ValueError):
                 continue
-            if d > day:
+            # Never validate against today's still-forming intraday/daily bar.
+            if d > day and d < today:
                 future.append((d, close))
         if not future or not r.get("today_close"):
             continue
