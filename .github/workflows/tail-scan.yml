@@ -15,6 +15,9 @@ on:
       - 'scripts/history.py'
       - 'scripts/report.py'
       - 'scripts/daily_pipeline.py'
+      - 'scripts/label_history.py'
+      - 'scripts/validate_predictions.py'
+      - 'scripts/weekly_review.py'
       - 'scripts/tests/**'
 
 permissions:
@@ -27,7 +30,7 @@ concurrency:
 jobs:
   tail-scan:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -37,17 +40,24 @@ jobs:
         run: pip install -r requirements.txt
       - name: Run tests
         run: pytest scripts/tests -q
-      - name: Run tail scan and research update
-        run: |
-          python scripts/daily_pipeline.py
-          python scripts/label_history.py
-          python scripts/report.py
-      - name: Commit tail-only result
+      - name: Run tail scan
+        run: python scripts/daily_pipeline.py
+      - name: Validate previous trading-day predictions
+        run: python scripts/validate_predictions.py
+      - name: Update research report
+        run: python scripts/report.py
+      - name: Weekly model review
+        if: github.event_name == 'schedule' && github.event.schedule == '30 6 * * 5'
+        run: python scripts/weekly_review.py
+      - name: Commit tail-only research result
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -f data/daily_candidates.json data/focus_candidates.json data/backtest_report.json data/scan_diagnostics.json
           if [ -d data/history ]; then git add -f data/history; fi
-          git diff --cached --quiet || git commit -m "data: update tail trend selection"
+          if [ -d data/predictions ]; then git add -f data/predictions; fi
+          if [ -d data/validation ]; then git add -f data/validation; fi
+          if [ -d reports ]; then git add -f reports; fi
+          git diff --cached --quiet || git commit -m "data: update tail trend selection and validation"
           git pull --rebase origin main
           git push
