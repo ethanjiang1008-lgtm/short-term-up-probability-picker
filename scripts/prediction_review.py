@@ -88,12 +88,10 @@ def _bootstrap_existing_daily_candidates() -> None:
 
 
 def _failure_reasons(row: dict, next_day_return: float) -> list[str]:
-    """Return transparent, pre-declared risk flags; these are not causal proof."""
     t = row.get("technical") or {}
     e = row.get("evidence") or {}
     market = row.get("market") or {}
     reasons: list[str] = []
-
     close = float(row.get("today_close") or 0)
     ma5 = float(t.get("ma5") or 0)
     ma20 = float(t.get("ma20") or 0)
@@ -106,7 +104,6 @@ def _failure_reasons(row: dict, next_day_return: float) -> list[str]:
     up_days = int(t.get("consecutive_up_days") or 0)
     breadth = float(market.get("breadth") or 0)
     market_env = float((row.get("components") or {}).get("market_environment") or 0)
-
     if ret5 >= 0.15 or ret20 >= 0.25 or up_days >= 4 or (close > 0 and ma5 > 0 and close / ma5 - 1 >= 0.08):
         reasons.append("短期过热/乖离偏高")
     if tail_accel >= 0.05:
@@ -119,7 +116,6 @@ def _failure_reasons(row: dict, next_day_return: float) -> list[str]:
         reasons.append("市场环境偏弱")
     if close > 0 and ma20 > 0 and close / ma20 - 1 < 0.05 and not bool(t.get("ma_bull_alignment")):
         reasons.append("趋势确认不足")
-
     if next_day_return < 0 and not reasons:
         reasons.append("未命中预设风险标签")
     return reasons
@@ -135,7 +131,6 @@ def validate_previous_day() -> tuple[str | None, list[dict]]:
     rows = latest.get("rows") or []
     if not day or not rows:
         return None, []
-
     codes = [str(r.get("code")) for r in rows if r.get("code")]
     bars_map, _ = fetch_klines_parallel(codes, count=10, workers=10)
     results = []
@@ -171,6 +166,21 @@ def save_validation(day: str, results: list[dict]) -> Path:
     out = Path("data/validation") / f"{day}_validation.json"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(results, ensure_ascii=False, indent=2), encoding="utf-8")
+    summary = {
+        "prediction_date": day,
+        "validation_date": results[0].get("验证日期") if results else None,
+        "samples": len(results),
+        "wins": sum(r.get("次日上涨") == "是" for r in results),
+        "losses": sum(r.get("次日上涨") == "否" for r in results),
+        "win_rate": round(sum(r.get("次日上涨") == "是" for r in results) / len(results), 4) if results else None,
+        "avg_return_pct": round(sum(float(r.get("次日收益%", 0) or 0) for r in results) / len(results), 4) if results else None,
+        "strong_up_count": sum(r.get("次日≥3%") == "是" for r in results),
+        "limit_up_count": sum(r.get("次日涨停") == "是" for r in results),
+        "focus_samples": sum(r.get("重点观察") == "是" for r in results),
+        "focus_wins": sum(r.get("重点观察") == "是" and r.get("次日上涨") == "是" for r in results),
+        "focus_win_rate": round(sum(r.get("重点观察") == "是" and r.get("次日上涨") == "是" for r in results) / max(1, sum(r.get("重点观察") == "是" for r in results)), 4),
+    }
+    Path("data/validation/latest_validation.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
     return out
 
 
