@@ -5,7 +5,7 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-from prediction_review import export_excel, load_json, save_daily_snapshot
+from prediction_review import export_excel, freeze_window_open, save_daily_snapshot
 from scanner import scan_with_diagnostics
 
 
@@ -26,23 +26,14 @@ def main() -> None:
     (data_dir / "daily_candidates.json").write_text(json.dumps(rows, ensure_ascii=False, indent=2), encoding="utf-8")
     (data_dir / "focus_candidates.json").write_text(json.dumps(focus_rows, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    if rows:
-        day = str(rows[0]["date"])
-        snapshot_path = Path("data/predictions") / f"{day}_tail.json"
-        if not snapshot_path.exists():
-            save_daily_snapshot(rows)
-            print(f"prediction_snapshot=frozen:{snapshot_path}")
+    if rows and freeze_window_open():
+        snapshot = save_daily_snapshot(rows)
+        if snapshot is not None:
+            print(f"prediction_excel={export_excel(rows, str(rows[0]['date']))}")
         else:
-            print(f"prediction_snapshot=already_frozen:{snapshot_path}")
-
-        excel_path = Path("reports") / f"{day}_tail_prediction.xlsx"
-        if not excel_path.exists():
-            frozen = load_json(snapshot_path)
-            frozen_rows = (frozen or {}).get("rows") if isinstance(frozen, dict) else None
-            export_excel(frozen_rows or rows, day)
-            print(f"prediction_excel={excel_path}")
-        else:
-            print(f"prediction_excel=already_exists:{excel_path}")
+            print("prediction_snapshot=not_frozen")
+    elif rows:
+        print("prediction_snapshot=preview_only_before_14:00")
 
     print(
         "scan_status="
