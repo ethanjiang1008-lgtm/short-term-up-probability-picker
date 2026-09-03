@@ -4,14 +4,14 @@
   "main_board_rows": 3122,
   "eligible_price_mcap_turnover_rows": 2579,
   "rising_5ma_rows": null,
-  "final_universe_rows": 2575,
-  "full_pool_rows": 2575,
-  "focus_rows": 7,
-  "limit_up_rows": 21,
+  "final_universe_rows": 2577,
+  "full_pool_rows": 2577,
+  "focus_rows": 2,
+  "limit_up_rows": 22,
   "st_rows": 0,
-  "score_ge_68_rows": 8,
+  "score_ge_68_rows": 11,
   "score_ge_75_rows": 0,
-  "technical_confirm_2plus_rows": 1424,
+  "technical_confirm_2plus_rows": 1267,
   "fast_kline_requested": 0,
   "fast_kline_success": 0,
   "fast_kline_failed": 0,
@@ -62,5 +62,5 @@
   },
   "status": "OK",
   "blocking_reason": null,
-  "captured_at_utc": "2026-09-03T07:29:14.121176+00:00"
+  "captured_at_utc": "2026-09-03T07:54:19.920600+00:00"
 }
