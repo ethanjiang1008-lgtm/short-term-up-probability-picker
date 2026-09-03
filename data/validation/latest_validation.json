@@ -1,0 +1,14 @@
+{
+  "prediction_date": "2026-09-03",
+  "validation_date": null,
+  "samples": 0,
+  "wins": 0,
+  "losses": 0,
+  "win_rate": null,
+  "avg_return_pct": null,
+  "strong_up_count": 0,
+  "limit_up_count": 0,
+  "focus_samples": 0,
+  "focus_wins": 0,
+  "focus_win_rate": 0.0
+}

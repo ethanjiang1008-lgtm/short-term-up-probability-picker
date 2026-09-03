@@ -3,11 +3,11 @@
     "date": "2026-09-03",
     "code": "003039",
     "name": "顺控发展",
-    "today_close": 13.17,
-    "today_change_pct": -4.357,
-    "turnover_rate_pct": 5.4719,
+    "today_close": 13.27,
+    "today_change_pct": -3.631,
+    "turnover_rate_pct": 5.7138,
     "volume_ratio": 3.541,
-    "score": 71.31,
+    "score": 71.38,
     "grade": "B",
     "decision": "FOCUS",
     "observation": "重点观察",
@@ -16,15 +16,15 @@
     "focus_reason": "Score≥68 + 3项趋势确认至少2项",
     "probability": null,
     "market": {
-      "breadth": 0.38668606766096764,
+      "breadth": 0.3622804110043089,
       "limit_up_count": 43,
-      "limit_down_count": 21,
-      "ranked_market_rows": 5080
+      "limit_down_count": 17,
+      "ranked_market_rows": 5554
     },
     "universe": {
-      "raw_rows": 5080,
-      "eligible_rows_before_volume_filter": 2330,
-      "eligible_rows": 2326,
+      "raw_rows": 5554,
+      "eligible_rows_before_volume_filter": 2579,
+      "eligible_rows": 2575,
       "price_max": 50.0,
       "float_mcap_billion_min": 2.0,
       "float_mcap_billion_max": 300.0,
@@ -35,24 +35,24 @@
     },
     "data_quality": {
       "date": "2026-09-03",
-      "raw_market_rows": 5080,
-      "main_board_rows": 2828,
-      "eligible_price_mcap_turnover_rows": 2330,
+      "raw_market_rows": 5554,
+      "main_board_rows": 3122,
+      "eligible_price_mcap_turnover_rows": 2579,
       "rising_5ma_rows": null,
-      "final_universe_rows": 2326,
-      "full_pool_rows": 2326,
-      "focus_rows": 6,
+      "final_universe_rows": 2575,
+      "full_pool_rows": 2575,
+      "focus_rows": 7,
       "limit_up_rows": 21,
       "st_rows": 0,
-      "score_ge_68_rows": 7,
+      "score_ge_68_rows": 8,
       "score_ge_75_rows": 0,
-      "technical_confirm_2plus_rows": 1290,
+      "technical_confirm_2plus_rows": 1424,
       "fast_kline_requested": 0,
       "fast_kline_success": 0,
       "fast_kline_failed": 0,
       "fast_kline_success_ratio": null,
-      "full_kline_requested": 2330,
-      "full_kline_success": 2330,
+      "full_kline_requested": 2579,
+      "full_kline_success": 2579,
       "full_kline_failed": 0,
       "full_kline_success_ratio": 1.0,
       "filters": {
@@ -90,21 +90,21 @@
       "min_expected_raw_rows": 3000,
       "min_kline_success_ratio": 0.7,
       "market": {
-        "breadth": 0.38668606766096764,
+        "breadth": 0.3622804110043089,
         "limit_up_count": 43,
-        "limit_down_count": 21,
-        "ranked_market_rows": 5080
+        "limit_down_count": 17,
+        "ranked_market_rows": 5554
       },
       "status": "OK",
       "blocking_reason": null,
-      "captured_at_utc": "2026-09-03T06:54:12.501317+00:00"
+      "captured_at_utc": "2026-09-03T07:29:14.121176+00:00"
     },
     "components": {
       "base_strength": 95.56,
       "close_strength": 100.0,
       "sector_strength": 40.0,
       "event_strength": 50.0,
-      "market_environment": 44.21
+      "market_environment": 44.86
     },
     "technical": {
       "ma5": 12.458,
@@ -138,17 +138,17 @@
       "consecutive_up_days": 2,
       "latest_turnover": 0.0
     },
-    "captured_at_utc": "2026-09-03T06:54:12.501317+00:00"
+    "captured_at_utc": "2026-09-03T07:29:14.121176+00:00"
   },
   {
     "date": "2026-09-03",
     "code": "600828",
     "name": "茂业商业",
-    "today_close": 5.06,
-    "today_change_pct": 5.198,
-    "turnover_rate_pct": 8.12,
+    "today_close": 5.1,
+    "today_change_pct": 6.029,
+    "turnover_rate_pct": 8.3577,
     "volume_ratio": 3.1958,
-    "score": 70.83,
+    "score": 70.89,
     "grade": "B",
     "decision": "FOCUS",
     "observation": "重点观察",
@@ -157,15 +157,15 @@
     "focus_reason": "Score≥68 + 3项趋势确认至少2项",
     "probability": null,
     "market": {
-      "breadth": 0.38668606766096764,
+      "breadth": 0.3622804110043089,
       "limit_up_count": 43,
-      "limit_down_count": 21,
-      "ranked_market_rows": 5080
+      "limit_down_count": 17,
+      "ranked_market_rows": 5554
     },
     "universe": {
-      "raw_rows": 5080,
-      "eligible_rows_before_volume_filter": 2330,
-      "eligible_rows": 2326,
+      "raw_rows": 5554,
+      "eligible_rows_before_volume_filter": 2579,
+      "eligible_rows": 2575,
       "price_max": 50.0,
       "float_mcap_billion_min": 2.0,
       "float_mcap_billion_max": 300.0,
@@ -176,24 +176,24 @@
     },
     "data_quality": {
       "date": "2026-09-03",
-      "raw_market_rows": 5080,
-      "main_board_rows": 2828,
-      "eligible_price_mcap_turnover_rows": 2330,
+      "raw_market_rows": 5554,
+      "main_board_rows": 3122,
+      "eligible_price_mcap_turnover_rows": 2579,
       "rising_5ma_rows": null,
-      "final_universe_rows": 2326,
-      "full_pool_rows": 2326,
-      "focus_rows": 6,
+      "final_universe_rows": 2575,
+      "full_pool_rows": 2575,
+      "focus_rows": 7,
       "limit_up_rows": 21,
       "st_rows": 0,
-      "score_ge_68_rows": 7,
+      "score_ge_68_rows": 8,
       "score_ge_75_rows": 0,
-      "technical_confirm_2plus_rows": 1290,
+      "technical_confirm_2plus_rows": 1424,
       "fast_kline_requested": 0,
       "fast_kline_success": 0,
       "fast_kline_failed": 0,
       "fast_kline_success_ratio": null,
-      "full_kline_requested": 2330,
-      "full_kline_success": 2330,
+      "full_kline_requested": 2579,
+      "full_kline_success": 2579,
       "full_kline_failed": 0,
       "full_kline_success_ratio": 1.0,
       "filters": {
@@ -231,21 +231,21 @@
       "min_expected_raw_rows": 3000,
       "min_kline_success_ratio": 0.7,
       "market": {
-        "breadth": 0.38668606766096764,
+        "breadth": 0.3622804110043089,
         "limit_up_count": 43,
-        "limit_down_count": 21,
-        "ranked_market_rows": 5080
+        "limit_down_count": 17,
+        "ranked_market_rows": 5554
       },
       "status": "OK",
       "blocking_reason": null,
-      "captured_at_utc": "2026-09-03T06:54:12.501317+00:00"
+      "captured_at_utc": "2026-09-03T07:29:14.121176+00:00"
     },
     "components": {
       "base_strength": 95.53,
       "close_strength": 98.09,
       "sector_strength": 40.0,
       "event_strength": 50.0,
-      "market_environment": 44.21
+      "market_environment": 44.86
     },
     "technical": {
       "ma5": 4.252,
@@ -279,7 +279,7 @@
       "consecutive_up_days": 2,
       "latest_turnover": 0.0
     },
-    "captured_at_utc": "2026-09-03T06:54:12.501317+00:00"
+    "captured_at_utc": "2026-09-03T07:29:14.121176+00:00"
   },
   {
     "date": "2026-09-03",
@@ -287,9 +287,9 @@
     "name": "深中华A",
     "today_close": 10.58,
     "today_change_pct": -9.957,
-    "turnover_rate_pct": 0.7,
+    "turnover_rate_pct": 0.739,
     "volume_ratio": 1.0253,
-    "score": 69.82,
+    "score": 69.89,
     "grade": "B",
     "decision": "FOCUS",
     "observation": "重点观察",
@@ -298,15 +298,15 @@
     "focus_reason": "Score≥68 + 3项趋势确认至少2项",
     "probability": null,
     "market": {
-      "breadth": 0.38668606766096764,
+      "breadth": 0.3622804110043089,
       "limit_up_count": 43,
-      "limit_down_count": 21,
-      "ranked_market_rows": 5080
+      "limit_down_count": 17,
+      "ranked_market_rows": 5554
     },
     "universe": {
-      "raw_rows": 5080,
-      "eligible_rows_before_volume_filter": 2330,
-      "eligible_rows": 2326,
+      "raw_rows": 5554,
+      "eligible_rows_before_volume_filter": 2579,
+      "eligible_rows": 2575,
       "price_max": 50.0,
       "float_mcap_billion_min": 2.0,
       "float_mcap_billion_max": 300.0,
@@ -317,24 +317,24 @@
     },
     "data_quality": {
       "date": "2026-09-03",
-      "raw_market_rows": 5080,
-      "main_board_rows": 2828,
-      "eligible_price_mcap_turnover_rows": 2330,
+      "raw_market_rows": 5554,
+      "main_board_rows": 3122,
+      "eligible_price_mcap_turnover_rows": 2579,
       "rising_5ma_rows": null,
-      "final_universe_rows": 2326,
-      "full_pool_rows": 2326,
-      "focus_rows": 6,
+      "final_universe_rows": 2575,
+      "full_pool_rows": 2575,
+      "focus_rows": 7,
       "limit_up_rows": 21,
       "st_rows": 0,
-      "score_ge_68_rows": 7,
+      "score_ge_68_rows": 8,
       "score_ge_75_rows": 0,
-      "technical_confirm_2plus_rows": 1290,
+      "technical_confirm_2plus_rows": 1424,
       "fast_kline_requested": 0,
       "fast_kline_success": 0,
       "fast_kline_failed": 0,
       "fast_kline_success_ratio": null,
-      "full_kline_requested": 2330,
-      "full_kline_success": 2330,
+      "full_kline_requested": 2579,
+      "full_kline_success": 2579,
       "full_kline_failed": 0,
       "full_kline_success_ratio": 1.0,
       "filters": {
@@ -372,21 +372,21 @@
       "min_expected_raw_rows": 3000,
       "min_kline_success_ratio": 0.7,
       "market": {
-        "breadth": 0.38668606766096764,
+        "breadth": 0.3622804110043089,
         "limit_up_count": 43,
-        "limit_down_count": 21,
-        "ranked_market_rows": 5080
+        "limit_down_count": 17,
+        "ranked_market_rows": 5554
       },
       "status": "OK",
       "blocking_reason": null,
-      "captured_at_utc": "2026-09-03T06:54:12.501317+00:00"
+      "captured_at_utc": "2026-09-03T07:29:14.121176+00:00"
     },
     "components": {
       "base_strength": 100.0,
       "close_strength": 89.62,
       "sector_strength": 40.0,
       "event_strength": 50.0,
-      "market_environment": 44.21
+      "market_environment": 44.86
     },
     "technical": {
       "ma5": 11.314,
@@ -420,17 +420,17 @@
       "consecutive_up_days": 0,
       "latest_turnover": 0.0
     },
-    "captured_at_utc": "2026-09-03T06:54:12.501317+00:00"
+    "captured_at_utc": "2026-09-03T07:29:14.121176+00:00"
   },
   {
     "date": "2026-09-03",
     "code": "603216",
     "name": "梦天家居",
-    "today_close": 23.15,
-    "today_change_pct": -3.902,
-    "turnover_rate_pct": 6.2034,
+    "today_close": 23.18,
+    "today_change_pct": -3.778,
+    "turnover_rate_pct": 6.7189,
     "volume_ratio": 2.0465,
-    "score": 69.12,
+    "score": 69.19,
     "grade": "B",
     "decision": "FOCUS",
     "observation": "重点观察",
@@ -439,15 +439,15 @@
     "focus_reason": "Score≥68 + 3项趋势确认至少2项",
     "probability": null,
     "market": {
-      "breadth": 0.38668606766096764,
+      "breadth": 0.3622804110043089,
       "limit_up_count": 43,
-      "limit_down_count": 21,
-      "ranked_market_rows": 5080
+      "limit_down_count": 17,
+      "ranked_market_rows": 5554
     },
     "universe": {
-      "raw_rows": 5080,
-      "eligible_rows_before_volume_filter": 2330,
-      "eligible_rows": 2326,
+      "raw_rows": 5554,
+      "eligible_rows_before_volume_filter": 2579,
+      "eligible_rows": 2575,
       "price_max": 50.0,
       "float_mcap_billion_min": 2.0,
       "float_mcap_billion_max": 300.0,
@@ -458,24 +458,24 @@
     },
     "data_quality": {
       "date": "2026-09-03",
-      "raw_market_rows": 5080,
-      "main_board_rows": 2828,
-      "eligible_price_mcap_turnover_rows": 2330,
+      "raw_market_rows": 5554,
+      "main_board_rows": 3122,
+      "eligible_price_mcap_turnover_rows": 2579,
       "rising_5ma_rows": null,
-      "final_universe_rows": 2326,
-      "full_pool_rows": 2326,
-      "focus_rows": 6,
+      "final_universe_rows": 2575,
+      "full_pool_rows": 2575,
+      "focus_rows": 7,
       "limit_up_rows": 21,
       "st_rows": 0,
-      "score_ge_68_rows": 7,
+      "score_ge_68_rows": 8,
       "score_ge_75_rows": 0,
-      "technical_confirm_2plus_rows": 1290,
+      "technical_confirm_2plus_rows": 1424,
       "fast_kline_requested": 0,
       "fast_kline_success": 0,
       "fast_kline_failed": 0,
       "fast_kline_success_ratio": null,
-      "full_kline_requested": 2330,
-      "full_kline_success": 2330,
+      "full_kline_requested": 2579,
+      "full_kline_success": 2579,
       "full_kline_failed": 0,
       "full_kline_success_ratio": 1.0,
       "filters": {
@@ -513,21 +513,21 @@
       "min_expected_raw_rows": 3000,
       "min_kline_success_ratio": 0.7,
       "market": {
-        "breadth": 0.38668606766096764,
+        "breadth": 0.3622804110043089,
         "limit_up_count": 43,
-        "limit_down_count": 21,
-        "ranked_market_rows": 5080
+        "limit_down_count": 17,
+        "ranked_market_rows": 5554
       },
       "status": "OK",
       "blocking_reason": null,
-      "captured_at_utc": "2026-09-03T06:54:12.501317+00:00"
+      "captured_at_utc": "2026-09-03T07:29:14.121176+00:00"
     },
     "components": {
       "base_strength": 92.27,
       "close_strength": 94.54,
       "sector_strength": 40.0,
       "event_strength": 50.0,
-      "market_environment": 44.21
+      "market_environment": 44.86
     },
     "technical": {
       "ma5": 21.964,
@@ -561,17 +561,17 @@
       "consecutive_up_days": 1,
       "latest_turnover": 0.0
     },
-    "captured_at_utc": "2026-09-03T06:54:12.501317+00:00"
+    "captured_at_utc": "2026-09-03T07:29:14.121176+00:00"
   },
   {
     "date": "2026-09-03",
     "code": "002890",
     "name": "弘宇股份",
-    "today_close": 15.73,
-    "today_change_pct": -3.26,
-    "turnover_rate_pct": 2.6528,
+    "today_close": 15.96,
+    "today_change_pct": -1.845,
+    "turnover_rate_pct": 2.8223,
     "volume_ratio": 3.414,
-    "score": 69.01,
+    "score": 69.08,
     "grade": "B",
     "decision": "FOCUS",
     "observation": "重点观察",
@@ -580,15 +580,15 @@
     "focus_reason": "Score≥68 + 3项趋势确认至少2项",
     "probability": null,
     "market": {
-      "breadth": 0.38668606766096764,
+      "breadth": 0.3622804110043089,
       "limit_up_count": 43,
-      "limit_down_count": 21,
-      "ranked_market_rows": 5080
+      "limit_down_count": 17,
+      "ranked_market_rows": 5554
     },
     "universe": {
-      "raw_rows": 5080,
-      "eligible_rows_before_volume_filter": 2330,
-      "eligible_rows": 2326,
+      "raw_rows": 5554,
+      "eligible_rows_before_volume_filter": 2579,
+      "eligible_rows": 2575,
       "price_max": 50.0,
       "float_mcap_billion_min": 2.0,
       "float_mcap_billion_max": 300.0,
@@ -599,24 +599,24 @@
     },
     "data_quality": {
       "date": "2026-09-03",
-      "raw_market_rows": 5080,
-      "main_board_rows": 2828,
-      "eligible_price_mcap_turnover_rows": 2330,
+      "raw_market_rows": 5554,
+      "main_board_rows": 3122,
+      "eligible_price_mcap_turnover_rows": 2579,
       "rising_5ma_rows": null,
-      "final_universe_rows": 2326,
-      "full_pool_rows": 2326,
-      "focus_rows": 6,
+      "final_universe_rows": 2575,
+      "full_pool_rows": 2575,
+      "focus_rows": 7,
       "limit_up_rows": 21,
       "st_rows": 0,
-      "score_ge_68_rows": 7,
+      "score_ge_68_rows": 8,
       "score_ge_75_rows": 0,
-      "technical_confirm_2plus_rows": 1290,
+      "technical_confirm_2plus_rows": 1424,
       "fast_kline_requested": 0,
       "fast_kline_success": 0,
       "fast_kline_failed": 0,
       "fast_kline_success_ratio": null,
-      "full_kline_requested": 2330,
-      "full_kline_success": 2330,
+      "full_kline_requested": 2579,
+      "full_kline_success": 2579,
       "full_kline_failed": 0,
       "full_kline_success_ratio": 1.0,
       "filters": {
@@ -654,21 +654,21 @@
       "min_expected_raw_rows": 3000,
       "min_kline_success_ratio": 0.7,
       "market": {
-        "breadth": 0.38668606766096764,
+        "breadth": 0.3622804110043089,
         "limit_up_count": 43,
-        "limit_down_count": 21,
-        "ranked_market_rows": 5080
+        "limit_down_count": 17,
+        "ranked_market_rows": 5554
       },
       "status": "OK",
       "blocking_reason": null,
-      "captured_at_utc": "2026-09-03T06:54:12.501317+00:00"
+      "captured_at_utc": "2026-09-03T07:29:14.121176+00:00"
     },
     "components": {
       "base_strength": 95.12,
       "close_strength": 91.24,
       "sector_strength": 40.0,
       "event_strength": 50.0,
-      "market_environment": 44.21
+      "market_environment": 44.86
     },
     "technical": {
       "ma5": 15.222,
@@ -702,17 +702,17 @@
       "consecutive_up_days": 3,
       "latest_turnover": 0.0
     },
-    "captured_at_utc": "2026-09-03T06:54:12.501317+00:00"
+    "captured_at_utc": "2026-09-03T07:29:14.121176+00:00"
   },
   {
     "date": "2026-09-03",
     "code": "600405",
     "name": "动力源",
-    "today_close": 5.18,
-    "today_change_pct": 0.388,
-    "turnover_rate_pct": 4.4435,
+    "today_close": 5.17,
+    "today_change_pct": 0.194,
+    "turnover_rate_pct": 4.6769,
     "volume_ratio": 1.6735,
-    "score": 68.21,
+    "score": 68.28,
     "grade": "B",
     "decision": "FOCUS",
     "observation": "重点观察",
@@ -721,15 +721,15 @@
     "focus_reason": "Score≥68 + 3项趋势确认至少2项",
     "probability": null,
     "market": {
-      "breadth": 0.38668606766096764,
+      "breadth": 0.3622804110043089,
       "limit_up_count": 43,
-      "limit_down_count": 21,
-      "ranked_market_rows": 5080
+      "limit_down_count": 17,
+      "ranked_market_rows": 5554
     },
     "universe": {
-      "raw_rows": 5080,
-      "eligible_rows_before_volume_filter": 2330,
-      "eligible_rows": 2326,
+      "raw_rows": 5554,
+      "eligible_rows_before_volume_filter": 2579,
+      "eligible_rows": 2575,
       "price_max": 50.0,
       "float_mcap_billion_min": 2.0,
       "float_mcap_billion_max": 300.0,
@@ -740,24 +740,24 @@
     },
     "data_quality": {
       "date": "2026-09-03",
-      "raw_market_rows": 5080,
-      "main_board_rows": 2828,
-      "eligible_price_mcap_turnover_rows": 2330,
+      "raw_market_rows": 5554,
+      "main_board_rows": 3122,
+      "eligible_price_mcap_turnover_rows": 2579,
       "rising_5ma_rows": null,
-      "final_universe_rows": 2326,
-      "full_pool_rows": 2326,
-      "focus_rows": 6,
+      "final_universe_rows": 2575,
+      "full_pool_rows": 2575,
+      "focus_rows": 7,
       "limit_up_rows": 21,
       "st_rows": 0,
-      "score_ge_68_rows": 7,
+      "score_ge_68_rows": 8,
       "score_ge_75_rows": 0,
-      "technical_confirm_2plus_rows": 1290,
+      "technical_confirm_2plus_rows": 1424,
       "fast_kline_requested": 0,
       "fast_kline_success": 0,
       "fast_kline_failed": 0,
       "fast_kline_success_ratio": null,
-      "full_kline_requested": 2330,
-      "full_kline_success": 2330,
+      "full_kline_requested": 2579,
+      "full_kline_success": 2579,
       "full_kline_failed": 0,
       "full_kline_success_ratio": 1.0,
       "filters": {
@@ -795,21 +795,21 @@
       "min_expected_raw_rows": 3000,
       "min_kline_success_ratio": 0.7,
       "market": {
-        "breadth": 0.38668606766096764,
+        "breadth": 0.3622804110043089,
         "limit_up_count": 43,
-        "limit_down_count": 21,
-        "ranked_market_rows": 5080
+        "limit_down_count": 17,
+        "ranked_market_rows": 5554
       },
       "status": "OK",
       "blocking_reason": null,
-      "captured_at_utc": "2026-09-03T06:54:12.501317+00:00"
+      "captured_at_utc": "2026-09-03T07:29:14.121176+00:00"
     },
     "components": {
       "base_strength": 93.37,
       "close_strength": 89.79,
       "sector_strength": 40.0,
       "event_strength": 50.0,
-      "market_environment": 44.21
+      "market_environment": 44.86
     },
     "technical": {
       "ma5": 4.85,
@@ -843,6 +843,147 @@
       "consecutive_up_days": 4,
       "latest_turnover": 0.0
     },
-    "captured_at_utc": "2026-09-03T06:54:12.501317+00:00"
+    "captured_at_utc": "2026-09-03T07:29:14.121176+00:00"
+  },
+  {
+    "date": "2026-09-03",
+    "code": "002017",
+    "name": "东信和平",
+    "today_close": 16.47,
+    "today_change_pct": -2.66,
+    "turnover_rate_pct": 8.7721,
+    "volume_ratio": 1.3019,
+    "score": 68.0,
+    "grade": "B",
+    "decision": "FOCUS",
+    "observation": "重点观察",
+    "is_focus": true,
+    "is_limit_up": false,
+    "focus_reason": "Score≥68 + 3项趋势确认至少2项",
+    "probability": null,
+    "market": {
+      "breadth": 0.3622804110043089,
+      "limit_up_count": 43,
+      "limit_down_count": 17,
+      "ranked_market_rows": 5554
+    },
+    "universe": {
+      "raw_rows": 5554,
+      "eligible_rows_before_volume_filter": 2579,
+      "eligible_rows": 2575,
+      "price_max": 50.0,
+      "float_mcap_billion_min": 2.0,
+      "float_mcap_billion_max": 300.0,
+      "turnover_rate_pct_lt": 10.0,
+      "volume_ratio_lt": 5.0,
+      "five_day_ma_rising": false,
+      "exclude_st": true
+    },
+    "data_quality": {
+      "date": "2026-09-03",
+      "raw_market_rows": 5554,
+      "main_board_rows": 3122,
+      "eligible_price_mcap_turnover_rows": 2579,
+      "rising_5ma_rows": null,
+      "final_universe_rows": 2575,
+      "full_pool_rows": 2575,
+      "focus_rows": 7,
+      "limit_up_rows": 21,
+      "st_rows": 0,
+      "score_ge_68_rows": 8,
+      "score_ge_75_rows": 0,
+      "technical_confirm_2plus_rows": 1424,
+      "fast_kline_requested": 0,
+      "fast_kline_success": 0,
+      "fast_kline_failed": 0,
+      "fast_kline_success_ratio": null,
+      "full_kline_requested": 2579,
+      "full_kline_success": 2579,
+      "full_kline_failed": 0,
+      "full_kline_success_ratio": 1.0,
+      "filters": {
+        "price_max": 50.0,
+        "float_mcap_billion_min": 2.0,
+        "float_mcap_billion_max": 300.0,
+        "turnover_rate_pct_lt": 10.0,
+        "volume_ratio_lt": 5.0,
+        "five_day_ma_rising": false,
+        "exclude_st": true
+      },
+      "technical_features": {
+        "ma5": true,
+        "ma10": true,
+        "ma20": true,
+        "ma60": true,
+        "close_above_ma5": true,
+        "close_above_ma20": true,
+        "ma5_rising": true,
+        "ma20_rising": true,
+        "ma_bull_alignment": "MA5 > MA10 > MA20 > MA60",
+        "relative_volume_5d_vs_20d": true,
+        "consecutive_up_days": true
+      },
+      "volume_ratio_definition": "latest volume / average volume of previous 5 trading days",
+      "kline_strategy": "one 120-bar request per price/mcap/turnover eligible stock; no 5MA hard filter",
+      "kline_source": "Sina daily K-line, urllib + SSL fallback + retry, reused from the validated legacy data path",
+      "candidate_policy": {
+        "full_pool": "保存全部通过硬过滤与量比代理过滤且K线可用的股票",
+        "focus": "score>=68 + 3项趋势确认至少2项，且当日非涨停、非ST",
+        "limit_up": "保留在全量池，标记为涨停观察，不进入重点观察",
+        "score_is_probability": false,
+        "focus_note": "重点观察是交易层优先级，不代表真实概率；弱市时避免因过高绝对门槛导致空集"
+      },
+      "min_expected_raw_rows": 3000,
+      "min_kline_success_ratio": 0.7,
+      "market": {
+        "breadth": 0.3622804110043089,
+        "limit_up_count": 43,
+        "limit_down_count": 17,
+        "ranked_market_rows": 5554
+      },
+      "status": "OK",
+      "blocking_reason": null,
+      "captured_at_utc": "2026-09-03T07:29:14.121176+00:00"
+    },
+    "components": {
+      "base_strength": 97.63,
+      "close_strength": 84.43,
+      "sector_strength": 40.0,
+      "event_strength": 50.0,
+      "market_environment": 44.86
+    },
+    "technical": {
+      "ma5": 16.446,
+      "ma10": 15.938,
+      "ma20": 14.8485,
+      "ma60": 14.383,
+      "close_above_ma5": true,
+      "close_above_ma20": true,
+      "ma5_rising": true,
+      "ma20_rising": true,
+      "ma_bull_alignment": true,
+      "relative_volume_5d_vs_20d": 1.6837,
+      "consecutive_up_days": 2
+    },
+    "evidence": {
+      "ret_5d": 0.02669902912621369,
+      "ret_20d": 0.20857142857142863,
+      "relative_volume_5d_vs_20d": 1.683711575997986,
+      "latest_volume_ratio_proxy": 1.3018901005241816,
+      "close_location": 0.737588652482271,
+      "tail_acceleration": 0.066162570888469,
+      "ma5": 16.446,
+      "ma10": 15.938,
+      "ma20": 14.8485,
+      "ma60": 14.383000000000001,
+      "close_above_ma5": true,
+      "close_above_ma20": true,
+      "ma5_rising": true,
+      "ma20_rising": true,
+      "ma_bull_alignment": true,
+      "consecutive_up_days": 2,
+      "latest_turnover": 0.0
+    },
+    "captured_at_utc": "2026-09-03T07:29:14.121176+00:00"
   }
 ]
