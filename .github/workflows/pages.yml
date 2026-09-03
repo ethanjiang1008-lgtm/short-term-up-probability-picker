@@ -7,8 +7,6 @@ on:
     paths:
       - 'docs/**'
       - 'data/daily_candidates.json'
-      - 'data/preopen_review.json'
-      - 'data/overnight_news.json'
       - 'data/backtest_report.json'
       - 'data/scan_diagnostics.json'
       - '.github/workflows/pages.yml'
@@ -41,9 +39,6 @@ jobs:
           cp docs/tail/index.html _site/tail/index.html
           cp docs/overnight/index.html _site/overnight/index.html
           for f in daily_candidates.json scan_diagnostics.json backtest_report.json; do
-            if [ -f "data/$f" ]; then cp "data/$f" "_site/data/$f"; fi
-          done
-          for f in preopen_review.json overnight_news.json; do
             if [ -f "data/$f" ]; then cp "data/$f" "_site/data/$f"; fi
           done
       - name: Upload Pages artifact
