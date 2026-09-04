@@ -170,9 +170,8 @@ def validate_previous_day() -> tuple[str | None, list[dict]]:
     if not files:
         return None, []
 
-    # Validation runs before today's new 14:00+ snapshot is frozen. Only use the
-    # latest snapshot strictly before Beijing's current calendar date. This prevents
-    # a same-day re-run from treating today's snapshot as a next-day result.
+    # Only use the latest snapshot strictly before Beijing's current calendar date.
+    # This keeps today's prediction isolated from today's validation target.
     today = beijing_today()
     eligible_files = []
     for path in files:
@@ -244,8 +243,13 @@ def save_validation(day: str, results: list[dict]) -> Path:
 
 
 def append_validation_to_excel(day: str, results: list[dict]) -> Path:
-    path = Path("reports") / f"{day}_tail_prediction.xlsx"
-    if not path.exists() or not results:
+    if not results:
+        return Path("reports") / f"{day}_tail_prediction.xlsx"
+
+    validation_date = str(results[0].get("验证日期") or "")
+    report_day = validation_date or day
+    path = Path("reports") / f"{report_day}_tail_prediction.xlsx"
+    if not path.exists():
         return path
     wb = load_workbook(path)
     if "次日验证" in wb.sheetnames:
