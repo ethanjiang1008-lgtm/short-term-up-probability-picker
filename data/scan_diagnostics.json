@@ -1,23 +1,23 @@
 {
   "date": "2026-09-04",
-  "raw_market_rows": 4997,
-  "main_board_rows": 2767,
-  "eligible_price_mcap_turnover_rows": 2268,
+  "raw_market_rows": 5555,
+  "main_board_rows": 3122,
+  "eligible_price_mcap_turnover_rows": 2574,
   "rising_5ma_rows": null,
-  "final_universe_rows": 2266,
-  "full_pool_rows": 2266,
-  "focus_rows": 10,
-  "limit_up_rows": 25,
+  "final_universe_rows": 2571,
+  "full_pool_rows": 2571,
+  "focus_rows": 9,
+  "limit_up_rows": 23,
   "st_rows": 0,
-  "score_ge_68_rows": 11,
+  "score_ge_68_rows": 22,
   "score_ge_75_rows": 0,
-  "technical_confirm_2plus_rows": 1113,
+  "technical_confirm_2plus_rows": 1238,
   "fast_kline_requested": 0,
   "fast_kline_success": 0,
   "fast_kline_failed": 0,
   "fast_kline_success_ratio": null,
-  "full_kline_requested": 2268,
-  "full_kline_success": 2268,
+  "full_kline_requested": 2574,
+  "full_kline_success": 2574,
   "full_kline_failed": 0,
   "full_kline_success_ratio": 1.0,
   "filters": {
@@ -55,12 +55,12 @@
   "min_expected_raw_rows": 3000,
   "min_kline_success_ratio": 0.7,
   "market": {
-    "breadth": 0.4337121212121212,
-    "limit_up_count": 41,
+    "breadth": 0.5062143097077595,
+    "limit_up_count": 40,
     "limit_down_count": 12,
-    "ranked_market_rows": 4997
+    "ranked_market_rows": 5555
   },
   "status": "OK",
   "blocking_reason": null,
-  "captured_at_utc": "2026-09-04T06:55:35.299462+00:00"
+  "captured_at_utc": "2026-09-04T13:34:48.744756+00:00"
 }

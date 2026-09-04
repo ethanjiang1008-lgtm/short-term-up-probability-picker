@@ -1,14 +1,14 @@
 {
   "prediction_date": "2026-09-03",
-  "validation_date": null,
-  "samples": 0,
-  "wins": 0,
-  "losses": 0,
-  "win_rate": null,
-  "avg_return_pct": null,
-  "strong_up_count": 0,
-  "limit_up_count": 0,
-  "focus_samples": 0,
-  "focus_wins": 0,
-  "focus_win_rate": 0.0
+  "validation_date": "2026-09-04",
+  "samples": 2574,
+  "wins": 1292,
+  "losses": 1282,
+  "win_rate": 0.5019,
+  "avg_return_pct": 0.0952,
+  "strong_up_count": 169,
+  "limit_up_count": 24,
+  "focus_samples": 7,
+  "focus_wins": 1,
+  "focus_win_rate": 0.1429
 }

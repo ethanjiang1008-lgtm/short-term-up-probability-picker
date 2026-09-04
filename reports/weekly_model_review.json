@@ -1,4 +1,17 @@
 {
-  "samples": 0,
-  "status": "样本不足"
+  "samples": 2574,
+  "win_rate": 0.5019,
+  "avg_return_pct": 0.0952,
+  "strong_up_count": 169,
+  "failure_count": 1282,
+  "focus_samples": 7,
+  "focus_win_rate": 0.1429,
+  "failure_tag_counts": {
+    "短期过热/乖离偏高": 116,
+    "尾盘加速过快": 43,
+    "放量风险": 72,
+    "市场环境偏弱": 1282,
+    "高换手风险": 29,
+    "趋势确认不足": 822
+  }
 }
