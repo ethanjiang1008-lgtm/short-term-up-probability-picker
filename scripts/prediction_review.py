@@ -200,8 +200,9 @@ def validate_previous_day() -> tuple[str | None, list[dict]]:
                 close = float(bar.get("close", bar.get("c")))
             except (TypeError, ValueError):
                 continue
-            # Only use a completed trading day between the prediction date and today.
-            if d > day and d < today:
+            # Use the first completed trading day after the prediction date,
+            # including today's completed daily bar when validation runs after 14:00.
+            if d > day and d <= today:
                 future.append((d, close))
         if not future or not r.get("today_close"):
             continue
