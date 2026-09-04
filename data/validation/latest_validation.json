@@ -1,14 +1,15 @@
 {
   "prediction_date": "2026-09-03",
   "validation_date": "2026-09-04",
-  "samples": 2574,
-  "wins": 1292,
-  "losses": 1282,
-  "win_rate": 0.5019,
-  "avg_return_pct": 0.0952,
-  "strong_up_count": 169,
-  "limit_up_count": 24,
+  "samples": 7,
+  "wins": 1,
+  "losses": 6,
+  "win_rate": 0.1429,
+  "avg_return_pct": -3.0641,
+  "strong_up_count": 1,
+  "limit_up_count": 0,
   "focus_samples": 7,
   "focus_wins": 1,
-  "focus_win_rate": 0.1429
+  "focus_win_rate": 0.1429,
+  "win_rate_scope": "重点观察"
 }

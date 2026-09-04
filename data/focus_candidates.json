@@ -97,7 +97,7 @@
       },
       "status": "OK",
       "blocking_reason": null,
-      "captured_at_utc": "2026-09-04T13:34:48.744756+00:00"
+      "captured_at_utc": "2026-09-04T14:05:18.526956+00:00"
     },
     "components": {
       "base_strength": 98.76,
@@ -138,7 +138,7 @@
       "consecutive_up_days": 7,
       "latest_turnover": 0.0
     },
-    "captured_at_utc": "2026-09-04T13:34:48.744756+00:00"
+    "captured_at_utc": "2026-09-04T14:05:18.526956+00:00"
   },
   {
     "date": "2026-09-04",
@@ -238,7 +238,7 @@
       },
       "status": "OK",
       "blocking_reason": null,
-      "captured_at_utc": "2026-09-04T13:34:48.744756+00:00"
+      "captured_at_utc": "2026-09-04T14:05:18.526956+00:00"
     },
     "components": {
       "base_strength": 96.52,
@@ -279,7 +279,7 @@
       "consecutive_up_days": 2,
       "latest_turnover": 0.0
     },
-    "captured_at_utc": "2026-09-04T13:34:48.744756+00:00"
+    "captured_at_utc": "2026-09-04T14:05:18.526956+00:00"
   },
   {
     "date": "2026-09-04",
@@ -379,7 +379,7 @@
       },
       "status": "OK",
       "blocking_reason": null,
-      "captured_at_utc": "2026-09-04T13:34:48.744756+00:00"
+      "captured_at_utc": "2026-09-04T14:05:18.526956+00:00"
     },
     "components": {
       "base_strength": 100.0,
@@ -420,7 +420,7 @@
       "consecutive_up_days": 4,
       "latest_turnover": 0.0
     },
-    "captured_at_utc": "2026-09-04T13:34:48.744756+00:00"
+    "captured_at_utc": "2026-09-04T14:05:18.526956+00:00"
   },
   {
     "date": "2026-09-04",
@@ -520,7 +520,7 @@
       },
       "status": "OK",
       "blocking_reason": null,
-      "captured_at_utc": "2026-09-04T13:34:48.744756+00:00"
+      "captured_at_utc": "2026-09-04T14:05:18.526956+00:00"
     },
     "components": {
       "base_strength": 91.28,
@@ -561,7 +561,7 @@
       "consecutive_up_days": 3,
       "latest_turnover": 0.0
     },
-    "captured_at_utc": "2026-09-04T13:34:48.744756+00:00"
+    "captured_at_utc": "2026-09-04T14:05:18.526956+00:00"
   },
   {
     "date": "2026-09-04",
@@ -661,7 +661,7 @@
       },
       "status": "OK",
       "blocking_reason": null,
-      "captured_at_utc": "2026-09-04T13:34:48.744756+00:00"
+      "captured_at_utc": "2026-09-04T14:05:18.526956+00:00"
     },
     "components": {
       "base_strength": 97.66,
@@ -702,7 +702,7 @@
       "consecutive_up_days": 1,
       "latest_turnover": 0.0
     },
-    "captured_at_utc": "2026-09-04T13:34:48.744756+00:00"
+    "captured_at_utc": "2026-09-04T14:05:18.526956+00:00"
   },
   {
     "date": "2026-09-04",
@@ -802,7 +802,7 @@
       },
       "status": "OK",
       "blocking_reason": null,
-      "captured_at_utc": "2026-09-04T13:34:48.744756+00:00"
+      "captured_at_utc": "2026-09-04T14:05:18.526956+00:00"
     },
     "components": {
       "base_strength": 93.61,
@@ -843,7 +843,7 @@
       "consecutive_up_days": 1,
       "latest_turnover": 0.0
     },
-    "captured_at_utc": "2026-09-04T13:34:48.744756+00:00"
+    "captured_at_utc": "2026-09-04T14:05:18.526956+00:00"
   },
   {
     "date": "2026-09-04",
@@ -943,7 +943,7 @@
       },
       "status": "OK",
       "blocking_reason": null,
-      "captured_at_utc": "2026-09-04T13:34:48.744756+00:00"
+      "captured_at_utc": "2026-09-04T14:05:18.526956+00:00"
     },
     "components": {
       "base_strength": 98.25,
@@ -984,7 +984,7 @@
       "consecutive_up_days": 2,
       "latest_turnover": 0.0
     },
-    "captured_at_utc": "2026-09-04T13:34:48.744756+00:00"
+    "captured_at_utc": "2026-09-04T14:05:18.526956+00:00"
   },
   {
     "date": "2026-09-04",
@@ -1084,7 +1084,7 @@
       },
       "status": "OK",
       "blocking_reason": null,
-      "captured_at_utc": "2026-09-04T13:34:48.744756+00:00"
+      "captured_at_utc": "2026-09-04T14:05:18.526956+00:00"
     },
     "components": {
       "base_strength": 97.83,
@@ -1125,7 +1125,7 @@
       "consecutive_up_days": 1,
       "latest_turnover": 0.0
     },
-    "captured_at_utc": "2026-09-04T13:34:48.744756+00:00"
+    "captured_at_utc": "2026-09-04T14:05:18.526956+00:00"
   },
   {
     "date": "2026-09-04",
@@ -1225,7 +1225,7 @@
       },
       "status": "OK",
       "blocking_reason": null,
-      "captured_at_utc": "2026-09-04T13:34:48.744756+00:00"
+      "captured_at_utc": "2026-09-04T14:05:18.526956+00:00"
     },
     "components": {
       "base_strength": 85.0,
@@ -1266,6 +1266,6 @@
       "consecutive_up_days": 1,
       "latest_turnover": 0.0
     },
-    "captured_at_utc": "2026-09-04T13:34:48.744756+00:00"
+    "captured_at_utc": "2026-09-04T14:05:18.526956+00:00"
   }
 ]
