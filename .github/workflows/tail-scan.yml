@@ -16,6 +16,7 @@ on:
       - 'scripts/report.py'
       - 'scripts/daily_pipeline.py'
       - 'scripts/prediction_review.py'
+      - 'scripts/validation_summary.py'
       - 'scripts/weekly_review.py'
       - 'scripts/tests/**'
       - 'requirements.txt'
@@ -46,6 +47,8 @@ jobs:
           python scripts/daily_pipeline.py
       - name: Validate previous trading-day prediction snapshot
         run: python scripts/prediction_review.py
+      - name: Normalize validation summary (focus stocks only)
+        run: python scripts/validation_summary.py
       - name: Update backtest report
         run: python scripts/report.py
       - name: Weekly model review
