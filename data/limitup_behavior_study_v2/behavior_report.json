@@ -1,0 +1,125 @@
+{
+  "version": "standalone-V2",
+  "analysis_date": "2026-09-14",
+  "cutoff_date": "2025-09-09",
+  "universe_stocks": 3122,
+  "stocks_with_data": 1,
+  "limitup_events": 0,
+  "unique_limitup_stocks": 0,
+  "purpose": "数据先行：先输出过去一年所有连板启动事件的逐日原始数据，再从样本分布自动发现覆盖率>=80%的共同现象。",
+  "data_collection": {
+    "universe": "existing Sina full-market stock list",
+    "historical_daily": "Eastmoney daily OHLCV/amount/turnover",
+    "current_snapshot": "Sina current price/current float market cap"
+  },
+  "common_phenomena_rule": "数值特征寻找能够覆盖80%样本的最窄区间；不预先指定业务阈值。布尔特征仅报告覆盖率>=80%的单一状态。",
+  "by_distance": {
+    "1": {
+      "sample_count": 0,
+      "distribution": {},
+      "common_phenomena_80pct": []
+    },
+    "2": {
+      "sample_count": 0,
+      "distribution": {},
+      "common_phenomena_80pct": []
+    },
+    "3": {
+      "sample_count": 0,
+      "distribution": {},
+      "common_phenomena_80pct": []
+    },
+    "4": {
+      "sample_count": 0,
+      "distribution": {},
+      "common_phenomena_80pct": []
+    },
+    "5": {
+      "sample_count": 0,
+      "distribution": {},
+      "common_phenomena_80pct": []
+    },
+    "6": {
+      "sample_count": 0,
+      "distribution": {},
+      "common_phenomena_80pct": []
+    },
+    "7": {
+      "sample_count": 0,
+      "distribution": {},
+      "common_phenomena_80pct": []
+    },
+    "8": {
+      "sample_count": 0,
+      "distribution": {},
+      "common_phenomena_80pct": []
+    },
+    "9": {
+      "sample_count": 0,
+      "distribution": {},
+      "common_phenomena_80pct": []
+    },
+    "10": {
+      "sample_count": 0,
+      "distribution": {},
+      "common_phenomena_80pct": []
+    },
+    "11": {
+      "sample_count": 0,
+      "distribution": {},
+      "common_phenomena_80pct": []
+    },
+    "12": {
+      "sample_count": 0,
+      "distribution": {},
+      "common_phenomena_80pct": []
+    },
+    "13": {
+      "sample_count": 0,
+      "distribution": {},
+      "common_phenomena_80pct": []
+    },
+    "14": {
+      "sample_count": 0,
+      "distribution": {},
+      "common_phenomena_80pct": []
+    },
+    "15": {
+      "sample_count": 0,
+      "distribution": {},
+      "common_phenomena_80pct": []
+    },
+    "16": {
+      "sample_count": 0,
+      "distribution": {},
+      "common_phenomena_80pct": []
+    },
+    "17": {
+      "sample_count": 0,
+      "distribution": {},
+      "common_phenomena_80pct": []
+    },
+    "18": {
+      "sample_count": 0,
+      "distribution": {},
+      "common_phenomena_80pct": []
+    },
+    "19": {
+      "sample_count": 0,
+      "distribution": {},
+      "common_phenomena_80pct": []
+    },
+    "20": {
+      "sample_count": 0,
+      "distribution": {},
+      "common_phenomena_80pct": []
+    }
+  },
+  "notes": [
+    "T-1表示启动日前一个交易日，T-2表示前两个交易日，以此类推。",
+    "原始逐日快照完整保存，分析结论不覆盖原始数据。",
+    "量比为历史日频量能比值，不冒充盘中实时量比。",
+    "历史流通市值为估算值，仅作为研究维度。",
+    "本工作流完全独立，不参与现有选股逻辑。"
+  ]
+}
