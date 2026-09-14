@@ -4,16 +4,17 @@
   "lookback_days": 370,
   "cutoff_date": "2025-09-09",
   "minimum_consecutive_limit_up": 2,
-  "positive_samples": 101,
-  "unique_positive_stocks": 53,
-  "control_samples": 202,
+  "positive_samples": 225,
+  "unique_positive_stocks": 130,
+  "control_samples": 450,
   "common_ratio_threshold": 0.8,
   "minimum_positive_samples": 30,
   "common_patterns_80pct": [],
   "discriminating_patterns": [],
   "current_circ_mcap_bucket_count": {
-    "<30亿": 97,
-    "30-80亿": 4
+    "<30亿": 214,
+    "30-80亿": 10,
+    "80-150亿": 1
   },
   "data_sources": {
     "daily_kline_price_volume": "Eastmoney public daily K-line",

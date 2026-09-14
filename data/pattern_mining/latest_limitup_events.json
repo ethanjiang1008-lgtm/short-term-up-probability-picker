@@ -6,15 +6,9 @@
     "consecutive_limit_up": 2
   },
   {
-    "code": "600488",
-    "name": "津药药业",
-    "start_date": "2026-03-27",
-    "consecutive_limit_up": 2
-  },
-  {
-    "code": "600488",
-    "name": "津药药业",
-    "start_date": "2026-05-11",
+    "code": "000981",
+    "name": "山子高科",
+    "start_date": "2025-12-19",
     "consecutive_limit_up": 2
   },
   {
@@ -27,18 +21,6 @@
     "code": "002172",
     "name": "澳洋健康",
     "start_date": "2026-09-07",
-    "consecutive_limit_up": 2
-  },
-  {
-    "code": "000978",
-    "name": "桂林旅游",
-    "start_date": "2026-09-07",
-    "consecutive_limit_up": 2
-  },
-  {
-    "code": "000981",
-    "name": "山子高科",
-    "start_date": "2025-12-19",
     "consecutive_limit_up": 2
   },
   {
@@ -69,6 +51,24 @@
     "code": "002585",
     "name": "双星新材",
     "start_date": "2026-09-11",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "000978",
+    "name": "桂林旅游",
+    "start_date": "2026-09-07",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "600488",
+    "name": "津药药业",
+    "start_date": "2026-03-27",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "600488",
+    "name": "津药药业",
+    "start_date": "2026-05-11",
     "consecutive_limit_up": 2
   },
   {
@@ -108,6 +108,12 @@
     "consecutive_limit_up": 2
   },
   {
+    "code": "601567",
+    "name": "三星电气",
+    "start_date": "2026-03-06",
+    "consecutive_limit_up": 2
+  },
+  {
     "code": "600186",
     "name": "莲花控股",
     "start_date": "2026-05-22",
@@ -123,6 +129,24 @@
     "code": "002976",
     "name": "瑞玛精密",
     "start_date": "2025-11-28",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "000823",
+    "name": "超声电子",
+    "start_date": "2026-06-24",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "000823",
+    "name": "超声电子",
+    "start_date": "2026-09-10",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "605168",
+    "name": "三人行",
+    "start_date": "2026-04-28",
     "consecutive_limit_up": 2
   },
   {
@@ -156,48 +180,6 @@
     "consecutive_limit_up": 2
   },
   {
-    "code": "000823",
-    "name": "超声电子",
-    "start_date": "2026-06-24",
-    "consecutive_limit_up": 2
-  },
-  {
-    "code": "000823",
-    "name": "超声电子",
-    "start_date": "2026-09-10",
-    "consecutive_limit_up": 2
-  },
-  {
-    "code": "601567",
-    "name": "三星电气",
-    "start_date": "2026-03-06",
-    "consecutive_limit_up": 2
-  },
-  {
-    "code": "605168",
-    "name": "三人行",
-    "start_date": "2026-04-28",
-    "consecutive_limit_up": 2
-  },
-  {
-    "code": "600330",
-    "name": "天通股份",
-    "start_date": "2025-12-09",
-    "consecutive_limit_up": 2
-  },
-  {
-    "code": "600330",
-    "name": "天通股份",
-    "start_date": "2026-02-03",
-    "consecutive_limit_up": 2
-  },
-  {
-    "code": "600330",
-    "name": "天通股份",
-    "start_date": "2026-04-17",
-    "consecutive_limit_up": 2
-  },
-  {
     "code": "000993",
     "name": "闽东电力",
     "start_date": "2025-11-04",
@@ -213,24 +195,6 @@
     "code": "603400",
     "name": "华之杰",
     "start_date": "2026-07-28",
-    "consecutive_limit_up": 2
-  },
-  {
-    "code": "000962",
-    "name": "东方钽业",
-    "start_date": "2026-02-11",
-    "consecutive_limit_up": 2
-  },
-  {
-    "code": "000962",
-    "name": "东方钽业",
-    "start_date": "2026-08-04",
-    "consecutive_limit_up": 2
-  },
-  {
-    "code": "605058",
-    "name": "澳弘电子",
-    "start_date": "2026-09-11",
     "consecutive_limit_up": 2
   },
   {
@@ -252,27 +216,27 @@
     "consecutive_limit_up": 2
   },
   {
-    "code": "002912",
-    "name": "中新赛克",
-    "start_date": "2026-09-10",
+    "code": "600330",
+    "name": "天通股份",
+    "start_date": "2025-12-09",
     "consecutive_limit_up": 2
   },
   {
-    "code": "002669",
-    "name": "康达新材",
-    "start_date": "2026-06-09",
+    "code": "600330",
+    "name": "天通股份",
+    "start_date": "2026-02-03",
     "consecutive_limit_up": 2
   },
   {
-    "code": "600228",
-    "name": "返利科技",
-    "start_date": "2026-06-16",
+    "code": "600330",
+    "name": "天通股份",
+    "start_date": "2026-04-17",
     "consecutive_limit_up": 2
   },
   {
-    "code": "600228",
-    "name": "返利科技",
-    "start_date": "2026-07-29",
+    "code": "605058",
+    "name": "澳弘电子",
+    "start_date": "2026-09-11",
     "consecutive_limit_up": 2
   },
   {
@@ -282,15 +246,21 @@
     "consecutive_limit_up": 2
   },
   {
-    "code": "001896",
-    "name": "豫能控股",
+    "code": "000962",
+    "name": "东方钽业",
     "start_date": "2026-02-11",
     "consecutive_limit_up": 2
   },
   {
-    "code": "001896",
-    "name": "豫能控股",
-    "start_date": "2026-06-03",
+    "code": "000962",
+    "name": "东方钽业",
+    "start_date": "2026-08-04",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "002669",
+    "name": "康达新材",
+    "start_date": "2026-06-09",
     "consecutive_limit_up": 2
   },
   {
@@ -306,9 +276,51 @@
     "consecutive_limit_up": 2
   },
   {
-    "code": "002212",
-    "name": "天融信",
-    "start_date": "2026-07-28",
+    "code": "002912",
+    "name": "中新赛克",
+    "start_date": "2026-09-10",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "603626",
+    "name": "科森科技",
+    "start_date": "2026-02-06",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "603626",
+    "name": "科森科技",
+    "start_date": "2026-08-20",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "603626",
+    "name": "科森科技",
+    "start_date": "2026-09-07",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "600228",
+    "name": "返利科技",
+    "start_date": "2026-06-16",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "600228",
+    "name": "返利科技",
+    "start_date": "2026-07-29",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "002346",
+    "name": "柘中股份",
+    "start_date": "2026-07-09",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "603439",
+    "name": "三力制药",
+    "start_date": "2026-09-11",
     "consecutive_limit_up": 2
   },
   {
@@ -342,45 +354,45 @@
     "consecutive_limit_up": 2
   },
   {
-    "code": "603439",
-    "name": "三力制药",
-    "start_date": "2026-09-11",
-    "consecutive_limit_up": 2
-  },
-  {
-    "code": "002346",
-    "name": "柘中股份",
-    "start_date": "2026-07-09",
-    "consecutive_limit_up": 2
-  },
-  {
-    "code": "603626",
-    "name": "科森科技",
-    "start_date": "2026-02-06",
-    "consecutive_limit_up": 2
-  },
-  {
-    "code": "603626",
-    "name": "科森科技",
-    "start_date": "2026-08-20",
-    "consecutive_limit_up": 2
-  },
-  {
-    "code": "603626",
-    "name": "科森科技",
-    "start_date": "2026-09-07",
-    "consecutive_limit_up": 2
-  },
-  {
     "code": "002918",
     "name": "蒙娜丽莎",
     "start_date": "2026-05-08",
     "consecutive_limit_up": 2
   },
   {
+    "code": "002212",
+    "name": "天融信",
+    "start_date": "2026-07-28",
+    "consecutive_limit_up": 2
+  },
+  {
     "code": "600802",
     "name": "福建水泥",
     "start_date": "2025-10-27",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "002141",
+    "name": "贤丰控股",
+    "start_date": "2026-06-16",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "002141",
+    "name": "贤丰控股",
+    "start_date": "2026-06-25",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "002141",
+    "name": "贤丰控股",
+    "start_date": "2026-07-03",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "002141",
+    "name": "贤丰控股",
+    "start_date": "2026-07-14",
     "consecutive_limit_up": 2
   },
   {
@@ -393,6 +405,12 @@
     "code": "603261",
     "name": "立航科技",
     "start_date": "2026-07-31",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "000839",
+    "name": "国安股份",
+    "start_date": "2026-03-10",
     "consecutive_limit_up": 2
   },
   {
@@ -420,9 +438,9 @@
     "consecutive_limit_up": 2
   },
   {
-    "code": "000839",
-    "name": "国安股份",
-    "start_date": "2026-03-10",
+    "code": "603661",
+    "name": "恒林股份",
+    "start_date": "2026-05-21",
     "consecutive_limit_up": 2
   },
   {
@@ -441,12 +459,6 @@
     "code": "002821",
     "name": "凯莱英",
     "start_date": "2026-03-31",
-    "consecutive_limit_up": 2
-  },
-  {
-    "code": "603661",
-    "name": "恒林股份",
-    "start_date": "2026-05-21",
     "consecutive_limit_up": 2
   },
   {
@@ -480,6 +492,18 @@
     "consecutive_limit_up": 2
   },
   {
+    "code": "001896",
+    "name": "豫能控股",
+    "start_date": "2026-02-11",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "001896",
+    "name": "豫能控股",
+    "start_date": "2026-06-03",
+    "consecutive_limit_up": 2
+  },
+  {
     "code": "002771",
     "name": "真视通",
     "start_date": "2026-03-24",
@@ -492,21 +516,9 @@
     "consecutive_limit_up": 2
   },
   {
-    "code": "603002",
-    "name": "宏昌电子",
-    "start_date": "2026-06-09",
-    "consecutive_limit_up": 2
-  },
-  {
-    "code": "603002",
-    "name": "宏昌电子",
-    "start_date": "2026-06-15",
-    "consecutive_limit_up": 2
-  },
-  {
-    "code": "003033",
-    "name": "征和工业",
-    "start_date": "2025-10-27",
+    "code": "002349",
+    "name": "精华制药",
+    "start_date": "2026-09-08",
     "consecutive_limit_up": 2
   },
   {
@@ -534,9 +546,9 @@
     "consecutive_limit_up": 2
   },
   {
-    "code": "002349",
-    "name": "精华制药",
-    "start_date": "2026-09-08",
+    "code": "003033",
+    "name": "征和工业",
+    "start_date": "2025-10-27",
     "consecutive_limit_up": 2
   },
   {
@@ -552,57 +564,789 @@
     "consecutive_limit_up": 2
   },
   {
-    "code": "002141",
-    "name": "贤丰控股",
-    "start_date": "2026-06-16",
+    "code": "603002",
+    "name": "宏昌电子",
+    "start_date": "2026-06-09",
     "consecutive_limit_up": 2
   },
   {
-    "code": "002141",
-    "name": "贤丰控股",
-    "start_date": "2026-06-25",
+    "code": "603002",
+    "name": "宏昌电子",
+    "start_date": "2026-06-15",
     "consecutive_limit_up": 2
   },
   {
-    "code": "002141",
-    "name": "贤丰控股",
-    "start_date": "2026-07-03",
+    "code": "001210",
+    "name": "金房能源",
+    "start_date": "2026-01-05",
     "consecutive_limit_up": 2
   },
   {
-    "code": "002141",
-    "name": "贤丰控股",
-    "start_date": "2026-07-14",
+    "code": "001210",
+    "name": "金房能源",
+    "start_date": "2026-05-13",
     "consecutive_limit_up": 2
   },
   {
-    "code": "603192",
-    "name": "XD汇得科",
-    "start_date": "2025-12-29",
+    "code": "001210",
+    "name": "金房能源",
+    "start_date": "2026-06-01",
     "consecutive_limit_up": 2
   },
   {
-    "code": "002747",
-    "name": "埃斯顿",
-    "start_date": "2026-06-08",
+    "code": "002518",
+    "name": "科士达",
+    "start_date": "2025-11-06",
     "consecutive_limit_up": 2
   },
   {
-    "code": "002747",
-    "name": "埃斯顿",
-    "start_date": "2026-06-30",
+    "code": "002099",
+    "name": "海翔药业",
+    "start_date": "2026-02-06",
     "consecutive_limit_up": 2
   },
   {
-    "code": "601096",
-    "name": "宏盛华源",
+    "code": "600939",
+    "name": "重庆建工",
+    "start_date": "2025-11-06",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "603315",
+    "name": "福鞍股份",
+    "start_date": "2026-04-16",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "002364",
+    "name": "中恒电气",
+    "start_date": "2026-04-09",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "002084",
+    "name": "海鸥住工",
+    "start_date": "2026-08-24",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "000633",
+    "name": "合金投资",
+    "start_date": "2025-11-13",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "603879",
+    "name": "永悦科技",
+    "start_date": "2025-12-09",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "002574",
+    "name": "明牌珠宝",
+    "start_date": "2026-01-12",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "002414",
+    "name": "高德红外",
+    "start_date": "2026-07-09",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "601868",
+    "name": "中国能建",
+    "start_date": "2026-03-11",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "600477",
+    "name": "杭萧钢构",
+    "start_date": "2026-01-08",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "600556",
+    "name": "天下秀",
+    "start_date": "2026-01-09",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "600775",
+    "name": "南京熊猫",
+    "start_date": "2026-01-05",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "600775",
+    "name": "南京熊猫",
+    "start_date": "2026-07-27",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "603500",
+    "name": "祥和实业",
+    "start_date": "2026-06-04",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "001234",
+    "name": "泰慕士",
+    "start_date": "2026-04-22",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "002478",
+    "name": "常宝股份",
+    "start_date": "2025-11-05",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "603978",
+    "name": "深圳新星",
+    "start_date": "2025-11-06",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "603045",
+    "name": "福达合金",
+    "start_date": "2026-04-30",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "603045",
+    "name": "福达合金",
+    "start_date": "2026-06-01",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "603045",
+    "name": "福达合金",
+    "start_date": "2026-06-15",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "603999",
+    "name": "读者传媒",
+    "start_date": "2026-09-07",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "601696",
+    "name": "中银证券",
+    "start_date": "2026-06-12",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "600408",
+    "name": "安泰集团",
+    "start_date": "2025-10-16",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "600408",
+    "name": "安泰集团",
+    "start_date": "2025-10-28",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "600408",
+    "name": "安泰集团",
+    "start_date": "2025-11-03",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "600408",
+    "name": "安泰集团",
+    "start_date": "2025-11-11",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "600408",
+    "name": "安泰集团",
+    "start_date": "2025-12-02",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "002519",
+    "name": "银河电子",
+    "start_date": "2025-11-28",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "002519",
+    "name": "银河电子",
+    "start_date": "2026-01-05",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "600215",
+    "name": "派斯林",
+    "start_date": "2026-01-08",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "002255",
+    "name": "海陆重工",
+    "start_date": "2025-11-03",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "002028",
+    "name": "思源电气",
     "start_date": "2026-01-16",
     "consecutive_limit_up": 2
   },
   {
-    "code": "000955",
-    "name": "欣龙控股",
-    "start_date": "2025-10-31",
+    "code": "601179",
+    "name": "中国西电",
+    "start_date": "2026-06-15",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "603335",
+    "name": "迪生力",
+    "start_date": "2026-06-12",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "603698",
+    "name": "航天工程",
+    "start_date": "2025-12-23",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "603698",
+    "name": "航天工程",
+    "start_date": "2026-04-14",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "605028",
+    "name": "世茂能源",
+    "start_date": "2026-07-14",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "603585",
+    "name": "苏利股份",
+    "start_date": "2025-12-17",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "603585",
+    "name": "苏利股份",
+    "start_date": "2026-03-27",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "605365",
+    "name": "立达信",
+    "start_date": "2025-12-17",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "605365",
+    "name": "立达信",
+    "start_date": "2026-04-21",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "600961",
+    "name": "株冶集团",
+    "start_date": "2026-04-16",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "002149",
+    "name": "西部材料",
+    "start_date": "2025-12-05",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "002149",
+    "name": "西部材料",
+    "start_date": "2025-12-18",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "002149",
+    "name": "西部材料",
+    "start_date": "2026-01-22",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "002149",
+    "name": "西部材料",
+    "start_date": "2026-04-30",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "603069",
+    "name": "海汽集团",
+    "start_date": "2025-12-19",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "600135",
+    "name": "乐凯胶片",
+    "start_date": "2026-01-07",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "600135",
+    "name": "乐凯胶片",
+    "start_date": "2026-03-09",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "605299",
+    "name": "舒华体育",
+    "start_date": "2025-12-04",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "605299",
+    "name": "舒华体育",
+    "start_date": "2026-03-24",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "600307",
+    "name": "酒钢宏兴",
+    "start_date": "2026-03-17",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "603106",
+    "name": "恒银科技",
+    "start_date": "2026-07-31",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "000663",
+    "name": "永安林业",
+    "start_date": "2025-11-19",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "002629",
+    "name": "仁智股份",
+    "start_date": "2026-03-02",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "600130",
+    "name": "波导股份",
+    "start_date": "2026-05-06",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "002404",
+    "name": "嘉欣丝绸",
+    "start_date": "2026-06-01",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "001376",
+    "name": "百通能源",
+    "start_date": "2026-01-28",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "603703",
+    "name": "盛洋科技",
+    "start_date": "2025-12-17",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "600688",
+    "name": "上海石化",
+    "start_date": "2026-03-02",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "600688",
+    "name": "上海石化",
+    "start_date": "2026-06-03",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "002356",
+    "name": "鹏飞绿能",
+    "start_date": "2026-02-27",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "600746",
+    "name": "江苏索普",
+    "start_date": "2026-07-14",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "001282",
+    "name": "三联锻造",
+    "start_date": "2025-10-17",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "003018",
+    "name": "金富科技",
+    "start_date": "2025-11-12",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "003018",
+    "name": "金富科技",
+    "start_date": "2025-11-24",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "003018",
+    "name": "金富科技",
+    "start_date": "2026-02-05",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "003018",
+    "name": "金富科技",
+    "start_date": "2026-04-17",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "003018",
+    "name": "金富科技",
+    "start_date": "2026-05-14",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "003018",
+    "name": "金富科技",
+    "start_date": "2026-08-04",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "601330",
+    "name": "绿色动力",
+    "start_date": "2026-03-11",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "601595",
+    "name": "上海电影",
+    "start_date": "2026-02-09",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "601595",
+    "name": "上海电影",
+    "start_date": "2026-09-07",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "601808",
+    "name": "中海油服",
+    "start_date": "2026-03-02",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "600266",
+    "name": "城建发展",
+    "start_date": "2025-12-31",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "000995",
+    "name": "皇台酒业",
+    "start_date": "2026-01-29",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "000802",
+    "name": "北京文化",
+    "start_date": "2026-08-10",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "600683",
+    "name": "京投发展",
+    "start_date": "2025-10-29",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "600683",
+    "name": "京投发展",
+    "start_date": "2026-02-03",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "600683",
+    "name": "京投发展",
+    "start_date": "2026-03-13",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "600683",
+    "name": "京投发展",
+    "start_date": "2026-04-15",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "600683",
+    "name": "京投发展",
+    "start_date": "2026-05-08",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "600683",
+    "name": "京投发展",
+    "start_date": "2026-08-10",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "001400",
+    "name": "江顺科技",
+    "start_date": "2026-01-06",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "001400",
+    "name": "江顺科技",
+    "start_date": "2026-04-17",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "002513",
+    "name": "蓝丰生化",
+    "start_date": "2025-10-21",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "001229",
+    "name": "魅视科技",
+    "start_date": "2026-06-29",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "001229",
+    "name": "魅视科技",
+    "start_date": "2026-07-07",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "001229",
+    "name": "魅视科技",
+    "start_date": "2026-08-03",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "001229",
+    "name": "魅视科技",
+    "start_date": "2026-08-17",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "600909",
+    "name": "华安证券",
+    "start_date": "2026-06-23",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "600982",
+    "name": "宁波能源",
+    "start_date": "2026-03-24",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "601616",
+    "name": "广电电气",
+    "start_date": "2026-01-16",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "000036",
+    "name": "华联控股",
+    "start_date": "2025-12-23",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "000036",
+    "name": "华联控股",
+    "start_date": "2026-01-21",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "603185",
+    "name": "弘元绿能",
+    "start_date": "2025-11-07",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "002686",
+    "name": "亿利达",
+    "start_date": "2025-12-02",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "600262",
+    "name": "北方股份",
+    "start_date": "2025-10-20",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "601929",
+    "name": "吉视传媒",
+    "start_date": "2025-11-03",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "603716",
+    "name": "塞力医疗",
+    "start_date": "2026-01-05",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "603716",
+    "name": "塞力医疗",
+    "start_date": "2026-07-27",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "000712",
+    "name": "锦龙股份",
+    "start_date": "2026-08-26",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "000908",
+    "name": "石药景峰",
+    "start_date": "2026-07-02",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "002687",
+    "name": "乔治白",
+    "start_date": "2026-06-23",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "002251",
+    "name": "步步高",
+    "start_date": "2026-05-26",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "000656",
+    "name": "金科股份",
+    "start_date": "2026-07-02",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "001209",
+    "name": "洪兴股份",
+    "start_date": "2025-11-05",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "001209",
+    "name": "洪兴股份",
+    "start_date": "2026-02-25",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "002081",
+    "name": "金 螳 螂",
+    "start_date": "2026-04-17",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "002081",
+    "name": "金 螳 螂",
+    "start_date": "2026-04-28",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "002081",
+    "name": "金 螳 螂",
+    "start_date": "2026-05-29",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "002081",
+    "name": "金 螳 螂",
+    "start_date": "2026-08-12",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "002208",
+    "name": "合肥城建",
+    "start_date": "2025-10-16",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "002208",
+    "name": "合肥城建",
+    "start_date": "2026-05-12",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "002208",
+    "name": "合肥城建",
+    "start_date": "2026-05-18",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "002208",
+    "name": "合肥城建",
+    "start_date": "2026-06-29",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "600844",
+    "name": "金煤科技",
+    "start_date": "2026-03-26",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "600844",
+    "name": "金煤科技",
+    "start_date": "2026-07-14",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "000506",
+    "name": "招金黄金",
+    "start_date": "2026-01-19",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "000506",
+    "name": "招金黄金",
+    "start_date": "2026-01-26",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "000506",
+    "name": "招金黄金",
+    "start_date": "2026-06-12",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "000506",
+    "name": "招金黄金",
+    "start_date": "2026-07-02",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "000506",
+    "name": "招金黄金",
+    "start_date": "2026-08-07",
+    "consecutive_limit_up": 2
+  },
+  {
+    "code": "000852",
+    "name": "石化机械",
+    "start_date": "2025-10-20",
     "consecutive_limit_up": 2
   }
 ]

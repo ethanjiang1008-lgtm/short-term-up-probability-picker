@@ -1,0 +1,1486 @@
+{
+  "single_rules": [
+    {
+      "kind": "single",
+      "feature": "turnover_5d_avg",
+      "operator": ">=",
+      "threshold": 5.37,
+      "positive_coverage": 0.5022,
+      "control_coverage": 0.1667,
+      "lift": 3.0133,
+      "precision_proxy": 0.7508,
+      "stability": {
+        "split_date": "2026-06-03",
+        "train_positive_coverage": 0.507,
+        "train_control_coverage": 0.1655,
+        "test_positive_coverage": 0.494,
+        "test_control_coverage": 0.1687,
+        "test_lift": 2.9286
+      }
+    },
+    {
+      "kind": "single",
+      "feature": "turnover_1d",
+      "operator": ">=",
+      "threshold": 5.42,
+      "positive_coverage": 0.5022,
+      "control_coverage": 0.1711,
+      "lift": 2.9351,
+      "precision_proxy": 0.7459,
+      "stability": {
+        "split_date": "2026-06-03",
+        "train_positive_coverage": 0.493,
+        "train_control_coverage": 0.1796,
+        "test_positive_coverage": 0.5181,
+        "test_control_coverage": 0.1566,
+        "test_lift": 3.3077
+      }
+    },
+    {
+      "kind": "single",
+      "feature": "turnover_3d_avg",
+      "operator": ">=",
+      "threshold": 5.256667,
+      "positive_coverage": 0.5022,
+      "control_coverage": 0.1711,
+      "lift": 2.9351,
+      "precision_proxy": 0.7459,
+      "stability": {
+        "split_date": "2026-06-03",
+        "train_positive_coverage": 0.493,
+        "train_control_coverage": 0.1761,
+        "test_positive_coverage": 0.5181,
+        "test_control_coverage": 0.1627,
+        "test_lift": 3.1852
+      }
+    },
+    {
+      "kind": "single",
+      "feature": "turnover_10d_avg",
+      "operator": ">=",
+      "threshold": 4.856,
+      "positive_coverage": 0.5022,
+      "control_coverage": 0.1978,
+      "lift": 2.5393,
+      "precision_proxy": 0.7175,
+      "stability": {
+        "split_date": "2026-06-03",
+        "train_positive_coverage": 0.507,
+        "train_control_coverage": 0.1866,
+        "test_positive_coverage": 0.494,
+        "test_control_coverage": 0.2169,
+        "test_lift": 2.2778
+      }
+    },
+    {
+      "kind": "single",
+      "feature": "above_low20_pct",
+      "operator": ">=",
+      "threshold": 12.958671,
+      "positive_coverage": 0.5022,
+      "control_coverage": 0.2067,
+      "lift": 2.4301,
+      "precision_proxy": 0.7085,
+      "stability": {
+        "split_date": "2026-06-03",
+        "train_positive_coverage": 0.5423,
+        "train_control_coverage": 0.2113,
+        "test_positive_coverage": 0.4337,
+        "test_control_coverage": 0.1988,
+        "test_lift": 2.1818
+      }
+    },
+    {
+      "kind": "single",
+      "feature": "range_1d_pct",
+      "operator": ">=",
+      "threshold": 5.506608,
+      "positive_coverage": 0.5022,
+      "control_coverage": 0.2222,
+      "lift": 2.26,
+      "precision_proxy": 0.6933,
+      "stability": {
+        "split_date": "2026-06-03",
+        "train_positive_coverage": 0.4296,
+        "train_control_coverage": 0.1901,
+        "test_positive_coverage": 0.6265,
+        "test_control_coverage": 0.2771,
+        "test_lift": 2.2609
+      }
+    },
+    {
+      "kind": "single",
+      "feature": "ret_20d",
+      "operator": ">=",
+      "threshold": 6.362545,
+      "positive_coverage": 0.5022,
+      "control_coverage": 0.2289,
+      "lift": 2.1942,
+      "precision_proxy": 0.6869,
+      "stability": {
+        "split_date": "2026-06-03",
+        "train_positive_coverage": 0.5775,
+        "train_control_coverage": 0.2676,
+        "test_positive_coverage": 0.3735,
+        "test_control_coverage": 0.1627,
+        "test_lift": 2.2963
+      }
+    },
+    {
+      "kind": "single",
+      "feature": "turnover_20d_avg",
+      "operator": ">=",
+      "threshold": 4.256,
+      "positive_coverage": 0.5022,
+      "control_coverage": 0.2467,
+      "lift": 2.036,
+      "precision_proxy": 0.6706,
+      "stability": {
+        "split_date": "2026-06-03",
+        "train_positive_coverage": 0.493,
+        "train_control_coverage": 0.2324,
+        "test_positive_coverage": 0.5181,
+        "test_control_coverage": 0.2711,
+        "test_lift": 1.9111
+      }
+    },
+    {
+      "kind": "single",
+      "feature": "turnover_3d_avg",
+      "operator": ">=",
+      "threshold": 2.736667,
+      "positive_coverage": 0.7511,
+      "control_coverage": 0.3844,
+      "lift": 1.9538,
+      "precision_proxy": 0.6614,
+      "stability": {
+        "split_date": "2026-06-03",
+        "train_positive_coverage": 0.7606,
+        "train_control_coverage": 0.3908,
+        "test_positive_coverage": 0.7349,
+        "test_control_coverage": 0.3735,
+        "test_lift": 1.9677
+      }
+    },
+    {
+      "kind": "single",
+      "feature": "turnover_5d_avg",
+      "operator": ">=",
+      "threshold": 2.778,
+      "positive_coverage": 0.7511,
+      "control_coverage": 0.3867,
+      "lift": 1.9425,
+      "precision_proxy": 0.6602,
+      "stability": {
+        "split_date": "2026-06-03",
+        "train_positive_coverage": 0.7535,
+        "train_control_coverage": 0.3944,
+        "test_positive_coverage": 0.747,
+        "test_control_coverage": 0.3735,
+        "test_lift": 2.0
+      }
+    },
+    {
+      "kind": "single",
+      "feature": "recent10_volatility_pct",
+      "operator": ">=",
+      "threshold": 4.250534,
+      "positive_coverage": 0.5022,
+      "control_coverage": 0.2622,
+      "lift": 1.9153,
+      "precision_proxy": 0.657,
+      "stability": {
+        "split_date": "2026-06-03",
+        "train_positive_coverage": 0.4789,
+        "train_control_coverage": 0.2289,
+        "test_positive_coverage": 0.5422,
+        "test_control_coverage": 0.3193,
+        "test_lift": 1.6981
+      }
+    },
+    {
+      "kind": "single",
+      "feature": "turnover_5_vs_20",
+      "operator": ">=",
+      "threshold": 1.116714,
+      "positive_coverage": 0.5022,
+      "control_coverage": 0.2733,
+      "lift": 1.8374,
+      "precision_proxy": 0.6476,
+      "stability": {
+        "split_date": "2026-06-03",
+        "train_positive_coverage": 0.5211,
+        "train_control_coverage": 0.3134,
+        "test_positive_coverage": 0.4699,
+        "test_control_coverage": 0.2048,
+        "test_lift": 2.2941
+      }
+    },
+    {
+      "kind": "single",
+      "feature": "volume_5_vs_20",
+      "operator": ">=",
+      "threshold": 1.118194,
+      "positive_coverage": 0.5022,
+      "control_coverage": 0.2756,
+      "lift": 1.8226,
+      "precision_proxy": 0.6457,
+      "stability": {
+        "split_date": "2026-06-03",
+        "train_positive_coverage": 0.5141,
+        "train_control_coverage": 0.3169,
+        "test_positive_coverage": 0.4819,
+        "test_control_coverage": 0.2048,
+        "test_lift": 2.3529
+      }
+    },
+    {
+      "kind": "single",
+      "feature": "turnover_1d",
+      "operator": ">=",
+      "threshold": 2.46,
+      "positive_coverage": 0.7511,
+      "control_coverage": 0.4222,
+      "lift": 1.7789,
+      "precision_proxy": 0.6402,
+      "stability": {
+        "split_date": "2026-06-03",
+        "train_positive_coverage": 0.7465,
+        "train_control_coverage": 0.4366,
+        "test_positive_coverage": 0.759,
+        "test_control_coverage": 0.3976,
+        "test_lift": 1.9091
+      }
+    },
+    {
+      "kind": "single",
+      "feature": "turnover_10d_avg",
+      "operator": ">=",
+      "threshold": 2.733,
+      "positive_coverage": 0.7511,
+      "control_coverage": 0.4311,
+      "lift": 1.7423,
+      "precision_proxy": 0.6353,
+      "stability": {
+        "split_date": "2026-06-03",
+        "train_positive_coverage": 0.7606,
+        "train_control_coverage": 0.4261,
+        "test_positive_coverage": 0.7349,
+        "test_control_coverage": 0.4398,
+        "test_lift": 1.6712
+      }
+    },
+    {
+      "kind": "single",
+      "feature": "turnover_20d_avg",
+      "operator": ">=",
+      "threshold": 2.618,
+      "positive_coverage": 0.7511,
+      "control_coverage": 0.4489,
+      "lift": 1.6733,
+      "precision_proxy": 0.6259
+    },
+    {
+      "kind": "single",
+      "feature": "ret_10d",
+      "operator": ">=",
+      "threshold": 3.91718,
+      "positive_coverage": 0.5022,
+      "control_coverage": 0.3022,
+      "lift": 1.6618,
+      "precision_proxy": 0.6243
+    },
+    {
+      "kind": "single",
+      "feature": "range_1d_pct",
+      "operator": ">=",
+      "threshold": 3.367496,
+      "positive_coverage": 0.7511,
+      "control_coverage": 0.4867,
+      "lift": 1.5434,
+      "precision_proxy": 0.6068
+    },
+    {
+      "kind": "single",
+      "feature": "above_low20_pct",
+      "operator": ">=",
+      "threshold": 5.015674,
+      "positive_coverage": 0.7511,
+      "control_coverage": 0.4933,
+      "lift": 1.5225,
+      "precision_proxy": 0.6036
+    },
+    {
+      "kind": "single",
+      "feature": "ret_5d",
+      "operator": ">=",
+      "threshold": 1.973435,
+      "positive_coverage": 0.5022,
+      "control_coverage": 0.3356,
+      "lift": 1.4967,
+      "precision_proxy": 0.5995
+    },
+    {
+      "kind": "single",
+      "feature": "recent10_volatility_pct",
+      "operator": ">=",
+      "threshold": 2.813794,
+      "positive_coverage": 0.7511,
+      "control_coverage": 0.5133,
+      "lift": 1.4632,
+      "precision_proxy": 0.594
+    },
+    {
+      "kind": "single",
+      "feature": "turnover_rising_5_vs_20",
+      "operator": "==",
+      "threshold": true,
+      "positive_coverage": 0.5956,
+      "control_coverage": 0.4133,
+      "lift": 1.4409,
+      "precision_proxy": 0.5903
+    },
+    {
+      "kind": "single",
+      "feature": "close_above_ma20",
+      "operator": "==",
+      "threshold": true,
+      "positive_coverage": 0.6356,
+      "control_coverage": 0.4467,
+      "lift": 1.4229,
+      "precision_proxy": 0.5873
+    },
+    {
+      "kind": "single",
+      "feature": "turnover_1d",
+      "operator": ">=",
+      "threshold": 1.55,
+      "positive_coverage": 0.8978,
+      "control_coverage": 0.6333,
+      "lift": 1.4175,
+      "precision_proxy": 0.5864
+    },
+    {
+      "kind": "single",
+      "feature": "turnover_5d_avg",
+      "operator": ">=",
+      "threshold": 1.5396,
+      "positive_coverage": 0.8978,
+      "control_coverage": 0.6511,
+      "lift": 1.3788,
+      "precision_proxy": 0.5796
+    },
+    {
+      "kind": "single",
+      "feature": "ma5_gt_ma10",
+      "operator": "==",
+      "threshold": true,
+      "positive_coverage": 0.6667,
+      "control_coverage": 0.4844,
+      "lift": 1.3761,
+      "precision_proxy": 0.5792
+    },
+    {
+      "kind": "single",
+      "feature": "turnover_3d_avg",
+      "operator": ">=",
+      "threshold": 1.526,
+      "positive_coverage": 0.8978,
+      "control_coverage": 0.6556,
+      "lift": 1.3695,
+      "precision_proxy": 0.578
+    },
+    {
+      "kind": "single",
+      "feature": "turnover_10d_avg",
+      "operator": ">=",
+      "threshold": 1.5584,
+      "positive_coverage": 0.8978,
+      "control_coverage": 0.6622,
+      "lift": 1.3557,
+      "precision_proxy": 0.5755
+    },
+    {
+      "kind": "single",
+      "feature": "ma10_gt_ma20",
+      "operator": "==",
+      "threshold": true,
+      "positive_coverage": 0.6356,
+      "control_coverage": 0.4711,
+      "lift": 1.3491,
+      "precision_proxy": 0.5743
+    },
+    {
+      "kind": "single",
+      "feature": "close_above_ma10",
+      "operator": "==",
+      "threshold": true,
+      "positive_coverage": 0.5911,
+      "control_coverage": 0.4489,
+      "lift": 1.3168,
+      "precision_proxy": 0.5684
+    },
+    {
+      "kind": "single",
+      "feature": "turnover_5_vs_20",
+      "operator": ">=",
+      "threshold": 0.889262,
+      "positive_coverage": 0.7511,
+      "control_coverage": 0.5733,
+      "lift": 1.3101,
+      "precision_proxy": 0.5671
+    },
+    {
+      "kind": "single",
+      "feature": "volume_5_vs_20",
+      "operator": ">=",
+      "threshold": 0.889937,
+      "positive_coverage": 0.7511,
+      "control_coverage": 0.5778,
+      "lift": 1.3,
+      "precision_proxy": 0.5652
+    },
+    {
+      "kind": "single",
+      "feature": "range_1d_pct",
+      "operator": ">=",
+      "threshold": 2.450911,
+      "positive_coverage": 0.8978,
+      "control_coverage": 0.6933,
+      "lift": 1.2949,
+      "precision_proxy": 0.5642
+    },
+    {
+      "kind": "single",
+      "feature": "turnover_20d_avg",
+      "operator": ">=",
+      "threshold": 1.5637,
+      "positive_coverage": 0.8978,
+      "control_coverage": 0.6956,
+      "lift": 1.2907,
+      "precision_proxy": 0.5635
+    },
+    {
+      "kind": "single",
+      "feature": "up_days_5",
+      "operator": ">=",
+      "threshold": 3.0,
+      "positive_coverage": 0.5244,
+      "control_coverage": 0.4089,
+      "lift": 1.2826,
+      "precision_proxy": 0.5619
+    },
+    {
+      "kind": "single",
+      "feature": "ret_20d",
+      "operator": ">=",
+      "threshold": -4.049383,
+      "positive_coverage": 0.7511,
+      "control_coverage": 0.5911,
+      "lift": 1.2707,
+      "precision_proxy": 0.5596
+    },
+    {
+      "kind": "single",
+      "feature": "recent10_volatility_pct",
+      "operator": ">=",
+      "threshold": 1.854603,
+      "positive_coverage": 0.8978,
+      "control_coverage": 0.7267,
+      "lift": 1.2355,
+      "precision_proxy": 0.5527
+    }
+  ],
+  "pair_rules": [
+    {
+      "kind": "pair",
+      "rules": [
+        {
+          "kind": "single",
+          "feature": "turnover_5d_avg",
+          "operator": ">=",
+          "threshold": 5.37,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.1667,
+          "lift": 3.0133,
+          "precision_proxy": 0.7508
+        },
+        {
+          "kind": "single",
+          "feature": "ret_20d",
+          "operator": ">=",
+          "threshold": 6.362545,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.2289,
+          "lift": 2.1942,
+          "precision_proxy": 0.6869
+        }
+      ],
+      "positive_coverage": 0.3644,
+      "control_coverage": 0.0956,
+      "lift": 3.814,
+      "precision_proxy": 0.7923,
+      "stability": {
+        "split_date": "2026-06-03",
+        "train_positive_coverage": 0.3944,
+        "train_control_coverage": 0.1162,
+        "test_positive_coverage": 0.3133,
+        "test_control_coverage": 0.0602,
+        "test_lift": 5.2
+      }
+    },
+    {
+      "kind": "pair",
+      "rules": [
+        {
+          "kind": "single",
+          "feature": "turnover_1d",
+          "operator": ">=",
+          "threshold": 5.42,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.1711,
+          "lift": 2.9351,
+          "precision_proxy": 0.7459
+        },
+        {
+          "kind": "single",
+          "feature": "ret_20d",
+          "operator": ">=",
+          "threshold": 6.362545,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.2289,
+          "lift": 2.1942,
+          "precision_proxy": 0.6869
+        }
+      ],
+      "positive_coverage": 0.3556,
+      "control_coverage": 0.0933,
+      "lift": 3.8095,
+      "precision_proxy": 0.7921,
+      "stability": {
+        "split_date": "2026-06-03",
+        "train_positive_coverage": 0.3873,
+        "train_control_coverage": 0.1232,
+        "test_positive_coverage": 0.3012,
+        "test_control_coverage": 0.0422,
+        "test_lift": 7.1429
+      }
+    },
+    {
+      "kind": "pair",
+      "rules": [
+        {
+          "kind": "single",
+          "feature": "turnover_5d_avg",
+          "operator": ">=",
+          "threshold": 5.37,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.1667,
+          "lift": 3.0133,
+          "precision_proxy": 0.7508
+        },
+        {
+          "kind": "single",
+          "feature": "above_low20_pct",
+          "operator": ">=",
+          "threshold": 12.958671,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.2067,
+          "lift": 2.4301,
+          "precision_proxy": 0.7085
+        }
+      ],
+      "positive_coverage": 0.3911,
+      "control_coverage": 0.1044,
+      "lift": 3.7447,
+      "precision_proxy": 0.7892,
+      "stability": {
+        "split_date": "2026-06-03",
+        "train_positive_coverage": 0.4014,
+        "train_control_coverage": 0.1092,
+        "test_positive_coverage": 0.3735,
+        "test_control_coverage": 0.0964,
+        "test_lift": 3.875
+      }
+    },
+    {
+      "kind": "pair",
+      "rules": [
+        {
+          "kind": "single",
+          "feature": "above_low20_pct",
+          "operator": ">=",
+          "threshold": 12.958671,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.2067,
+          "lift": 2.4301,
+          "precision_proxy": 0.7085
+        },
+        {
+          "kind": "single",
+          "feature": "turnover_20d_avg",
+          "operator": ">=",
+          "threshold": 4.256,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.2467,
+          "lift": 2.036,
+          "precision_proxy": 0.6706
+        }
+      ],
+      "positive_coverage": 0.3511,
+      "control_coverage": 0.0956,
+      "lift": 3.6744,
+      "precision_proxy": 0.7861,
+      "stability": {
+        "split_date": "2026-06-03",
+        "train_positive_coverage": 0.3592,
+        "train_control_coverage": 0.1056,
+        "test_positive_coverage": 0.3373,
+        "test_control_coverage": 0.0783,
+        "test_lift": 4.3077
+      }
+    },
+    {
+      "kind": "pair",
+      "rules": [
+        {
+          "kind": "single",
+          "feature": "turnover_10d_avg",
+          "operator": ">=",
+          "threshold": 4.856,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.1978,
+          "lift": 2.5393,
+          "precision_proxy": 0.7175
+        },
+        {
+          "kind": "single",
+          "feature": "above_low20_pct",
+          "operator": ">=",
+          "threshold": 12.958671,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.2067,
+          "lift": 2.4301,
+          "precision_proxy": 0.7085
+        }
+      ],
+      "positive_coverage": 0.3733,
+      "control_coverage": 0.1022,
+      "lift": 3.6522,
+      "precision_proxy": 0.785,
+      "stability": {
+        "split_date": "2026-06-03",
+        "train_positive_coverage": 0.3944,
+        "train_control_coverage": 0.1092,
+        "test_positive_coverage": 0.3373,
+        "test_control_coverage": 0.0904,
+        "test_lift": 3.7333
+      }
+    },
+    {
+      "kind": "pair",
+      "rules": [
+        {
+          "kind": "single",
+          "feature": "turnover_10d_avg",
+          "operator": ">=",
+          "threshold": 4.856,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.1978,
+          "lift": 2.5393,
+          "precision_proxy": 0.7175
+        },
+        {
+          "kind": "single",
+          "feature": "ret_20d",
+          "operator": ">=",
+          "threshold": 6.362545,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.2289,
+          "lift": 2.1942,
+          "precision_proxy": 0.6869
+        }
+      ],
+      "positive_coverage": 0.3556,
+      "control_coverage": 0.0978,
+      "lift": 3.6364,
+      "precision_proxy": 0.7843,
+      "stability": {
+        "split_date": "2026-06-03",
+        "train_positive_coverage": 0.3873,
+        "train_control_coverage": 0.1232,
+        "test_positive_coverage": 0.3012,
+        "test_control_coverage": 0.0542,
+        "test_lift": 5.5556
+      }
+    },
+    {
+      "kind": "pair",
+      "rules": [
+        {
+          "kind": "single",
+          "feature": "turnover_5d_avg",
+          "operator": ">=",
+          "threshold": 5.37,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.1667,
+          "lift": 3.0133,
+          "precision_proxy": 0.7508
+        },
+        {
+          "kind": "single",
+          "feature": "above_low20_pct",
+          "operator": ">=",
+          "threshold": 5.015674,
+          "positive_coverage": 0.7511,
+          "control_coverage": 0.4933,
+          "lift": 1.5225,
+          "precision_proxy": 0.6036
+        }
+      ],
+      "positive_coverage": 0.4667,
+      "control_coverage": 0.1289,
+      "lift": 3.6207,
+      "precision_proxy": 0.7836,
+      "stability": {
+        "split_date": "2026-06-03",
+        "train_positive_coverage": 0.4859,
+        "train_control_coverage": 0.1373,
+        "test_positive_coverage": 0.4337,
+        "test_control_coverage": 0.1145,
+        "test_lift": 3.7895
+      }
+    },
+    {
+      "kind": "pair",
+      "rules": [
+        {
+          "kind": "single",
+          "feature": "turnover_1d",
+          "operator": ">=",
+          "threshold": 5.42,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.1711,
+          "lift": 2.9351,
+          "precision_proxy": 0.7459
+        },
+        {
+          "kind": "single",
+          "feature": "range_1d_pct",
+          "operator": ">=",
+          "threshold": 5.506608,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.2222,
+          "lift": 2.26,
+          "precision_proxy": 0.6933
+        }
+      ],
+      "positive_coverage": 0.4089,
+      "control_coverage": 0.1133,
+      "lift": 3.6078,
+      "precision_proxy": 0.783,
+      "stability": {
+        "split_date": "2026-06-03",
+        "train_positive_coverage": 0.3803,
+        "train_control_coverage": 0.1092,
+        "test_positive_coverage": 0.4578,
+        "test_control_coverage": 0.1205,
+        "test_lift": 3.8
+      }
+    },
+    {
+      "kind": "pair",
+      "rules": [
+        {
+          "kind": "single",
+          "feature": "turnover_1d",
+          "operator": ">=",
+          "threshold": 5.42,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.1711,
+          "lift": 2.9351,
+          "precision_proxy": 0.7459
+        },
+        {
+          "kind": "single",
+          "feature": "above_low20_pct",
+          "operator": ">=",
+          "threshold": 12.958671,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.2067,
+          "lift": 2.4301,
+          "precision_proxy": 0.7085
+        }
+      ],
+      "positive_coverage": 0.3822,
+      "control_coverage": 0.1067,
+      "lift": 3.5833,
+      "precision_proxy": 0.7818,
+      "stability": {
+        "split_date": "2026-06-03",
+        "train_positive_coverage": 0.3944,
+        "train_control_coverage": 0.1197,
+        "test_positive_coverage": 0.3614,
+        "test_control_coverage": 0.0843,
+        "test_lift": 4.2857
+      }
+    },
+    {
+      "kind": "pair",
+      "rules": [
+        {
+          "kind": "single",
+          "feature": "turnover_1d",
+          "operator": ">=",
+          "threshold": 5.42,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.1711,
+          "lift": 2.9351,
+          "precision_proxy": 0.7459
+        },
+        {
+          "kind": "single",
+          "feature": "above_low20_pct",
+          "operator": ">=",
+          "threshold": 5.015674,
+          "positive_coverage": 0.7511,
+          "control_coverage": 0.4933,
+          "lift": 1.5225,
+          "precision_proxy": 0.6036
+        }
+      ],
+      "positive_coverage": 0.4667,
+      "control_coverage": 0.1311,
+      "lift": 3.5593,
+      "precision_proxy": 0.7807,
+      "stability": {
+        "split_date": "2026-06-03",
+        "train_positive_coverage": 0.4718,
+        "train_control_coverage": 0.1479,
+        "test_positive_coverage": 0.4578,
+        "test_control_coverage": 0.1024,
+        "test_lift": 4.4706
+      }
+    },
+    {
+      "kind": "pair",
+      "rules": [
+        {
+          "kind": "single",
+          "feature": "turnover_3d_avg",
+          "operator": ">=",
+          "threshold": 5.256667,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.1711,
+          "lift": 2.9351,
+          "precision_proxy": 0.7459
+        },
+        {
+          "kind": "single",
+          "feature": "ret_20d",
+          "operator": ">=",
+          "threshold": 6.362545,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.2289,
+          "lift": 2.1942,
+          "precision_proxy": 0.6869
+        }
+      ],
+      "positive_coverage": 0.3689,
+      "control_coverage": 0.1044,
+      "lift": 3.5319,
+      "precision_proxy": 0.7793,
+      "stability": {
+        "split_date": "2026-06-03",
+        "train_positive_coverage": 0.3944,
+        "train_control_coverage": 0.1303,
+        "test_positive_coverage": 0.3253,
+        "test_control_coverage": 0.0602,
+        "test_lift": 5.4
+      }
+    },
+    {
+      "kind": "pair",
+      "rules": [
+        {
+          "kind": "single",
+          "feature": "turnover_5d_avg",
+          "operator": ">=",
+          "threshold": 5.37,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.1667,
+          "lift": 3.0133,
+          "precision_proxy": 0.7508
+        },
+        {
+          "kind": "single",
+          "feature": "range_1d_pct",
+          "operator": ">=",
+          "threshold": 5.506608,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.2222,
+          "lift": 2.26,
+          "precision_proxy": 0.6933
+        }
+      ],
+      "positive_coverage": 0.3689,
+      "control_coverage": 0.1067,
+      "lift": 3.4583,
+      "precision_proxy": 0.7757,
+      "stability": {
+        "split_date": "2026-06-03",
+        "train_positive_coverage": 0.3451,
+        "train_control_coverage": 0.0986,
+        "test_positive_coverage": 0.4096,
+        "test_control_coverage": 0.1205,
+        "test_lift": 3.4
+      }
+    },
+    {
+      "kind": "pair",
+      "rules": [
+        {
+          "kind": "single",
+          "feature": "turnover_3d_avg",
+          "operator": ">=",
+          "threshold": 5.256667,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.1711,
+          "lift": 2.9351,
+          "precision_proxy": 0.7459
+        },
+        {
+          "kind": "single",
+          "feature": "above_low20_pct",
+          "operator": ">=",
+          "threshold": 12.958671,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.2067,
+          "lift": 2.4301,
+          "precision_proxy": 0.7085
+        }
+      ],
+      "positive_coverage": 0.3867,
+      "control_coverage": 0.1133,
+      "lift": 3.4118,
+      "precision_proxy": 0.7733,
+      "stability": {
+        "split_date": "2026-06-03",
+        "train_positive_coverage": 0.3944,
+        "train_control_coverage": 0.1232,
+        "test_positive_coverage": 0.3735,
+        "test_control_coverage": 0.0964,
+        "test_lift": 3.875
+      }
+    },
+    {
+      "kind": "pair",
+      "rules": [
+        {
+          "kind": "single",
+          "feature": "above_low20_pct",
+          "operator": ">=",
+          "threshold": 12.958671,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.2067,
+          "lift": 2.4301,
+          "precision_proxy": 0.7085
+        },
+        {
+          "kind": "single",
+          "feature": "range_1d_pct",
+          "operator": ">=",
+          "threshold": 5.506608,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.2222,
+          "lift": 2.26,
+          "precision_proxy": 0.6933
+        }
+      ],
+      "positive_coverage": 0.3511,
+      "control_coverage": 0.1044,
+      "lift": 3.3617,
+      "precision_proxy": 0.7707,
+      "stability": {
+        "split_date": "2026-06-03",
+        "train_positive_coverage": 0.3451,
+        "train_control_coverage": 0.1092,
+        "test_positive_coverage": 0.3614,
+        "test_control_coverage": 0.0964,
+        "test_lift": 3.75
+      }
+    },
+    {
+      "kind": "pair",
+      "rules": [
+        {
+          "kind": "single",
+          "feature": "turnover_5d_avg",
+          "operator": ">=",
+          "threshold": 5.37,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.1667,
+          "lift": 3.0133,
+          "precision_proxy": 0.7508
+        },
+        {
+          "kind": "single",
+          "feature": "close_above_ma20",
+          "operator": "==",
+          "threshold": true,
+          "positive_coverage": 0.6356,
+          "control_coverage": 0.4467,
+          "lift": 1.4229,
+          "precision_proxy": 0.5873
+        }
+      ],
+      "positive_coverage": 0.3733,
+      "control_coverage": 0.1111,
+      "lift": 3.36,
+      "precision_proxy": 0.7706,
+      "stability": {
+        "split_date": "2026-06-03",
+        "train_positive_coverage": 0.4014,
+        "train_control_coverage": 0.1232,
+        "test_positive_coverage": 0.3253,
+        "test_control_coverage": 0.0904,
+        "test_lift": 3.6
+      }
+    },
+    {
+      "kind": "pair",
+      "rules": [
+        {
+          "kind": "single",
+          "feature": "turnover_1d",
+          "operator": ">=",
+          "threshold": 5.42,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.1711,
+          "lift": 2.9351,
+          "precision_proxy": 0.7459
+        },
+        {
+          "kind": "single",
+          "feature": "close_above_ma20",
+          "operator": "==",
+          "threshold": true,
+          "positive_coverage": 0.6356,
+          "control_coverage": 0.4467,
+          "lift": 1.4229,
+          "precision_proxy": 0.5873
+        }
+      ],
+      "positive_coverage": 0.3733,
+      "control_coverage": 0.1111,
+      "lift": 3.36,
+      "precision_proxy": 0.7706
+    },
+    {
+      "kind": "pair",
+      "rules": [
+        {
+          "kind": "single",
+          "feature": "turnover_3d_avg",
+          "operator": ">=",
+          "threshold": 5.256667,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.1711,
+          "lift": 2.9351,
+          "precision_proxy": 0.7459
+        },
+        {
+          "kind": "single",
+          "feature": "range_1d_pct",
+          "operator": ">=",
+          "threshold": 5.506608,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.2222,
+          "lift": 2.26,
+          "precision_proxy": 0.6933
+        }
+      ],
+      "positive_coverage": 0.3733,
+      "control_coverage": 0.1111,
+      "lift": 3.36,
+      "precision_proxy": 0.7706
+    },
+    {
+      "kind": "pair",
+      "rules": [
+        {
+          "kind": "single",
+          "feature": "turnover_3d_avg",
+          "operator": ">=",
+          "threshold": 5.256667,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.1711,
+          "lift": 2.9351,
+          "precision_proxy": 0.7459
+        },
+        {
+          "kind": "single",
+          "feature": "above_low20_pct",
+          "operator": ">=",
+          "threshold": 5.015674,
+          "positive_coverage": 0.7511,
+          "control_coverage": 0.4933,
+          "lift": 1.5225,
+          "precision_proxy": 0.6036
+        }
+      ],
+      "positive_coverage": 0.4622,
+      "control_coverage": 0.14,
+      "lift": 3.3016,
+      "precision_proxy": 0.7675
+    },
+    {
+      "kind": "pair",
+      "rules": [
+        {
+          "kind": "single",
+          "feature": "turnover_3d_avg",
+          "operator": ">=",
+          "threshold": 5.256667,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.1711,
+          "lift": 2.9351,
+          "precision_proxy": 0.7459
+        },
+        {
+          "kind": "single",
+          "feature": "close_above_ma20",
+          "operator": "==",
+          "threshold": true,
+          "positive_coverage": 0.6356,
+          "control_coverage": 0.4467,
+          "lift": 1.4229,
+          "precision_proxy": 0.5873
+        }
+      ],
+      "positive_coverage": 0.3733,
+      "control_coverage": 0.1156,
+      "lift": 3.2308,
+      "precision_proxy": 0.7636
+    },
+    {
+      "kind": "pair",
+      "rules": [
+        {
+          "kind": "single",
+          "feature": "turnover_5d_avg",
+          "operator": ">=",
+          "threshold": 5.37,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.1667,
+          "lift": 3.0133,
+          "precision_proxy": 0.7508
+        },
+        {
+          "kind": "single",
+          "feature": "turnover_1d",
+          "operator": ">=",
+          "threshold": 5.42,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.1711,
+          "lift": 2.9351,
+          "precision_proxy": 0.7459
+        }
+      ],
+      "positive_coverage": 0.4578,
+      "control_coverage": 0.1422,
+      "lift": 3.2188,
+      "precision_proxy": 0.763
+    },
+    {
+      "kind": "pair",
+      "rules": [
+        {
+          "kind": "single",
+          "feature": "turnover_10d_avg",
+          "operator": ">=",
+          "threshold": 4.856,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.1978,
+          "lift": 2.5393,
+          "precision_proxy": 0.7175
+        },
+        {
+          "kind": "single",
+          "feature": "above_low20_pct",
+          "operator": ">=",
+          "threshold": 5.015674,
+          "positive_coverage": 0.7511,
+          "control_coverage": 0.4933,
+          "lift": 1.5225,
+          "precision_proxy": 0.6036
+        }
+      ],
+      "positive_coverage": 0.4578,
+      "control_coverage": 0.1422,
+      "lift": 3.2188,
+      "precision_proxy": 0.763
+    },
+    {
+      "kind": "pair",
+      "rules": [
+        {
+          "kind": "single",
+          "feature": "turnover_1d",
+          "operator": ">=",
+          "threshold": 5.42,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.1711,
+          "lift": 2.9351,
+          "precision_proxy": 0.7459
+        },
+        {
+          "kind": "single",
+          "feature": "turnover_rising_5_vs_20",
+          "operator": "==",
+          "threshold": true,
+          "positive_coverage": 0.5956,
+          "control_coverage": 0.4133,
+          "lift": 1.4409,
+          "precision_proxy": 0.5903
+        }
+      ],
+      "positive_coverage": 0.3689,
+      "control_coverage": 0.1156,
+      "lift": 3.1923,
+      "precision_proxy": 0.7615
+    },
+    {
+      "kind": "pair",
+      "rules": [
+        {
+          "kind": "single",
+          "feature": "turnover_5d_avg",
+          "operator": ">=",
+          "threshold": 5.37,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.1667,
+          "lift": 3.0133,
+          "precision_proxy": 0.7508
+        },
+        {
+          "kind": "single",
+          "feature": "turnover_rising_5_vs_20",
+          "operator": "==",
+          "threshold": true,
+          "positive_coverage": 0.5956,
+          "control_coverage": 0.4133,
+          "lift": 1.4409,
+          "precision_proxy": 0.5903
+        }
+      ],
+      "positive_coverage": 0.36,
+      "control_coverage": 0.1133,
+      "lift": 3.1765,
+      "precision_proxy": 0.7606
+    },
+    {
+      "kind": "pair",
+      "rules": [
+        {
+          "kind": "single",
+          "feature": "above_low20_pct",
+          "operator": ">=",
+          "threshold": 12.958671,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.2067,
+          "lift": 2.4301,
+          "precision_proxy": 0.7085
+        },
+        {
+          "kind": "single",
+          "feature": "turnover_20d_avg",
+          "operator": ">=",
+          "threshold": 2.618,
+          "positive_coverage": 0.7511,
+          "control_coverage": 0.4489,
+          "lift": 1.6733,
+          "precision_proxy": 0.6259
+        }
+      ],
+      "positive_coverage": 0.4578,
+      "control_coverage": 0.1444,
+      "lift": 3.1692,
+      "precision_proxy": 0.7601
+    },
+    {
+      "kind": "pair",
+      "rules": [
+        {
+          "kind": "single",
+          "feature": "above_low20_pct",
+          "operator": ">=",
+          "threshold": 12.958671,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.2067,
+          "lift": 2.4301,
+          "precision_proxy": 0.7085
+        },
+        {
+          "kind": "single",
+          "feature": "turnover_5d_avg",
+          "operator": ">=",
+          "threshold": 2.778,
+          "positive_coverage": 0.7511,
+          "control_coverage": 0.3867,
+          "lift": 1.9425,
+          "precision_proxy": 0.6602
+        }
+      ],
+      "positive_coverage": 0.4756,
+      "control_coverage": 0.1511,
+      "lift": 3.1471,
+      "precision_proxy": 0.7589
+    },
+    {
+      "kind": "pair",
+      "rules": [
+        {
+          "kind": "single",
+          "feature": "turnover_5d_avg",
+          "operator": ">=",
+          "threshold": 5.37,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.1667,
+          "lift": 3.0133,
+          "precision_proxy": 0.7508
+        },
+        {
+          "kind": "single",
+          "feature": "turnover_3d_avg",
+          "operator": ">=",
+          "threshold": 5.256667,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.1711,
+          "lift": 2.9351,
+          "precision_proxy": 0.7459
+        }
+      ],
+      "positive_coverage": 0.48,
+      "control_coverage": 0.1533,
+      "lift": 3.1304,
+      "precision_proxy": 0.7579
+    },
+    {
+      "kind": "pair",
+      "rules": [
+        {
+          "kind": "single",
+          "feature": "turnover_3d_avg",
+          "operator": ">=",
+          "threshold": 5.256667,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.1711,
+          "lift": 2.9351,
+          "precision_proxy": 0.7459
+        },
+        {
+          "kind": "single",
+          "feature": "turnover_20d_avg",
+          "operator": ">=",
+          "threshold": 4.256,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.2467,
+          "lift": 2.036,
+          "precision_proxy": 0.6706
+        }
+      ],
+      "positive_coverage": 0.4444,
+      "control_coverage": 0.1422,
+      "lift": 3.125,
+      "precision_proxy": 0.7576
+    },
+    {
+      "kind": "pair",
+      "rules": [
+        {
+          "kind": "single",
+          "feature": "turnover_3d_avg",
+          "operator": ">=",
+          "threshold": 5.256667,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.1711,
+          "lift": 2.9351,
+          "precision_proxy": 0.7459
+        },
+        {
+          "kind": "single",
+          "feature": "turnover_10d_avg",
+          "operator": ">=",
+          "threshold": 4.856,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.1978,
+          "lift": 2.5393,
+          "precision_proxy": 0.7175
+        }
+      ],
+      "positive_coverage": 0.4622,
+      "control_coverage": 0.1489,
+      "lift": 3.1045,
+      "precision_proxy": 0.7564
+    },
+    {
+      "kind": "pair",
+      "rules": [
+        {
+          "kind": "single",
+          "feature": "above_low20_pct",
+          "operator": ">=",
+          "threshold": 12.958671,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.2067,
+          "lift": 2.4301,
+          "precision_proxy": 0.7085
+        },
+        {
+          "kind": "single",
+          "feature": "turnover_3d_avg",
+          "operator": ">=",
+          "threshold": 2.736667,
+          "positive_coverage": 0.7511,
+          "control_coverage": 0.3844,
+          "lift": 1.9538,
+          "precision_proxy": 0.6614
+        }
+      ],
+      "positive_coverage": 0.4622,
+      "control_coverage": 0.1489,
+      "lift": 3.1045,
+      "precision_proxy": 0.7564
+    },
+    {
+      "kind": "pair",
+      "rules": [
+        {
+          "kind": "single",
+          "feature": "turnover_5d_avg",
+          "operator": ">=",
+          "threshold": 5.37,
+          "positive_coverage": 0.5022,
+          "control_coverage": 0.1667,
+          "lift": 3.0133,
+          "precision_proxy": 0.7508
+        },
+        {
+          "kind": "single",
+          "feature": "recent10_volatility_pct",
+          "operator": ">=",
+          "threshold": 2.813794,
+          "positive_coverage": 0.7511,
+          "control_coverage": 0.5133,
+          "lift": 1.4632,
+          "precision_proxy": 0.594
+        }
+      ],
+      "positive_coverage": 0.4756,
+      "control_coverage": 0.1533,
+      "lift": 3.1014,
+      "precision_proxy": 0.7562
+    }
+  ]
+}
