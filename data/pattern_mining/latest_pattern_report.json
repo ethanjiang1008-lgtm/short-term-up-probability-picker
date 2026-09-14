@@ -1,33 +1,30 @@
 {
+  "version": "V2",
   "analysis_date": "2026-09-14",
   "lookback_days": 370,
   "cutoff_date": "2025-09-09",
   "minimum_consecutive_limit_up": 2,
-  "sample_count": 1837,
-  "unique_stocks": 1079,
+  "positive_samples": 101,
+  "unique_positive_stocks": 53,
+  "control_samples": 202,
   "common_ratio_threshold": 0.8,
-  "common_patterns": [
-    {
-      "feature": "turnover_1d",
-      "type": "range",
-      "lower": 0,
-      "upper": 1,
-      "coverage": 1.0,
-      "matched": 1837,
-      "total": 1837
-    },
-    {
-      "feature": "turnover_5d_avg",
-      "type": "range",
-      "lower": 0,
-      "upper": 1,
-      "coverage": 1.0,
-      "matched": 1837,
-      "total": 1837
-    }
-  ],
+  "minimum_positive_samples": 30,
+  "common_patterns_80pct": [],
+  "discriminating_patterns": [],
   "current_circ_mcap_bucket_count": {
-    "<30亿": 1837
+    "<30亿": 97,
+    "30-80亿": 4
   },
-  "note": "流通市值为当前值，仅做补充，不参与历史启动规律的判定；历史特征全部不使用启动当日及之后K线。"
+  "data_sources": {
+    "daily_kline_price_volume": "Eastmoney public daily K-line",
+    "historical_turnover_rate": "Eastmoney daily K-line turnover field",
+    "current_float_mcap": "Sina current ranking snapshot; static cross-sectional label only"
+  },
+  "method_notes": [
+    "正样本：主板非ST股票，连续至少2个涨停的第一板作为启动日。",
+    "启动日前特征仅使用T-1及更早日K。",
+    "对照组从相同启动日随机抽取同样主板股票，避免把大盘日期效应误当成个股规律。",
+    "80%覆盖率只有在对照组覆盖明显更低时才进入discriminating_patterns。",
+    "当前流通市值不是历史市值，因此不参与启动规律判定。"
+  ]
 }
