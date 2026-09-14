@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - 'scripts/limitup_pattern_miner.py'
+      - 'scripts/analyze_mined_patterns.py'
       - '.github/workflows/limitup-pattern-mining.yml'
 
 permissions:
@@ -28,6 +29,8 @@ jobs:
         run: pip install -r requirements.txt
       - name: Mine startup patterns
         run: python scripts/limitup_pattern_miner.py
+      - name: Analyze advanced rules
+        run: python scripts/analyze_mined_patterns.py
       - name: Commit mining result
         run: |
           git config user.name 'github-actions[bot]'
