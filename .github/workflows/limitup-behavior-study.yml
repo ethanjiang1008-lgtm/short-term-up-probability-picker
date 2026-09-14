@@ -2,6 +2,11 @@ name: A股-连板启动前行为研究（独立）
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/limitup_behavior_study.py'
+      - '.github/workflows/limitup-behavior-study.yml'
 
 permissions:
   contents: write
