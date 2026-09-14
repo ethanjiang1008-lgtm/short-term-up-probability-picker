@@ -1,0 +1,45 @@
+name: A股-尾盘预测次日验证
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 15:30 Beijing time: after the A-share market has closed and
+    # the daily K-line close is expected to be available.
+    - cron: "30 7 * * 1-5"
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: tail-validation
+  cancel-in-progress: true
+
+jobs:
+  validate-tail:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Validate previous trading-day prediction
+        run: python scripts/prediction_review.py
+      - name: Normalize validation summary (focus stocks only)
+        run: python scripts/validation_summary.py
+      - name: Commit validation result
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f data/validation
+          if [ -d reports ]; then git add -f reports/*.xlsx; fi
+          git diff --cached --quiet || git commit -m "data: update tail validation"
+          git pull --rebase origin main
+          git push
+      - name: Trigger Pages publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --repo "${{ github.repository }}" --ref main
