@@ -1,0 +1,33 @@
+{
+  "analysis_date": "2026-09-14",
+  "lookback_days": 370,
+  "cutoff_date": "2025-09-09",
+  "minimum_consecutive_limit_up": 2,
+  "sample_count": 1837,
+  "unique_stocks": 1079,
+  "common_ratio_threshold": 0.8,
+  "common_patterns": [
+    {
+      "feature": "turnover_1d",
+      "type": "range",
+      "lower": 0,
+      "upper": 1,
+      "coverage": 1.0,
+      "matched": 1837,
+      "total": 1837
+    },
+    {
+      "feature": "turnover_5d_avg",
+      "type": "range",
+      "lower": 0,
+      "upper": 1,
+      "coverage": 1.0,
+      "matched": 1837,
+      "total": 1837
+    }
+  ],
+  "current_circ_mcap_bucket_count": {
+    "<30亿": 1837
+  },
+  "note": "流通市值为当前值，仅做补充，不参与历史启动规律的判定；历史特征全部不使用启动当日及之后K线。"
+}
