@@ -1,0 +1,40 @@
+name: A股-首板一进二-第二轮日K封板结构代理回测
+
+on:
+  push:
+    branches:
+      - backtest/one-to-two-round2-20260919
+    paths:
+      - scripts/one_to_two_daily_structure_backtest.py
+      - .github/workflows/one-to-two-daily-structure-backtest.yml
+  pull_request:
+    branches:
+      - main
+    paths:
+      - scripts/one_to_two_daily_structure_backtest.py
+      - .github/workflows/one-to-two-daily-structure-backtest.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  backtest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install requests
+      - name: Run daily structure proxy backtest
+        run: |
+          python scripts/one_to_two_daily_structure_backtest.py --start 2025-10-16 --end 2026-09-18 --workers 10
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        with:
+          name: one-to-two-daily-structure-round2-20260919
+          path: data/backtest_one_to_two_round2_daily_proxy
+          if-no-files-found: error
