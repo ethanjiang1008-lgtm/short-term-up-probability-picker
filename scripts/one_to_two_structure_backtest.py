@@ -373,7 +373,8 @@ def main():
             "two": sum(s >= 2 for _, s in rows),
         }
 
-    rows = []
+    # 先构造首板事件的基础特征，再并发拉取首板当天5分钟结构，避免串行网络请求成为瓶颈。
+    pending_rows = []
     for d, code, name, i, bs in events:
         nd = next_day.get(d)
         if not nd:
@@ -399,21 +400,32 @@ def main():
             "prev_market_1to2_rate": prate,
         }
         r.update(base_feats(bs, i))
-        if r:
-            for k in BASE_FEATURES:
-                r[k] = f(r.get(k))
+        prev_close = f(bs[i - 1].get("close"))
+        for k in BASE_FEATURES:
+            r[k] = f(r.get(k))
+        pending_rows.append((r, code, d, prev_close))
 
-            # 与首板结构严格对应：只读取首板当天5分钟数据。
-            prev_close = f(bs[i - 1].get("close"))
-            try:
-                st = minute_structure(code, d, prev_close)
-            except Exception as exc:
-                print("minute_failed", code, d, exc)
-                st = {"structure_available": 0}
-            r.update(st)
-            for k in STRUCT_FEATURES:
-                r[k] = f(r.get(k))
-            rows.append(r)
+    structures = {}
+    if pending_rows:
+        with ThreadPoolExecutor(max_workers=min(max(args.workers, 4), 10)) as ex:
+            futures = {
+                ex.submit(minute_structure, code, d, prev_close): (code, d)
+                for _, code, d, prev_close in pending_rows
+            }
+            for fut in as_completed(futures):
+                key = futures[fut]
+                try:
+                    structures[key] = fut.result()
+                except Exception as exc:
+                    print("minute_failed", key[0], key[1], exc)
+                    structures[key] = {"structure_available": 0}
+
+    rows = []
+    for r, code, d, _ in pending_rows:
+        r.update(structures.get((code, d), {"structure_available": 0}))
+        for k in STRUCT_FEATURES:
+            r[k] = f(r.get(k))
+        rows.append(r)
 
     rows.sort(key=lambda x: (x["date"], x["code"]))
     dates = sorted({r["date"] for r in rows})
