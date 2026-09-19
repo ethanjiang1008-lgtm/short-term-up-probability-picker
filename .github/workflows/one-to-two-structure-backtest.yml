@@ -7,6 +7,12 @@ on:
     paths:
       - scripts/one_to_two_structure_backtest.py
       - .github/workflows/one-to-two-structure-backtest.yml
+  pull_request:
+    branches:
+      - main
+    paths:
+      - scripts/one_to_two_structure_backtest.py
+      - .github/workflows/one-to-two-structure-backtest.yml
   workflow_dispatch:
 
 permissions:
