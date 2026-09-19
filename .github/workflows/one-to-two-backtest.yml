@@ -1,0 +1,39 @@
+name: A股-首板一进二历史回测
+
+on:
+  push:
+    branches:
+      - backtest/one-to-two-20260919
+    paths:
+      - scripts/one_to_two_backtest.py
+      - .github/workflows/one-to-two-backtest.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  backtest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install requests
+
+      - name: Run one-to-two historical backtest
+        run: |
+          python scripts/one_to_two_backtest.py --start 2025-10-16 --end 2026-09-18 --workers 10
+
+      - name: Upload backtest results
+        uses: actions/upload-artifact@v4
+        with:
+          name: one-to-two-backtest-20260919
+          path: data/backtest_one_to_two
+          if-no-files-found: error
