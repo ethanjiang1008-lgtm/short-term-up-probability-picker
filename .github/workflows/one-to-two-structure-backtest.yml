@@ -1,0 +1,34 @@
+name: A股-首板一进二-第二轮封板结构回测
+
+on:
+  push:
+    branches:
+      - backtest/one-to-two-20260919
+    paths:
+      - scripts/one_to_two_structure_backtest.py
+      - .github/workflows/one-to-two-structure-backtest.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  backtest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install requests
+      - name: Run round2 seal-structure backtest
+        run: |
+          python scripts/one_to_two_structure_backtest.py --start 2025-10-16 --end 2026-09-18 --workers 10
+      - name: Upload round2 results
+        uses: actions/upload-artifact@v4
+        with:
+          name: one-to-two-structure-round2-20260919
+          path: data/backtest_one_to_two_round2
+          if-no-files-found: error
