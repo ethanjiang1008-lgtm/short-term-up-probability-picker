@@ -1,6 +1,6 @@
 [
   {
-    "date": "2026-09-24",
+    "date": "2026-09-25",
     "code": "603073",
     "name": "彩蝶实业",
     "today_close": 18.88,
@@ -34,7 +34,7 @@
       "exclude_st": true
     },
     "data_quality": {
-      "date": "2026-09-24",
+      "date": "2026-09-25",
       "raw_market_rows": 5568,
       "main_board_rows": 3123,
       "eligible_price_mcap_turnover_rows": 2594,
@@ -97,7 +97,7 @@
       },
       "status": "OK",
       "blocking_reason": null,
-      "captured_at_utc": "2026-09-24T12:11:48.382326+00:00"
+      "captured_at_utc": "2026-09-25T12:12:22.255478+00:00"
     },
     "components": {
       "base_strength": 91.75,
@@ -138,10 +138,10 @@
       "consecutive_up_days": 7,
       "latest_turnover": 0.0
     },
-    "captured_at_utc": "2026-09-24T12:11:48.382326+00:00"
+    "captured_at_utc": "2026-09-25T12:12:22.255478+00:00"
   },
   {
-    "date": "2026-09-24",
+    "date": "2026-09-25",
     "code": "002005",
     "name": "德豪润达",
     "today_close": 2.8,
@@ -175,7 +175,7 @@
       "exclude_st": true
     },
     "data_quality": {
-      "date": "2026-09-24",
+      "date": "2026-09-25",
       "raw_market_rows": 5568,
       "main_board_rows": 3123,
       "eligible_price_mcap_turnover_rows": 2594,
@@ -238,7 +238,7 @@
       },
       "status": "OK",
       "blocking_reason": null,
-      "captured_at_utc": "2026-09-24T12:11:48.382326+00:00"
+      "captured_at_utc": "2026-09-25T12:12:22.255478+00:00"
     },
     "components": {
       "base_strength": 97.08,
@@ -279,6 +279,6 @@
       "consecutive_up_days": 1,
       "latest_turnover": 0.0
     },
-    "captured_at_utc": "2026-09-24T12:11:48.382326+00:00"
+    "captured_at_utc": "2026-09-25T12:12:22.255478+00:00"
   }
 ]

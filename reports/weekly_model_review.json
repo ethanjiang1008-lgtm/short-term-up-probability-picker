@@ -1,18 +1,18 @@
 {
-  "samples": 11874,
-  "win_rate": 0.4642,
-  "avg_return_pct": -0.0236,
-  "strong_up_count": 790,
-  "failure_count": 6362,
-  "focus_samples": 36,
-  "focus_win_rate": 0.3056,
+  "samples": 24180,
+  "win_rate": 0.4636,
+  "avg_return_pct": 0.0798,
+  "strong_up_count": 1935,
+  "failure_count": 12971,
+  "focus_samples": 262,
+  "focus_win_rate": 0.4542,
   "failure_tag_counts": {
-    "短期过热/乖离偏高": 277,
-    "尾盘加速过快": 147,
-    "放量风险": 319,
-    "市场环境偏弱": 3141,
-    "高换手风险": 137,
-    "趋势确认不足": 4308,
-    "未命中预设风险标签": 730
+    "短期过热/乖离偏高": 961,
+    "尾盘加速过快": 678,
+    "放量风险": 668,
+    "市场环境偏弱": 5128,
+    "高换手风险": 301,
+    "趋势确认不足": 9928,
+    "未命中预设风险标签": 986
   }
 }
