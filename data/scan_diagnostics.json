@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-30",
+  "date": "2026-10-01",
   "raw_market_rows": 5571,
   "main_board_rows": 3123,
   "eligible_price_mcap_turnover_rows": 2633,
@@ -62,5 +62,5 @@
   },
   "status": "OK",
   "blocking_reason": null,
-  "captured_at_utc": "2026-09-30T13:08:54.379984+00:00"
+  "captured_at_utc": "2026-10-01T13:52:35.149271+00:00"
 }
