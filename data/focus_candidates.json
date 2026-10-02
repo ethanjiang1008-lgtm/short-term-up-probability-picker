@@ -1,6 +1,6 @@
 [
   {
-    "date": "2026-10-01",
+    "date": "2026-10-02",
     "code": "603073",
     "name": "彩蝶实业",
     "today_close": 20.88,
@@ -34,7 +34,7 @@
       "exclude_st": true
     },
     "data_quality": {
-      "date": "2026-10-01",
+      "date": "2026-10-02",
       "raw_market_rows": 5571,
       "main_board_rows": 3123,
       "eligible_price_mcap_turnover_rows": 2633,
@@ -97,7 +97,7 @@
       },
       "status": "OK",
       "blocking_reason": null,
-      "captured_at_utc": "2026-10-01T13:52:35.149271+00:00"
+      "captured_at_utc": "2026-10-02T13:07:08.027488+00:00"
     },
     "components": {
       "base_strength": 100.0,
@@ -138,10 +138,10 @@
       "consecutive_up_days": 1,
       "latest_turnover": 0.0
     },
-    "captured_at_utc": "2026-10-01T13:52:35.149271+00:00"
+    "captured_at_utc": "2026-10-02T13:07:08.027488+00:00"
   },
   {
-    "date": "2026-10-01",
+    "date": "2026-10-02",
     "code": "600606",
     "name": "绿地控股",
     "today_close": 1.54,
@@ -175,7 +175,7 @@
       "exclude_st": true
     },
     "data_quality": {
-      "date": "2026-10-01",
+      "date": "2026-10-02",
       "raw_market_rows": 5571,
       "main_board_rows": 3123,
       "eligible_price_mcap_turnover_rows": 2633,
@@ -238,7 +238,7 @@
       },
       "status": "OK",
       "blocking_reason": null,
-      "captured_at_utc": "2026-10-01T13:52:35.149271+00:00"
+      "captured_at_utc": "2026-10-02T13:07:08.027488+00:00"
     },
     "components": {
       "base_strength": 94.57,
@@ -279,10 +279,10 @@
       "consecutive_up_days": 2,
       "latest_turnover": 0.0
     },
-    "captured_at_utc": "2026-10-01T13:52:35.149271+00:00"
+    "captured_at_utc": "2026-10-02T13:07:08.027488+00:00"
   },
   {
-    "date": "2026-10-01",
+    "date": "2026-10-02",
     "code": "600325",
     "name": "华发股份",
     "today_close": 2.92,
@@ -316,7 +316,7 @@
       "exclude_st": true
     },
     "data_quality": {
-      "date": "2026-10-01",
+      "date": "2026-10-02",
       "raw_market_rows": 5571,
       "main_board_rows": 3123,
       "eligible_price_mcap_turnover_rows": 2633,
@@ -379,7 +379,7 @@
       },
       "status": "OK",
       "blocking_reason": null,
-      "captured_at_utc": "2026-10-01T13:52:35.149271+00:00"
+      "captured_at_utc": "2026-10-02T13:07:08.027488+00:00"
     },
     "components": {
       "base_strength": 95.5,
@@ -420,10 +420,10 @@
       "consecutive_up_days": 0,
       "latest_turnover": 0.0
     },
-    "captured_at_utc": "2026-10-01T13:52:35.149271+00:00"
+    "captured_at_utc": "2026-10-02T13:07:08.027488+00:00"
   },
   {
-    "date": "2026-10-01",
+    "date": "2026-10-02",
     "code": "002836",
     "name": "新宏泽",
     "today_close": 12.12,
@@ -457,7 +457,7 @@
       "exclude_st": true
     },
     "data_quality": {
-      "date": "2026-10-01",
+      "date": "2026-10-02",
       "raw_market_rows": 5571,
       "main_board_rows": 3123,
       "eligible_price_mcap_turnover_rows": 2633,
@@ -520,7 +520,7 @@
       },
       "status": "OK",
       "blocking_reason": null,
-      "captured_at_utc": "2026-10-01T13:52:35.149271+00:00"
+      "captured_at_utc": "2026-10-02T13:07:08.027488+00:00"
     },
     "components": {
       "base_strength": 98.77,
@@ -561,10 +561,10 @@
       "consecutive_up_days": 0,
       "latest_turnover": 0.0
     },
-    "captured_at_utc": "2026-10-01T13:52:35.149271+00:00"
+    "captured_at_utc": "2026-10-02T13:07:08.027488+00:00"
   },
   {
-    "date": "2026-10-01",
+    "date": "2026-10-02",
     "code": "600675",
     "name": "中华企业",
     "today_close": 2.52,
@@ -598,7 +598,7 @@
       "exclude_st": true
     },
     "data_quality": {
-      "date": "2026-10-01",
+      "date": "2026-10-02",
       "raw_market_rows": 5571,
       "main_board_rows": 3123,
       "eligible_price_mcap_turnover_rows": 2633,
@@ -661,7 +661,7 @@
       },
       "status": "OK",
       "blocking_reason": null,
-      "captured_at_utc": "2026-10-01T13:52:35.149271+00:00"
+      "captured_at_utc": "2026-10-02T13:07:08.027488+00:00"
     },
     "components": {
       "base_strength": 90.87,
@@ -702,10 +702,10 @@
       "consecutive_up_days": 2,
       "latest_turnover": 0.0
     },
-    "captured_at_utc": "2026-10-01T13:52:35.149271+00:00"
+    "captured_at_utc": "2026-10-02T13:07:08.027488+00:00"
   },
   {
-    "date": "2026-10-01",
+    "date": "2026-10-02",
     "code": "601811",
     "name": "新华文轩",
     "today_close": 21.12,
@@ -739,7 +739,7 @@
       "exclude_st": true
     },
     "data_quality": {
-      "date": "2026-10-01",
+      "date": "2026-10-02",
       "raw_market_rows": 5571,
       "main_board_rows": 3123,
       "eligible_price_mcap_turnover_rows": 2633,
@@ -802,7 +802,7 @@
       },
       "status": "OK",
       "blocking_reason": null,
-      "captured_at_utc": "2026-10-01T13:52:35.149271+00:00"
+      "captured_at_utc": "2026-10-02T13:07:08.027488+00:00"
     },
     "components": {
       "base_strength": 100.0,
@@ -843,10 +843,10 @@
       "consecutive_up_days": 2,
       "latest_turnover": 0.0
     },
-    "captured_at_utc": "2026-10-01T13:52:35.149271+00:00"
+    "captured_at_utc": "2026-10-02T13:07:08.027488+00:00"
   },
   {
-    "date": "2026-10-01",
+    "date": "2026-10-02",
     "code": "600770",
     "name": "综艺股份",
     "today_close": 6.36,
@@ -880,7 +880,7 @@
       "exclude_st": true
     },
     "data_quality": {
-      "date": "2026-10-01",
+      "date": "2026-10-02",
       "raw_market_rows": 5571,
       "main_board_rows": 3123,
       "eligible_price_mcap_turnover_rows": 2633,
@@ -943,7 +943,7 @@
       },
       "status": "OK",
       "blocking_reason": null,
-      "captured_at_utc": "2026-10-01T13:52:35.149271+00:00"
+      "captured_at_utc": "2026-10-02T13:07:08.027488+00:00"
     },
     "components": {
       "base_strength": 95.62,
@@ -984,10 +984,10 @@
       "consecutive_up_days": 2,
       "latest_turnover": 0.0
     },
-    "captured_at_utc": "2026-10-01T13:52:35.149271+00:00"
+    "captured_at_utc": "2026-10-02T13:07:08.027488+00:00"
   },
   {
-    "date": "2026-10-01",
+    "date": "2026-10-02",
     "code": "600189",
     "name": "泉阳泉",
     "today_close": 8.95,
@@ -1021,7 +1021,7 @@
       "exclude_st": true
     },
     "data_quality": {
-      "date": "2026-10-01",
+      "date": "2026-10-02",
       "raw_market_rows": 5571,
       "main_board_rows": 3123,
       "eligible_price_mcap_turnover_rows": 2633,
@@ -1084,7 +1084,7 @@
       },
       "status": "OK",
       "blocking_reason": null,
-      "captured_at_utc": "2026-10-01T13:52:35.149271+00:00"
+      "captured_at_utc": "2026-10-02T13:07:08.027488+00:00"
     },
     "components": {
       "base_strength": 92.28,
@@ -1125,10 +1125,10 @@
       "consecutive_up_days": 0,
       "latest_turnover": 0.0
     },
-    "captured_at_utc": "2026-10-01T13:52:35.149271+00:00"
+    "captured_at_utc": "2026-10-02T13:07:08.027488+00:00"
   },
   {
-    "date": "2026-10-01",
+    "date": "2026-10-02",
     "code": "000498",
     "name": "山东路桥",
     "today_close": 5.87,
@@ -1162,7 +1162,7 @@
       "exclude_st": true
     },
     "data_quality": {
-      "date": "2026-10-01",
+      "date": "2026-10-02",
       "raw_market_rows": 5571,
       "main_board_rows": 3123,
       "eligible_price_mcap_turnover_rows": 2633,
@@ -1225,7 +1225,7 @@
       },
       "status": "OK",
       "blocking_reason": null,
-      "captured_at_utc": "2026-10-01T13:52:35.149271+00:00"
+      "captured_at_utc": "2026-10-02T13:07:08.027488+00:00"
     },
     "components": {
       "base_strength": 97.32,
@@ -1266,10 +1266,10 @@
       "consecutive_up_days": 1,
       "latest_turnover": 0.0
     },
-    "captured_at_utc": "2026-10-01T13:52:35.149271+00:00"
+    "captured_at_utc": "2026-10-02T13:07:08.027488+00:00"
   },
   {
-    "date": "2026-10-01",
+    "date": "2026-10-02",
     "code": "000739",
     "name": "普洛药业",
     "today_close": 27.74,
@@ -1303,7 +1303,7 @@
       "exclude_st": true
     },
     "data_quality": {
-      "date": "2026-10-01",
+      "date": "2026-10-02",
       "raw_market_rows": 5571,
       "main_board_rows": 3123,
       "eligible_price_mcap_turnover_rows": 2633,
@@ -1366,7 +1366,7 @@
       },
       "status": "OK",
       "blocking_reason": null,
-      "captured_at_utc": "2026-10-01T13:52:35.149271+00:00"
+      "captured_at_utc": "2026-10-02T13:07:08.027488+00:00"
     },
     "components": {
       "base_strength": 94.15,
@@ -1407,10 +1407,10 @@
       "consecutive_up_days": 1,
       "latest_turnover": 0.0
     },
-    "captured_at_utc": "2026-10-01T13:52:35.149271+00:00"
+    "captured_at_utc": "2026-10-02T13:07:08.027488+00:00"
   },
   {
-    "date": "2026-10-01",
+    "date": "2026-10-02",
     "code": "000069",
     "name": "华侨城Ａ",
     "today_close": 1.97,
@@ -1444,7 +1444,7 @@
       "exclude_st": true
     },
     "data_quality": {
-      "date": "2026-10-01",
+      "date": "2026-10-02",
       "raw_market_rows": 5571,
       "main_board_rows": 3123,
       "eligible_price_mcap_turnover_rows": 2633,
@@ -1507,7 +1507,7 @@
       },
       "status": "OK",
       "blocking_reason": null,
-      "captured_at_utc": "2026-10-01T13:52:35.149271+00:00"
+      "captured_at_utc": "2026-10-02T13:07:08.027488+00:00"
     },
     "components": {
       "base_strength": 87.7,
@@ -1548,10 +1548,10 @@
       "consecutive_up_days": 0,
       "latest_turnover": 0.0
     },
-    "captured_at_utc": "2026-10-01T13:52:35.149271+00:00"
+    "captured_at_utc": "2026-10-02T13:07:08.027488+00:00"
   },
   {
-    "date": "2026-10-01",
+    "date": "2026-10-02",
     "code": "002811",
     "name": "郑中设计",
     "today_close": 16.97,
@@ -1585,7 +1585,7 @@
       "exclude_st": true
     },
     "data_quality": {
-      "date": "2026-10-01",
+      "date": "2026-10-02",
       "raw_market_rows": 5571,
       "main_board_rows": 3123,
       "eligible_price_mcap_turnover_rows": 2633,
@@ -1648,7 +1648,7 @@
       },
       "status": "OK",
       "blocking_reason": null,
-      "captured_at_utc": "2026-10-01T13:52:35.149271+00:00"
+      "captured_at_utc": "2026-10-02T13:07:08.027488+00:00"
     },
     "components": {
       "base_strength": 93.09,
@@ -1689,10 +1689,10 @@
       "consecutive_up_days": 2,
       "latest_turnover": 0.0
     },
-    "captured_at_utc": "2026-10-01T13:52:35.149271+00:00"
+    "captured_at_utc": "2026-10-02T13:07:08.027488+00:00"
   },
   {
-    "date": "2026-10-01",
+    "date": "2026-10-02",
     "code": "000031",
     "name": "大悦城",
     "today_close": 2.46,
@@ -1726,7 +1726,7 @@
       "exclude_st": true
     },
     "data_quality": {
-      "date": "2026-10-01",
+      "date": "2026-10-02",
       "raw_market_rows": 5571,
       "main_board_rows": 3123,
       "eligible_price_mcap_turnover_rows": 2633,
@@ -1789,7 +1789,7 @@
       },
       "status": "OK",
       "blocking_reason": null,
-      "captured_at_utc": "2026-10-01T13:52:35.149271+00:00"
+      "captured_at_utc": "2026-10-02T13:07:08.027488+00:00"
     },
     "components": {
       "base_strength": 85.53,
@@ -1830,10 +1830,10 @@
       "consecutive_up_days": 2,
       "latest_turnover": 0.0
     },
-    "captured_at_utc": "2026-10-01T13:52:35.149271+00:00"
+    "captured_at_utc": "2026-10-02T13:07:08.027488+00:00"
   },
   {
-    "date": "2026-10-01",
+    "date": "2026-10-02",
     "code": "002244",
     "name": "滨江集团",
     "today_close": 10.14,
@@ -1867,7 +1867,7 @@
       "exclude_st": true
     },
     "data_quality": {
-      "date": "2026-10-01",
+      "date": "2026-10-02",
       "raw_market_rows": 5571,
       "main_board_rows": 3123,
       "eligible_price_mcap_turnover_rows": 2633,
@@ -1930,7 +1930,7 @@
       },
       "status": "OK",
       "blocking_reason": null,
-      "captured_at_utc": "2026-10-01T13:52:35.149271+00:00"
+      "captured_at_utc": "2026-10-02T13:07:08.027488+00:00"
     },
     "components": {
       "base_strength": 81.07,
@@ -1971,6 +1971,6 @@
       "consecutive_up_days": 3,
       "latest_turnover": 0.0
     },
-    "captured_at_utc": "2026-10-01T13:52:35.149271+00:00"
+    "captured_at_utc": "2026-10-02T13:07:08.027488+00:00"
   }
 ]
